@@ -52,7 +52,7 @@ namespace Assignment1
         
         public override string ToString()
         {
-            string ret = String.Format("Id         : {0 , -10 }\n", Id);
+            string ret = String.Format("Id    : {0 , -10 }\n", Id);
             ret += String.Format("OwnerID  : {0}\n", OwnerID);
             ret += String.Format("Floors   : {0}\n", floors);
             return ret;
