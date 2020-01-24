@@ -32,6 +32,20 @@ namespace Assignment1
             forSale = false;
         }
 
+        public bool StringToBool(string boolString)
+        {
+            bool trueorfalse;
+            if (boolString.CompareTo("T") ==0 )
+            {
+                trueorfalse = true;
+            }
+            else
+            {
+                trueorfalse = false;
+            }
+            return trueorfalse;
+
+        }
         public Property(string[] args)
         {
             id = Convert.ToUInt32(args[0]);
@@ -41,8 +55,9 @@ namespace Assignment1
             streetAddr = args[4];
             city = args[5]; 
             state = args[6]; 
-            zip = args[7]; 
-            forSale = Convert.ToBoolean(args[8]);
+            zip = args[7];
+            forSale = StringToBool(args[8]); //Convert.ToBoolean(args[8]); 
+
         }
 
         public int CompareTo(Object alpha)
