@@ -39,9 +39,9 @@ namespace Assignment1
             x = Convert.ToUInt32(args[2]);
             y = Convert.ToUInt32(args[3]);
             streetAddr = args[4];
-            city = args[5]; ;
-            state = args[6]; ;
-            zip = args[7]; ;
+            city = args[5]; 
+            state = args[6]; 
+            zip = args[7]; 
             forSale = Convert.ToBoolean(args[8]);
         }
 
@@ -58,42 +58,37 @@ namespace Assignment1
             return 0;
         }
 
-        public uint Id
-        {
-            get { return id; }
-        }
+        public uint Id =>id; 
+
         public uint OwnerID
         {
             set { ownerID = value; }
-            get { return ownerID; }
+            get => ownerID;
         }
-        public uint X
-        {
-            get { return x; }
-        }
-        public uint Y
-        {
-            get { return y; }
-        }
+
+        public uint X => x;
+
+        public uint Y => y;
+
         public string StreetAddr
         {
             set { streetAddr = value; }
-            get { return streetAddr; }
+            get => streetAddr;
         }
         public string City
         {
             set { city = value; }
-            get { return city; }
+            get => city;
         }
         public string State
         {
             set { state = value; }
-            get { return state; }
+            get => state;
         }
         public string Zip
         {
             set { zip = value; }
-            get { return zip; }
+            get => zip; 
         }
         public bool ForSale
         {

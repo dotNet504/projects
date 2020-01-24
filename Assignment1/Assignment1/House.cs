@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class House : Resident
+    class House : Residential
     {
         private bool garage;
         private bool attachedGarage;

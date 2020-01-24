@@ -15,7 +15,6 @@ namespace Assignment1
         private readonly DateTime birthday;
         private List<uint> residenceIds = new List<uint>();
 
-
         public int CompareTo(Object alpha)
         {
             if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
@@ -50,19 +49,16 @@ namespace Assignment1
         public Person(string[] args)
         {
             uint ID = Convert.ToUInt32(args[0]);
-            string lastname = args[1];
-            string firstname = args[2];
-            string occu = args[3];
+            LastName = args[1];
+            FirstName = args[2];
+            Occupation = args[3];
             int year = Convert.ToInt32(args[4]);
             int month = Convert.ToInt32(args[5]);
             int day = Convert.ToInt32(args[6]);
+            residenceIds.Add(Convert.ToUInt32(args[7]));
 
             DateTime birth = new DateTime(year, month, day);
-
-            FirstName = firstname;
-            LastName = lastname;
-            Occupation = occu;
-
+            
             if (birth <= DateTime.Now)
             {
                 birthday = birth;
@@ -76,49 +72,37 @@ namespace Assignment1
             {
                 throw new ArgumentNullException("Invalid ID provided, should be within 1 - 99999");
             }
-            else if (residenceIds.Contains(ID))
-            {
-                throw new ArgumentNullException("ID already exists, enter a new ID within 1 - 99999");
-            }
             else
             {
                 id = ID;
-                residenceIds.Add(ID);
             }
+
+
         }
 
         public string FirstName
         {
-            get { return firstName; }
+            get => firstName;
             set { firstName = value; }
         }
 
         public string LastName
         {
-            get { return lastName; }
+            get => lastName;
             set { lastName = value; }
         }
 
         public string Occupation
         {
-            get { return occupation; }
+            get => occupation; 
             set { occupation = value; }
         }
 
-        public uint Id
-        {
-            get { return id; }
-        }
+        public uint Id => id;
 
-        public uint[] ResidenceIds
-        {
-            get { return residenceIds.ToArray(); }
-        }
+        public uint[] ResidenceIds => residenceIds.ToArray();
 
-        public DateTime Birthday
-        {
-            get { return birthday; }
-        }
+        public DateTime Birthday => birthday;
 
         //get-only property
         public string FullName => LastName + ", " + FirstName;

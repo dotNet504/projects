@@ -10,11 +10,11 @@ namespace Assignment1
     {
         static void Main(string[] args)
         {
-            string[] attr = { "125", "John", "Doe", "Lawyer", "1992", "5", "19" };
+            string[] attr = { "125", "John", "Doe", "Lawyer", "1992", "5", "19", "25364" };
             Person me = new Person(attr);
             Console.WriteLine(me);
 
-            string[] attr2 = { "1", "John", "Allan", "Lawyer", "1992", "5", "19" };
+            string[] attr2 = { "1", "John", "Allan", "Lawyer", "1992", "5", "19", "25647" };
             Person me2 = new Person(attr2);
             Console.WriteLine(me2);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class Apartment : Resident 
+    class Apartment : Residential 
     {
         private string unit;
 

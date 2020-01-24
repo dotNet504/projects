@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class Resident : Property
+    class Residential : Property
     {
         private uint bedrooms;
         private uint baths;
         private uint sqft;
 
-        public Resident(string[] args) : base(args) //modified by Xuezhi, I think this part still has problem
+        public Residential(string[] args) : base(args) //modified by Xuezhi, I think this part still has problem
         {
             bedrooms = Convert.ToUInt32(args[9]);
             baths = Convert.ToUInt32(args[10]);
@@ -36,8 +36,6 @@ namespace Assignment1
             set { sqft = value; }
             get { return sqft; }
         }
-
-
     }
 
 }
