@@ -41,11 +41,24 @@ namespace Assignment1
             Console.WriteLine(test_class);
 
             string[] appartment_string = { "61539", "1101", "216", "216", "7031 Lincoln Hwy.", "DeKalb", "Illinois", "60115", "T", "1", "1", "2000", "PAR" };
-            Apartment test_class_apartment = new Apartment(appartment_string);
+            Apartment test_class_apartment = new Apartment(appartment_string) ;
             Console.WriteLine(test_class_apartment);
             /*
              * Test is end
              */
+            Console.WriteLine("Press a number to select the function.");
+            Console.WriteLine("1. Full property list");
+            Console.WriteLine("2.List addresses of either House or Apartment - type properties");
+            Console.WriteLine("3.List addresses of all for-sale properties") ;
+            Console.WriteLine("4.List all residents of a community");
+            Console.WriteLine("5.List all residents of a property, by street address") ;
+            Console.WriteLine("6.Toggle a property, by street address, as being for-sale or not.") ;
+            Console.WriteLine("7.Buy a for-sale property, by street address") ;
+            Console.WriteLine("8.Add yourself as an occupant to a property.") ;
+            Console.WriteLine("9.Remove yourself as an occupant from a property") ;
+            Console.WriteLine("10.Quit");
+
+
 
 
 
