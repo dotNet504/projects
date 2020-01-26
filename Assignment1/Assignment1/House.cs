@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class House : Residential
+    //Swathi - made class public due to visibility issue in Community class
+    public class House : Residential
     {
         private bool garage;
         private bool attachedGarage;

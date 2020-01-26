@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class Person : IComparable
+    //Swathi - made class public due to visibility issue in Community class
+    public class Person : IComparable
     {
         private readonly uint id;
         private string firstName;
@@ -48,7 +49,17 @@ namespace Assignment1
 
         public Person(string[] args)
         {
-            uint ID = Convert.ToUInt32(args[0]);
+            // Swathi - added try catch to handle id exception during convert at output
+            try
+            {
+                uint ID = Convert.ToUInt32(args[0]);
+                id = ID;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
             LastName = args[1];
             FirstName = args[2];
             Occupation = args[3];
@@ -68,14 +79,14 @@ namespace Assignment1
                 throw new ArgumentNullException("Birthday provided is in the future");
             }
 
-            if (ID > 99999 || ID < 1)
-            {
-                throw new ArgumentNullException("Invalid ID provided, should be within 1 - 99999");
-            }
-            else
-            {
-                id = ID;
-            }
+            //if (ID > 99999 || ID < 1)
+            //{
+            //    throw new ArgumentNullException("Invalid ID provided, should be within 1 - 99999");
+            //}
+            //else
+            //{
+            //    id = ID;
+            //}
 
 
         }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    class Property : IComparable
+    //Swathi - made class public due to visibility issue in Community class
+    public class Property : IComparable
     {
         private readonly uint id;
         private uint ownerID;
