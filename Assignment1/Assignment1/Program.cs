@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -147,6 +147,7 @@ namespace Assignment1
                                     Console.Write(h.Floors + (h.Floors == 1 ? " floor" : " floors"));
                                 }
                                 Console.WriteLine("\n");
+                                //todo - need to remove my name
                             }
                             break;
 
@@ -232,6 +233,7 @@ namespace Assignment1
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
                             Console.WriteLine("List of residents living at " + streetAddress + ":\n");
+                            Console.WriteLine("------------------------------------------------");
 
                             Property pr = community.Props
                                 .FirstOrDefault(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase));
@@ -314,6 +316,7 @@ namespace Assignment1
                             if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
                             {
                                 Console.WriteLine(streetAddress);
+                            string streetAdd = Console.ReadLine(); //"518 Oak Ave"; // 
 
                                 Console.WriteLine("You are already a resident at this property!");
                             }

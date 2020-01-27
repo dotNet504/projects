@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,6 +121,7 @@ namespace Assignment1
         public int Compare(Property x, Property y)
         {
             return x.CompareTo(y);
+            //return x.Id.CompareTo(y.Id);
         }
 
 
