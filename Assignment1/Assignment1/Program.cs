@@ -105,6 +105,7 @@ namespace Assignment1
                 Console.WriteLine("9.Remove yourself as an occupant from a property");
                 Console.WriteLine("10.Quit");
                 Console.WriteLine("\n");
+                
                 try
                 {
                     string streetAddress = "";
@@ -252,6 +253,7 @@ namespace Assignment1
                         case "7":
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
+                            bool addressFound = false;
                             
                             foreach (var item in community.Props)
                             {
@@ -262,10 +264,16 @@ namespace Assignment1
                                     {
                                         item.ForSale = false;
                                     }
-                                    Console.WriteLine(streetAddress);
+                                    //Console.WriteLine(streetAddress);
                                     Console.WriteLine("Congratulations! You have successfully purchased this property!\n");
                                     PropertyDetails(item, lstPersons, lstApartments, lstHouses);
+                                    addressFound = true;
+
                                 }
+                            }
+                            if (!addressFound)
+                            {
+                                Console.WriteLine("Address not found!");
                             }
                             break;
                         case "8":
@@ -348,7 +356,7 @@ namespace Assignment1
                 {
                     Console.Write("... with no garage : ");
                 }
-                Console.Write(h.Floors + (h.Floors == 1 ? " floor" : " floors"));
+                Console.Write(h.Floors + (h.Floors == 1 ? " floor." : " floors."));
             }
             Console.WriteLine("\n");
         }
