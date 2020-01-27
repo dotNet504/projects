@@ -118,9 +118,13 @@ namespace Assignment1
     }
     public class PropertyComparer : IComparer<Property>
     {
+        
         public int Compare(Property x, Property y)
         {
-             return x.Id.CompareTo(y.Id);
+             return x.CompareTo(y);
         }
+
+         
+
     }
 }
