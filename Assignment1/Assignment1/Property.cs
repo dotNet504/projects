@@ -92,7 +92,8 @@ namespace Assignment1
                         {
                             if (AddressNumer.CompareTo(rightOp.AddressNumer) == 0)
                             {
-                                return 0;
+                                
+                                return (Id.CompareTo(rightOp.Id));
                             }
                             else
                                 return AddressNumer.CompareTo(rightOp.AddressNumer);
