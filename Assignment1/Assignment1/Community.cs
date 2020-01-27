@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assignment1;
 
 namespace Assignment1
@@ -12,7 +13,7 @@ namespace Assignment1
         private readonly uint id;
         private readonly string name;
         private uint mayorID;
-        //todo - Enum
+
 
         public Community()
         {
@@ -27,12 +28,12 @@ namespace Assignment1
             id = 99999;
             name = "Dekalb";
             mayorID = 0;
-            props = new SortedSet<Property>();
+            props = new SortedSet<Property>(new PropertyComparer());
             residents = new SortedSet<Person>();
             foreach (var per in persons)
             {
                 residents.Add(per);
-            }
+            }            
             foreach (var a in apartments)
             {
                 props.Add(a);
@@ -43,9 +44,15 @@ namespace Assignment1
             }            
         }
 
-        public IEnumerator GetEnumerator()
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
+        }
+
+        public CommEnum GetEnumerator()
+        {
+            return new CommEnum(residents);
         }
 
         public int CompareTo(object obj)
@@ -64,5 +71,56 @@ namespace Assignment1
             get { return mayorID; }
         }
         public int Population => residents.Count;        
+    }
+
+    public class CommEnum : IEnumerator
+    {
+        public SortedSet<Person> _people;
+        int position = -1;
+
+        public CommEnum(SortedSet<Person> list)
+        {
+            _people = list;
+        }
+        public bool MoveNext()
+        {
+
+            position++;
+            return (position < _people.Count);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+        public Person Current
+        {
+            get
+            {
+                try
+                {
+                    return _people.ElementAt(position);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+    }
+    public class PropertyComparer : IComparer<Property>
+    {
+        public int Compare(Property x, Property y)
+        {
+             return x.Id.CompareTo(y.Id);
+        }
     }
 }

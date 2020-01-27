@@ -124,29 +124,33 @@ namespace Assignment1
                                lstPersons[0].FullName);
                             Console.WriteLine("-------------------------------------------------------------");
 
-                            foreach (var item in lstHouses)
+                            foreach (var item in community.Props)
                             {
                                 Person p = lstPersons.Where(x => x.Id == item.OwnerID).FirstOrDefault();
-                                int age = GetAge(p.Birthday);
-                                Console.WriteLine("Property Address: " +
+                                Apartment a = lstApartments.Where(x => x.Id == item.Id).FirstOrDefault();
+                                House h = lstHouses.Where(x => x.Id == item.Id).FirstOrDefault();
+
+                                Console.Write("Property Address: " +
                                     item.StreetAddr + " / " +
                                     item.City + " / " +
                                     item.State + " / " +
                                     item.Zip + "\nOwned by " +
                                     p.FullName + ", Age(" +
-                                    age + ") Occupation: " +
+                                    GetAge(p.Birthday) + ") Occupation: " +
                                     p.Occupation + "\n" +
-                                    (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) ") +
-                                    item.Bedrooms + " bedrooms \\ " +
-                                    item.Baths + " baths \\ " +
-                                    item.Sqft + " sq.ft. \n"
-                                    //(item.Garage ? "..with " + (item.AttachedGarage ? "an attached garage" : "a detached garage") : "no garage") +
-                                    //" : " + item.Floors == null ? "" : item.Floors + " floors." //floor and floors
-
-                                    );
+                                    (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) "));
+                                if (a != null)
+                                {
+                                    Console.Write(a.Bedrooms + " bedrooms \\ " +
+                                    a.Baths + " baths \\ " +
+                                    a.Sqft + " sq.ft. \n");
+                                } else if(h!= null)
+                                {
+                                    Console.Write(h.Bedrooms + " bedrooms \\ " +
+                                   h.Baths + " baths \\ " +
+                                   h.Sqft + " sq.ft. \n");
+                                }
                             }
-
-                            //todo - for apartments
                             break;
 
                         case "2":
