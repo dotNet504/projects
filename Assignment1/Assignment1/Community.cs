@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assignment1;
 
 namespace Assignment1
 {
-    public class Community:IComparable, IEnumerable
+    public class Community : IComparable, IEnumerable
     {
         private SortedSet<Property> props;
         private SortedSet<Person> residents;
@@ -23,7 +22,7 @@ namespace Assignment1
             name = "";
             mayorID = 0;
         }
-        public Community( List<Person> persons, List<House> houses, List<Apartment> apartments)
+        public Community(List<Person> persons, List<House> houses, List<Apartment> apartments)
         {
             id = 99999;
             name = "Dekalb";
@@ -33,7 +32,7 @@ namespace Assignment1
             foreach (var per in persons)
             {
                 residents.Add(per);
-            }            
+            }
             foreach (var a in apartments)
             {
                 props.Add(a);
@@ -41,7 +40,7 @@ namespace Assignment1
             foreach (var h in houses)
             {
                 props.Add(h);
-            }            
+            }
         }
 
 
@@ -70,7 +69,7 @@ namespace Assignment1
             set { mayorID = value; }
             get { return mayorID; }
         }
-        public int Population => residents.Count;        
+        public int Population => residents.Count;
     }
 
     public class CommEnum : IEnumerator
@@ -118,13 +117,13 @@ namespace Assignment1
     }
     public class PropertyComparer : IComparer<Property>
     {
-        
+
         public int Compare(Property x, Property y)
         {
-             return x.CompareTo(y);
+            return x.CompareTo(y);
         }
 
-         
+
 
     }
 }

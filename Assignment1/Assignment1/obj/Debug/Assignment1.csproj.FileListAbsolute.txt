@@ -31,3 +31,8 @@ F:\csci504\assgnment_1\projects\Assignment1\Assignment1\bin\Debug\Assignment1.ex
 F:\csci504\assgnment_1\projects\Assignment1\Assignment1\bin\Debug\Assignment1.exe
 F:\csci504\assgnment_1\projects\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
 F:\csci504\assgnment_1\projects\Assignment1\Assignment1\obj\Debug\Assignment1.csprojAssemblyReference.cache
+C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\bin\Debug\Assignment1.exe.config
+C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\bin\Debug\Assignment1.exe
+C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
+C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\obj\Debug\Assignment1.exe
+C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\obj\Debug\Assignment1.pdb

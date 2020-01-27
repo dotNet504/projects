@@ -37,30 +37,59 @@ namespace Assignment1
             * appartment: unique ID | ownerID | x | y | streetAddr | city | state | zip | forSale | bedrooms | baths | sqft | unit
             * 61539	1101	216	216	7031 Lincoln Hwy.	DeKalb	Illinois	60115	T	1	1	2000	PAR
             */
-            string[] house_string= { "98213", "0", "250", "250", "6000 Mayor St.", "DeKalb", "Illinois" ,"60115","F","3","2","5000","T","T","2"};
-            House test_class = new House(house_string);
-            Console.WriteLine(test_class);
+            //string[] house_string = { "98213", "0", "250", "250", "6000 Mayor St.", "DeKalb", "Illinois", "60115", "F", "3", "2", "5000", "T", "T", "2" };
+            //House test_class = new House(house_string);
+            //Console.WriteLine(test_class);
 
 
-            string[] appartment_string = { "61539", "1101", "216", "216", "7031 Lincoln Hwy.", "DeKalb", "Illinois", "60115", "T", "1", "1", "2000", "PAR" };
-            Apartment test_class_apartment = new Apartment(appartment_string) ;
-            Console.WriteLine(test_class_apartment);
-            if (test_class.CompareTo(test_class_apartment) > 0)
-            {
-                Console.WriteLine("property 1 is great than property 2");
-            }
-            else if (test_class.CompareTo(test_class_apartment) == 0)
-            {
-                Console.WriteLine("Equal");
-            }
-            else 
-            {
-                Console.WriteLine("property 1 is smaller than property 2");
-            }
+            //string[] appartment_string = { "61539", "1101", "216", "216", "7031 Lincoln Hwy.", "DeKalb", "Illinois", "60115", "T", "1", "1", "2000", "PAR" };
+            //Apartment test_class_apartment = new Apartment(appartment_string);
+            //Console.WriteLine(test_class_apartment);
+            //if (test_class.CompareTo(test_class_apartment) > 0)
+            //{
+            //    Console.WriteLine("property 1 is great than property 2");
+            //}
+            //else if (test_class.CompareTo(test_class_apartment) == 0)
+            //{
+            //    Console.WriteLine("Equal");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("property 1 is smaller than property 2");
+            //}
             /*
              * Test is end
              */
+            //Reading input files.
+            string[] persons = File.ReadAllLines(@"../../InputFiles/p.txt");
+            string[] houses = File.ReadAllLines(@"../../InputFiles/r.txt");
+            string[] apartments = File.ReadAllLines(@"../../InputFiles/a.txt");
 
+            List<Person> lstPersons = new List<Person>();
+            List<House> lstHouses = new List<House>();
+            List<Apartment> lstApartments = new List<Apartment>();
+
+            foreach (var item in persons)
+            {
+                string[] items = item.Split('\t');
+                Person p = new Person(items);
+                lstPersons.Add(p);
+            }
+
+            foreach (var item in houses)
+            {
+                string[] items = item.Split('\t');
+                House h = new House(items);
+                lstHouses.Add(h);
+            }
+
+            foreach (var item in apartments)
+            {
+                string[] items = item.Split('\t');
+                Apartment a = new Apartment(items);
+                lstApartments.Add(a);
+            }
+            Community community = new Community(lstPersons, lstHouses, lstApartments);
 
             do
             {
@@ -74,44 +103,10 @@ namespace Assignment1
                 Console.WriteLine("8.Add yourself as an occupant to a property.");
                 Console.WriteLine("9.Remove yourself as an occupant from a property");
                 Console.WriteLine("10.Quit");
-
-                //Reading input files.
-                string[] persons = File.ReadAllLines(@"../../InputFiles/p.txt");
-                string[] houses = File.ReadAllLines(@"../../InputFiles/r.txt");
-                string[] apartments = File.ReadAllLines(@"../../InputFiles/a.txt");
-
-                List<Person> lstPersons = new List<Person>();
-                List<House> lstHouses = new List<House>();
-                List<Apartment> lstApartments = new List<Apartment>();
-                List<Property> lstProperty = new List<Property>();
-
-                foreach (var item in persons)
-                {
-                    string[] items = item.Split('\t');
-                    Person p = new Person(items);
-                    lstPersons.Add(p);
-                }
-
-                foreach (var item in houses)
-                {
-                    string[] items = item.Split('\t');
-                    House h = new House(items);
-                    lstHouses.Add(h);
-
-                }
-
-                    foreach (var item in apartments)
-                {
-                    string[] items = item.Split('\t');
-                    Apartment a = new Apartment(items);
-                    lstApartments.Add(a);
-
-                }
-                Community community = new Community(lstPersons, lstHouses, lstApartments);
-
+                Console.WriteLine("\n");
                 try
                 {
-                    Console.WriteLine("press any key from 1-10");
+                    string streetAddress = "";
                     string readValue = Console.ReadLine();
                     if (readValue == "10" || readValue.ToLower() == "quit" || readValue.ToLower() == "q" ||
                         readValue.ToLower() == "exit" || readValue.ToLower() == "e")
@@ -120,82 +115,78 @@ namespace Assignment1
                     switch (readValue)
                     {
                         case "1":
-                            Console.WriteLine("<" + community.Id + "> " + community.Name + ". Population(" + community.Population + "). Mayor: " +
-                               lstPersons[0].FullName);
+                            Console.WriteLine("<" + community.Id + "> " + community.Name + ". Population (" + community.Population + "). Mayor: " + lstPersons[0].FullName);
                             Console.WriteLine("-------------------------------------------------------------");
 
                             foreach (var item in community.Props)
                             {
-                                Person p = lstPersons.Where(x => x.Id == item.OwnerID).FirstOrDefault();
-                                Apartment a = lstApartments.Where(x => x.Id == item.Id).FirstOrDefault();
-                                House h = lstHouses.Where(x => x.Id == item.Id).FirstOrDefault();
+                                Person p = lstPersons?.Where(x => x.Id == item.OwnerID).FirstOrDefault();
+                                Apartment a = lstApartments?.Where(x => x.Id == item.Id).FirstOrDefault();
+                                House h = lstHouses?.Where(x => x.Id == item.Id).FirstOrDefault();
 
-                                Console.Write("Property Address: " +
-                                    item.StreetAddr + " / " +
-                                    item.City + " / " +
-                                    item.State + " / " +
-                                    item.Zip + "\nOwned by " +
-                                    p.FullName + ", Age(" +
-                                    GetAge(p.Birthday) + ") Occupation: " +
-                                    p.Occupation + "\n" +
-                                    (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) "));
+                                Console.Write("Property Address: " + item.StreetAddr + " / " + item.City + " / " + item.State + " / " + item.Zip
+                                              + "\nOwned by " + p.FullName + ", Age(" + GetAge(p.Birthday) + ") Occupation: " + p.Occupation
+                                              + "\n" + (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) "));
                                 if (a != null)
                                 {
-                                    Console.Write(a.Bedrooms + " bedrooms \\ " +
-                                    a.Baths + " baths \\ " +
-                                    a.Sqft + " sq.ft. \n");
-                                } else if(h!= null)
-                                {
-                                    Console.Write(h.Bedrooms + " bedrooms \\ " +
-                                   h.Baths + " baths \\ " +
-                                   h.Sqft + " sq.ft. \n");
+                                    Console.Write(a.Bedrooms + " bedrooms \\ " + a.Baths + " baths \\ " + a.Sqft + " sq.ft. " + "Apt.# " + a.Unit + "\n");
                                 }
+                                else if (h != null)
+                                {
+                                    Console.Write(h.Bedrooms + " bedrooms \\ " + h.Baths + " baths \\ " + h.Sqft + " sq.ft. \n");
+                                    if (h.Garage)
+                                    {
+                                        Console.Write(h.AttachedGarage
+                                            ? "... with an attached garage : "
+                                            : "... with a detached garage : ");
+                                    }
+                                    else
+                                    {
+                                        Console.Write("... with no garage : ");
+                                    }
+                                    Console.Write(h.Floors + (h.Floors == 1 ? " floor" : " floors"));
+                                }
+                                Console.WriteLine("\n");
                             }
                             break;
 
                         case "2":
 
                             Console.WriteLine("Enter property type (House/Apartment):");
-                            String inputValue = Console.ReadLine();
-                            if (inputValue.ToLower() == "apartment")
+                            string inputValue = Console.ReadLine();
+                            switch (inputValue.ToLower())
                             {
-                                Console.WriteLine("List of addresses of Apartment properties in the Dekalb community.");
-                                Console.WriteLine("-------------------------------------------------------");
-                                foreach (var item in lstApartments)
-                                {
-                                    Console.WriteLine(item.StreetAddr + " Apt.# " +
-                                        item.Unit + " " +
-                                        item.City + ", " +
-                                        item.State + ", " +
-                                        item.Zip);
-                                    //todo - sorting
-                                }
+                                case "apartment":
+                                    {
+                                        Console.WriteLine("\nList of addresses of Apartment properties in the Dekalb community.");
+                                        Console.WriteLine("-------------------------------------------------------\n");
+                                        foreach (var item in lstApartments)
+                                        {
+                                            Console.WriteLine(item.StreetAddr + " Apt.# " + item.Unit + " " + item.City + ", " + item.State + ", " + item.Zip);
+                                            //todo - sorting
+                                        }
+                                        break;
+                                    }
+                                case "house":
+                                    {
+                                        Console.WriteLine("\nList of addresses of House properties in the Dekalb community.");
+                                        Console.WriteLine("-------------------------------------------------------\n");
+                                        foreach (var item in lstHouses)
+                                        {
+                                            Console.WriteLine(item.StreetAddr + " " + item.City + ", " + item.State + ", " + item.Zip);
+                                            //todo - sorting and confirmation
+                                        }
+                                        break;
+                                    }
+                                default:
+                                    Console.WriteLine("Invalid Input!");
+                                    break;
                             }
-                            else if (inputValue.ToLower() == "house")
-                            {
-                                Console.WriteLine("List of addresses of House properties in the Dekalb community.");
-                                Console.WriteLine("-------------------------------------------------------");
-                                foreach (var item in lstHouses)
-                                {
-                                    Console.WriteLine(item.StreetAddr + " " +
-                                         //item.Unit + " " +
-                                         item.City + ", " +
-                                         item.State + ", " +
-                                         item.Zip);
-                                    //todo - sorting and confirmation
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid Input!");
-                                Console.WriteLine("Enter input values as Apartment/House");
-                            }
-
                             break;
 
                         case "3":
                             Console.WriteLine("List of addresses for all FOR SALE properties in the Dekalb community.");
-                            Console.WriteLine("-------------------------------------------------------");
+                            Console.WriteLine("-------------------------------------------------------\n");
                             foreach (var item in lstApartments)
                             {
                                 if (item.ForSale)
@@ -239,88 +230,105 @@ namespace Assignment1
 
                         case "5":
                             Console.WriteLine("Enter the street address to lookup:");
-                            String inputVal = Console.ReadLine();//"1238 Woodcrest Ln."; // 
-                            Console.WriteLine("List of residents living at " + inputVal);
-                            List<String> residentsExists = new List<string>();
+                            streetAddress = Console.ReadLine();
+                            Console.WriteLine("List of residents living at " + streetAddress + ":\n");
 
-                            foreach (var item in lstApartments)
+                            Property pr = community.Props
+                                .FirstOrDefault(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase));
+                            if (pr != null)
                             {
-                                Person p = lstPersons.Where(x => x.Id == item.OwnerID).FirstOrDefault();
-                                if (item.StreetAddr.ToLower() == inputVal.ToLower())
+                                Person p = lstPersons.FirstOrDefault(x => x.Id == pr.OwnerID);
+                                if (p != null)
                                 {
-                                    Console.WriteLine(p.FullName + ", Age(" +
-                                        GetAge(p.Birthday) + "), Occupation: " +
-                                        p.Occupation);
-                                    residentsExists.Add(p.FullName);
+                                    Console.WriteLine(p.FullName + ", Age(" + GetAge(p.Birthday) + "), Occupation: " + p.Occupation);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Residents not found for the provided street address.");
                                 }
                             }
-
-                            foreach (var item in lstHouses)
+                            else
                             {
-                                Person p = lstPersons.Where(x => x.Id == item.OwnerID).FirstOrDefault();
-                                if (item.StreetAddr.ToLower() == inputVal.ToLower())
-                                {
-                                    Console.WriteLine(p.FullName + ", Age(" +
-                                        GetAge(p.Birthday) + "), Occupation: " +
-                                        p.Occupation);
-                                    residentsExists.Add(p.FullName);
-                                }
+                                Console.WriteLine("Street Address not found."); // todo
                             }
-                            if (residentsExists == null)
-                            {
-                                Console.WriteLine("Residents not found for the provided street address.");
-                            }
-
                             break;
 
                         case "6":
                             Console.WriteLine("Enter the street address to lookup:");
-                            string streetAd = Console.ReadLine();  //"906 Stonehenge Rd."; // 
-                            foreach (var item in lstApartments)
-                            {
-                                if (item.StreetAddr.ToLower() == streetAd.ToLower())
-                                {
-                                    if (item.ForSale)
-                                    {
-                                        item.ForSale = false;
-                                        Console.WriteLine(streetAd + " is now listed as NOT for sale!");
-                                    }
-                                    else
-                                    {
-                                        item.ForSale = true; //todo - this is not working 
-                                        Console.WriteLine(streetAd + " is now listed as FOR SALE!");
-                                    }
-                                }
-                            }
-                            foreach (var item in lstHouses)
-                            {
-                                if (item.StreetAddr.ToLower() == streetAd.ToLower())
-                                {
-                                    if (item.ForSale)
-                                    {
-                                        item.ForSale = false;
-                                        Console.WriteLine(streetAd + " is now listed as NOT for sale!");
-                                    }
-                                    else
-                                    {
-                                        item.ForSale = true;
-                                        Console.WriteLine(streetAd + " is now listed as FOR SALE!");
-                                    }
+                            streetAddress = Console.ReadLine(); 
 
-                                }
-                            }
+                            Property prop = community.Props
+                                .FirstOrDefault(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase));
 
+                            if (prop != null)
+                            {
+                                prop.ForSale = !prop.ForSale;
+                                Console.WriteLine(streetAddress + " is now listed as " + (prop.ForSale ? "" : "NOT ") + "for sale!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Street Address not found."); // todo
+                            }
                             break;
 
                         case "7":
                             Console.WriteLine("Enter the street address to lookup:");
-                            //string streetAdd = "518 Oak Ave"; // Console.ReadLine();
+                            streetAddress = Console.ReadLine();
+                            foreach (var item in community.Props)
+                            {
+                                if (string.Equals(item.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    if (item.ForSale)
+                                    {
+                                        item.ForSale = false;
+                                    }
+                                    Console.WriteLine(streetAddress);
+                                    Console.WriteLine("Congratulations! You have successfully purchased this property!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Street Address not found."); // todo
+                                }
+                            }
+                            break;
+                        case "8":
+                            Console.WriteLine("Enter the street address to lookup:");
+                            streetAddress = Console.ReadLine();
+                            if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
+                            {
+                                Console.WriteLine(streetAddress);
+                                Console.WriteLine("You are already a resident at this property!");
+                            }
+                            else
+                            {
+                                // todo add other properties
+                                Property p = new Property { StreetAddr = streetAddress };
+                                community.Props.Add(p);
+                                Console.WriteLine(streetAddress);
+                                Console.WriteLine("Success! You have been added as a resident at this property!");
+                            }
+                            break;
+                        case "9":
+                            Console.WriteLine("Enter the street address to lookup:");
+                            streetAddress = Console.ReadLine();
+                            if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
+                            {
+                                Console.WriteLine(streetAddress);
 
+                                Console.WriteLine("You are already a resident at this property!");
+                            }
+                            else
+                            {
+                                // todo add other properties
+                                Property p = new Property { StreetAddr = streetAddress };
+                                community.Props.Add(p);
+                                Console.WriteLine(streetAddress);
+                                Console.WriteLine("Success! You have been added as a resident at this property!");
+                            }
                             break;
 
                         default:
-                            Console.WriteLine("Invalid input. Choose input value from 1 to 10");
-                            // todo
+                            Console.WriteLine("Invalid input. Choose input value from 1 to 10");// todo
                             break;
                     }
                 }
@@ -328,14 +336,13 @@ namespace Assignment1
                 {
                     Console.WriteLine(ex.Message);
                 }
-                //Console.ReadKey();
                 Console.ReadLine();
             }
 
             while (true);
         }
 
-        public static int GetAge(DateTime dateOfBirth)
+        private static int GetAge(DateTime dateOfBirth)
         {
             int age = 0;
             age = DateTime.Now.Year - dateOfBirth.Year;
@@ -345,6 +352,6 @@ namespace Assignment1
             }
             return age;
         }
-        
+
     }
 }
