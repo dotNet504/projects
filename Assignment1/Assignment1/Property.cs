@@ -19,6 +19,9 @@ namespace Assignment1
         private string zip;
         private bool forSale;
 
+        private uint addressNumer;
+        private string addressStreetName;
+
 
         public Property()
         {
@@ -49,6 +52,8 @@ namespace Assignment1
         }
         public Property(string[] args)
         {
+  
+  
             id = Convert.ToUInt32(args[0]);
             ownerID = Convert.ToUInt32(args[1]);
             x = Convert.ToUInt32(args[2]);
@@ -59,19 +64,54 @@ namespace Assignment1
             zip = args[7];
             forSale = StringToBool(args[8]); //Convert.ToBoolean(args[8]); 
 
+            string[] addressStringArr = streetAddr.Split();
+            addressNumer = Convert.ToUInt32(addressStringArr[0]);
+            addressStreetName = addressStringArr[1] + " " + addressStringArr[2];
+
+
+
+
         }
 
         public int CompareTo(Object alpha)
         {
-            //if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
 
-            //Person rightOp = alpha as Person;
 
-            //if (rightOp != null)
-            //    return FullName().CompareTo(rightOp.FullName());
-            //else
-            //    throw new ArgumentNullException("Person object being compared with is NULL");
-            return 0;
+            if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
+
+            Property rightOp = alpha as Property;
+
+
+            if (rightOp != null)
+            {
+                if ( State.CompareTo(rightOp.State) == 0)
+                {
+                    if (City.CompareTo(rightOp.City) == 0)
+                    {
+                        if (AddressStreetName.CompareTo(rightOp.AddressStreetName) == 0)
+                        {
+                            if (AddressNumer.CompareTo(rightOp.AddressNumer) == 0)
+                            {
+                                return 0;
+                            }
+                            else
+                                return AddressNumer.CompareTo(rightOp.AddressNumer);
+                        }
+                        else
+                            return AddressStreetName.CompareTo(rightOp.AddressStreetName);
+
+
+                    }
+                    else
+                        return City.CompareTo(rightOp.City);
+                }
+
+                else 
+                    return State.CompareTo(rightOp.State);
+            }
+            else
+                throw new ArgumentNullException("Person object being compared with is NULL");
+            //return 0;
         }
 
         public uint Id =>id; 
@@ -111,5 +151,20 @@ namespace Assignment1
             set { forSale = value; }
             get { return forSale; }
         }
+
+
+        public uint AddressNumer
+        {
+            set { addressNumer = value; }
+            get { return addressNumer;  }
+        }
+
+        public string AddressStreetName
+        {
+            set { addressStreetName = value; }
+            get { return addressStreetName; }
+        }
+
+
     }
 }
