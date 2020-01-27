@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -120,34 +121,7 @@ namespace Assignment1
 
                             foreach (var item in community.Props)
                             {
-                                Person p = lstPersons?.Where(x => x.Id == item.OwnerID).FirstOrDefault();
-                                Apartment a = lstApartments?.Where(x => x.Id == item.Id).FirstOrDefault();
-                                House h = lstHouses?.Where(x => x.Id == item.Id).FirstOrDefault();
-
-                                Console.Write("Property Address: " + item.StreetAddr + " / " + item.City + " / " + item.State + " / " + item.Zip
-                                              + "\nOwned by " + p.FullName + ", Age(" + GetAge(p.Birthday) + ") Occupation: " + p.Occupation
-                                              + "\n" + (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) "));
-                                if (a != null)
-                                {
-                                    Console.Write(a.Bedrooms + " bedrooms \\ " + a.Baths + " baths \\ " + a.Sqft + " sq.ft. " + "Apt.# " + a.Unit + "\n");
-                                }
-                                else if (h != null)
-                                {
-                                    Console.Write(h.Bedrooms + " bedrooms \\ " + h.Baths + " baths \\ " + h.Sqft + " sq.ft. \n");
-                                    if (h.Garage)
-                                    {
-                                        Console.Write(h.AttachedGarage
-                                            ? "... with an attached garage : "
-                                            : "... with a detached garage : ");
-                                    }
-                                    else
-                                    {
-                                        Console.Write("... with no garage : ");
-                                    }
-                                    Console.Write(h.Floors + (h.Floors == 1 ? " floor" : " floors"));
-                                }
-                                Console.WriteLine("\n");
-                                //todo - need to remove my name
+                                PropertyDetails(item, lstPersons, lstApartments, lstHouses);
                             }
                             break;
 
@@ -230,6 +204,7 @@ namespace Assignment1
                             break;
 
                         case "5":
+                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
                             Console.WriteLine("List of residents living at " + streetAddress + ":\n");
@@ -256,6 +231,7 @@ namespace Assignment1
                             break;
 
                         case "6":
+                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine(); 
 
@@ -276,8 +252,10 @@ namespace Assignment1
                         case "7":
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
+                            
                             foreach (var item in community.Props)
                             {
+                                // TODO finalize requirement if multiple street address found
                                 if (string.Equals(item.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     if (item.ForSale)
@@ -285,15 +263,13 @@ namespace Assignment1
                                         item.ForSale = false;
                                     }
                                     Console.WriteLine(streetAddress);
-                                    Console.WriteLine("Congratulations! You have successfully purchased this property!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Street Address not found."); // todo
+                                    Console.WriteLine("Congratulations! You have successfully purchased this property!\n");
+                                    PropertyDetails(item, lstPersons, lstApartments, lstHouses);
                                 }
                             }
                             break;
                         case "8":
+                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
                             if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
@@ -311,6 +287,7 @@ namespace Assignment1
                             }
                             break;
                         case "9":
+                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
                             if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
@@ -343,6 +320,37 @@ namespace Assignment1
             }
 
             while (true);
+        }
+
+        private static void PropertyDetails(Property item, List<Person> lstPersons, List<Apartment> lstApartments, List<House> lstHouses)
+        {
+            Person p = lstPersons?.Where(x => x.Id == item.OwnerID).FirstOrDefault();
+            Apartment a = lstApartments?.Where(x => x.Id == item.Id).FirstOrDefault();
+            House h = lstHouses?.Where(x => x.Id == item.Id).FirstOrDefault();
+
+            Console.Write("Property Address: " + item.StreetAddr + " / " + item.City + " / " + item.State + " / " + item.Zip
+                          + "\nOwned by " + p.FullName + ", Age(" + GetAge(p.Birthday) + ") Occupation: " + p.Occupation
+                          + "\n" + (item.ForSale ? "(FOR SALE)  " : "(NOT for sale) "));
+            if (a != null)
+            {
+                Console.Write(a.Bedrooms + " bedrooms \\ " + a.Baths + " baths \\ " + a.Sqft + " sq.ft. " + "Apt.# " + a.Unit + "\n");
+            }
+            else if (h != null)
+            {
+                Console.Write(h.Bedrooms + " bedrooms \\ " + h.Baths + " baths \\ " + h.Sqft + " sq.ft. \n");
+                if (h.Garage)
+                {
+                    Console.Write(h.AttachedGarage
+                        ? "... with an attached garage : "
+                        : "... with a detached garage : ");
+                }
+                else
+                {
+                    Console.Write("... with no garage : ");
+                }
+                Console.Write(h.Floors + (h.Floors == 1 ? " floor" : " floors"));
+            }
+            Console.WriteLine("\n");
         }
 
         private static int GetAge(DateTime dateOfBirth)
