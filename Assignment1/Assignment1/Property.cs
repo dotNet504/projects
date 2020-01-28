@@ -13,12 +13,8 @@ namespace Assignment1
         //Attributes of the Property class
         private readonly uint id;
         private uint ownerID;
-        private readonly uint x;
-        private readonly uint y;
-        private string streetAddr;
-        private string city;
-        private string state;
-        private string zip;
+        private readonly uint x, y;
+        private string streetAddr, city , state, zip;
         private bool forSale;
 
         // Attributes used to keep track of 
@@ -29,14 +25,8 @@ namespace Assignment1
         // Default class constructor
         public Property()
         {
-            id = 0;
-            ownerID = 0;
-            x = 0;
-            y = 0;
-            streetAddr = "";
-            city = "";
-            state = "";
-            zip = "";
+            id = ownerID = x = y = 0;
+            streetAddr = city = state =  zip = "";
             forSale = false;
         }
 

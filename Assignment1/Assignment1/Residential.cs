@@ -14,7 +14,7 @@ namespace Assignment1
         private uint baths;
         private uint sqft;
 
-        // Constructor, sets base classa and adds values to attr
+        // Constructor, sets base class and adds values to attr
         // @params: String array
         public Residential(string[] args) : base(args) //modified by Xuezhi, I think this part still has problem
         {

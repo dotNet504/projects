@@ -51,9 +51,7 @@ namespace Assignment1
         public Person()
         {
             id = 0;
-            this.LastName = "";
-            this.FirstName = "";
-            this.Occupation = "";
+            this.LastName = this.FirstName = this.Occupation = "";
             birthday = new DateTime(0, 0, 0);
         }
 
@@ -63,17 +61,7 @@ namespace Assignment1
         // Exception if( birthday is in future && if ID value isn't valid )
         public Person(string[] args)
         {
-            // Swathi - added try catch to handle id exception during convert at output
-            try
-            {
-                uint ID = Convert.ToUInt32(args[0]);
-                id = ID;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            
+            uint ID = Convert.ToUInt32(args[0]);
             LastName = args[1];
             FirstName = args[2];
             Occupation = args[3];
@@ -93,16 +81,14 @@ namespace Assignment1
                 throw new ArgumentNullException("Birthday provided is in the future");
             }
 
-            //if (ID > 99999 || ID < 1)
-            //{
-            //    throw new ArgumentNullException("Invalid ID provided, should be within 1 - 99999");
-            //}
-            //else
-            //{
-            //    id = ID;
-            //}
-
-
+            if (ID > 99999 || ID < 0)
+            {
+                throw new ArgumentNullException("Invalid ID provided, should be within 0 - 99999");
+            }
+            else
+            {
+                id = ID;
+            }
         }
 
         // Property for firstName attr
