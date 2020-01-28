@@ -12,13 +12,6 @@ C:/Users/manpu_000/Spring20/c#/Assignment1/Assignment1/obj/Debug/Assignment1.csp
 C:/Users/manpu_000/Spring20/c#/Assignment1/Assignment1/obj/Debug/Assignment1.csproj.CoreCompileInputs.cache
 C:/Users/manpu_000/Spring20/c#/Assignment1/Assignment1/obj/Debug/Assignment1.exe
 C:/Users/manpu_000/Spring20/c#/Assignment1/Assignment1/obj/Debug/Assignment1.pdb
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/bin/Debug/Assignment1.exe.config
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/bin/Debug/Assignment1.exe
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/bin/Debug/Assignment1.pdb
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/obj/Debug/Assignment1.csprojAssemblyReference.cache
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/obj/Debug/Assignment1.csproj.CoreCompileInputs.cache
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/obj/Debug/Assignment1.exe
-C:/Users/manpu_000/Documents/GitHub/Assignments/Assignment1/Assignment1/obj/Debug/Assignment1.pdb
 /Users/ramchandrareddykatukuri/Documents/Swathi/FourthSemester/DotNet/Assignments/Assign1/Assignment1/Assignment1/bin/Debug/Assignment1.exe.config
 /Users/ramchandrareddykatukuri/Documents/Swathi/FourthSemester/DotNet/Assignments/Assign1/Assignment1/Assignment1/bin/Debug/Assignment1.exe
 /Users/ramchandrareddykatukuri/Documents/Swathi/FourthSemester/DotNet/Assignments/Assign1/Assignment1/Assignment1/bin/Debug/Assignment1.pdb
@@ -35,3 +28,10 @@ C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\bin\Debug\Assignme
 C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
 C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\obj\Debug\Assignment1.exe
 C:\Users\rkatukuri\Desktop\New folder\Assignment1\Assignment1\obj\Debug\Assignment1.pdb
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.csproj.CoreCompileInputs.cache
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.exe
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.pdb
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.exe.config
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.exe
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\bin\Debug\Assignment1.pdb
+C:\Users\manpu_000\Documents\GitHub\Assignments\Assignment1\Assignment1\obj\Debug\Assignment1.csprojAssemblyReference.cache

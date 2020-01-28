@@ -133,8 +133,8 @@ namespace Assignment1
                             switch (inputValue.ToLower())
                             {
                                 case "apartment":
-                                    {
-                                        Console.WriteLine("\nList of addresses of Apartment properties in the Dekalb community.");
+                                    {                                                                               // Abdul => Changed from Hard-Coded value
+                                        Console.WriteLine("\nList of addresses of Apartment properties in the {0} community.", community.Name);
                                         Console.WriteLine("-------------------------------------------------------\n");
                                         foreach (var item in lstApartments)
                                         {
@@ -144,8 +144,8 @@ namespace Assignment1
                                         break;
                                     }
                                 case "house":
-                                    {
-                                        Console.WriteLine("\nList of addresses of House properties in the Dekalb community.");
+                                    {                                                                              // Abdul => Changed from Hard-Coded value
+                                        Console.WriteLine("\nList of addresses of House properties in the {0} community.", community.Name);
                                         Console.WriteLine("-------------------------------------------------------\n");
                                         foreach (var item in lstHouses)
                                         {
@@ -160,8 +160,8 @@ namespace Assignment1
                             }
                             break;
 
-                        case "3":
-                            Console.WriteLine("List of addresses for all FOR SALE properties in the Dekalb community.");
+                        case "3":                                                                   // Abdul => Changed from Hard-Coded value
+                            Console.WriteLine("List of addresses for all FOR SALE properties in the {0} community.", community.Name);
                             Console.WriteLine("-------------------------------------------------------\n");
                             foreach (var item in lstApartments)
                             {
@@ -188,18 +188,15 @@ namespace Assignment1
                             }
                             break;
 
-                        case "4":
-                            //todo - This part need to be re-done with community object
-                            Console.WriteLine("List of residents living in the Dekalb community.");
+                        case "4":                                                  // Abdul => Changed from Hard-Coded value
+                            Console.WriteLine("List of residents living in the {0} community.", community.Name);
                             Console.WriteLine("------------------------------------------------");
 
-                            //todo - for each on community mentioned
-
-                            foreach (var item in lstPersons)
+                            //Abdul => changed to community foreach 
+                            foreach (Person p in community)
                             {
-                                Console.WriteLine(item.FullName + ", " +
-                                    "Age (" + GetAge(item.Birthday) + "), Occupation: " + item.Occupation
-                                    );
+                                Console.WriteLine(p.FullName + ", " +
+                                    "Age (" + GetAge(p.Birthday) + "), Occupation: " + p.Occupation);
                                 Console.WriteLine();
                             }
                             break;

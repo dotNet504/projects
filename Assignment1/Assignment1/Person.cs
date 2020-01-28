@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    //Swathi - made class public due to visibility issue in Community class
+    //Person class, it stores generic info a person could possess  
+    // @implements : IComparable for the "CompareTo" method
     public class Person : IComparable
     {
+        //Attributes of the Person Class 
         private readonly uint id;
         private string firstName;
         private string lastName;
@@ -16,6 +18,10 @@ namespace Assignment1
         private readonly DateTime birthday;
         private List<uint> residenceIds = new List<uint>();
 
+        // Implements CompareTo using FullName,
+        //      property as main sorting criteria
+        // @returns -> int result of comparison
+        // Exception if( Null object found )
         public int CompareTo(Object alpha)
         {
             if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
@@ -28,6 +34,9 @@ namespace Assignment1
                 throw new ArgumentNullException("[Person]: CompareTo argument is not a Person");
         }
 
+        // Override ToString method
+        // Stringifies object in a well, 
+        //     formatted way.
         public override string ToString()
         {
             string ret = String.Format("Id         : {0 , -10 }\n", id);
@@ -38,6 +47,7 @@ namespace Assignment1
             return ret;
         }
 
+        //Default constructor
         public Person()
         {
             id = 0;
@@ -47,6 +57,10 @@ namespace Assignment1
             birthday = new DateTime(0, 0, 0);
         }
 
+        // Alternate constrictor, allows user add defaults
+        // @params: String Array, broken down within the 
+        //          constructor to fill attr values
+        // Exception if( birthday is in future && if ID value isn't valid )
         public Person(string[] args)
         {
             // Swathi - added try catch to handle id exception during convert at output
@@ -91,31 +105,41 @@ namespace Assignment1
 
         }
 
+        // Property for firstName attr
+        // allows: set && get
         public string FirstName
         {
             get => firstName;
             set { firstName = value; }
         }
 
+        // Property for lastName attr
+        // allows: set && get
         public string LastName
         {
             get => lastName;
             set { lastName = value; }
         }
 
+        // Property for occupation attr
+        // allows: set && get
         public string Occupation
         {
             get => occupation; 
             set { occupation = value; }
         }
 
+        //get-only prop for id attr
         public uint Id => id;
 
+        //get-only prop for the residenceID 
         public uint[] ResidenceIds => residenceIds.ToArray();
 
+        //ge-only prop for birthday date obj
         public DateTime Birthday => birthday;
 
-        //get-only property
+        // get-only property for lastName
+        //  and firstName concatenate
         public string FullName => LastName + ", " + FirstName;
 
     }

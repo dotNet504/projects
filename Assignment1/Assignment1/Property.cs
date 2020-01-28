@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    //Swathi - made class public due to visibility issue in Community class
+    //Property class, it stores generic info a property could possess  
+    // @implements : IComparable for the "CompareTo" method
     public class Property : IComparable
     {
+        //Attributes of the Property class
         private readonly uint id;
         private uint ownerID;
         private readonly uint x;
@@ -19,10 +21,12 @@ namespace Assignment1
         private string zip;
         private bool forSale;
 
-        private uint addressNumer;
-        private string addressStreetName;
+        // Attributes used to keep track of 
+        // addNumber and streetName
+        private uint addNumber;
+        private string streetName;
 
-
+        // Default class constructor
         public Property()
         {
             id = 0;
@@ -36,24 +40,18 @@ namespace Assignment1
             forSale = false;
         }
 
+        // Method used to covert string value to bool
+        // @returns : true or false
         public bool StringToBool(string boolString)
         {
-            bool trueorfalse;
-            if (boolString.CompareTo("T") ==0 )
-            {
-                trueorfalse = true;
-            }
-            else
-            {
-                trueorfalse = false;
-            }
-            return trueorfalse;
-
+            return (boolString.CompareTo("T") == 0) ? true : false;
         }
+
+        // Alternate constructor for the class
+        // @params: String Array, broken down within the 
+        //          constructor to fill attr values
         public Property(string[] args)
         {
-  
-  
             id = Convert.ToUInt32(args[0]);
             ownerID = Convert.ToUInt32(args[1]);
             x = Convert.ToUInt32(args[2]);
@@ -62,25 +60,22 @@ namespace Assignment1
             city = args[5]; 
             state = args[6]; 
             zip = args[7];
-            forSale = StringToBool(args[8]); //Convert.ToBoolean(args[8]); 
+            forSale = StringToBool(args[8]); 
 
             string[] addressStringArr = streetAddr.Split();
-            addressNumer = Convert.ToUInt32(addressStringArr[0]);
-            addressStreetName = addressStringArr[1] + " " + addressStringArr[2];
-
-
-
-
+            addNumber = Convert.ToUInt32(addressStringArr[0]);
+            streetName = addressStringArr[1] + " " + addressStringArr[2];
         }
 
+        // implementation of CompareTo method
+        //     comapres first by State,then City,
+        //     then streetName and Address number
+        // Exception if( Null object found )
         public int CompareTo(Object alpha)
         {
-
-
             if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
 
             Property rightOp = alpha as Property;
-
 
             if (rightOp != null)
             {
@@ -88,18 +83,18 @@ namespace Assignment1
                 {
                     if (City.CompareTo(rightOp.City) == 0)
                     {
-                        if (AddressStreetName.CompareTo(rightOp.AddressStreetName) == 0)
+                        if (StreetName.CompareTo(rightOp.StreetName) == 0)
                         {
-                            if (AddressNumer.CompareTo(rightOp.AddressNumer) == 0)
+                            if (AddNumber.CompareTo(rightOp.AddNumber) == 0)
                             {
                                 
                                 return (Id.CompareTo(rightOp.Id));
                             }
                             else
-                                return AddressNumer.CompareTo(rightOp.AddressNumer);
+                                return AddNumber.CompareTo(rightOp.AddNumber);
                         }
                         else
-                            return AddressStreetName.CompareTo(rightOp.AddressStreetName);
+                            return StreetName.CompareTo(rightOp.StreetName);
 
 
                     }
@@ -112,60 +107,79 @@ namespace Assignment1
             }
             else
                 throw new ArgumentNullException("Person object being compared with is NULL");
-            //return 0;
         }
 
-        public uint Id =>id; 
+        //get-only prop for id attr
+        public uint Id =>id;
 
+        // Property for ownerID attr
+        // allows: set && get
         public uint OwnerID
         {
             set { ownerID = value; }
             get => ownerID;
         }
 
+        //get-only prop for x attr
         public uint X => x;
 
+        //get-only prop for y attr
         public uint Y => y;
 
+        // Property for streetAddr attr
+        // allows: set && get
         public string StreetAddr
         {
             set { streetAddr = value; }
             get => streetAddr;
         }
+
+        // Property for city attr
+        // allows: set && get
         public string City
         {
             set { city = value; }
             get => city;
         }
+
+        // Property for state attr
+        // allows: set && get
         public string State
         {
             set { state = value; }
             get => state;
         }
+
+        // Property for zip attr
+        // allows: set && get
         public string Zip
         {
             set { zip = value; }
             get => zip; 
         }
+
+        // Property for forSale attr
+        // allows: set && get
         public bool ForSale
         {
             set { forSale = value; }
             get { return forSale; }
         }
 
-
-        public uint AddressNumer
+        // Property for addNumber attr
+        // allows: set && get
+        public uint AddNumber
         {
-            set { addressNumer = value; }
-            get { return addressNumer;  }
+            set { addNumber = value; }
+            get { return addNumber;  }
         }
 
-        public string AddressStreetName
+        // Property for streetName attr
+        // allows: set && get
+        public string StreetName
         {
-            set { addressStreetName = value; }
-            get { return addressStreetName; }
+            set { streetName = value; }
+            get { return streetName; }
         }
-
-
     }
 }

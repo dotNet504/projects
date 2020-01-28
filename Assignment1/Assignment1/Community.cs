@@ -22,11 +22,12 @@ namespace Assignment1
             name = "";
             mayorID = 0;
         }
-        public Community(List<Person> persons, List<House> houses, List<Apartment> apartments)
+                                                                                        // Abdul => Added defaults (Future HW won't be Dekalb)
+        public Community(List<Person> persons, List<House> houses, List<Apartment> apartments, uint ID = 99999, string nme = "Dekalb", uint myor = 0)
         {
-            id = 99999;
-            name = "Dekalb";
-            mayorID = 0;
+            id = ID;
+            name = nme;
+            mayorID = myor;
             props = new SortedSet<Property>(new PropertyComparer());
             residents = new SortedSet<Person>();
             foreach (var per in persons)
@@ -45,13 +46,56 @@ namespace Assignment1
 
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+        {       //Abdul ==> casted the getEnumerator into an IEnumerator type
+            return (IEnumerator) GetEnumerator();
         }
 
         public CommEnum GetEnumerator()
         {
             return new CommEnum(residents);
+        }
+
+        public class CommEnum : IEnumerator
+        {                   //Abdul => Changes the name from _people to _residents
+            public SortedSet<Person> _residents;
+            int position = -1;
+
+            public CommEnum(SortedSet<Person> list)
+            {
+                _residents = list;
+            }
+            public bool MoveNext()
+            {
+                position++;
+                return (position < _residents.Count);
+            }
+
+            public void Reset()
+            {
+                position = -1;
+            }
+
+            object IEnumerator.Current
+            {
+                get
+                {
+                    return Current;
+                }
+            }
+            public Person Current
+            {
+                get
+                {
+                    try
+                    {
+                        return _residents.ElementAt(position);
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+            }
         }
 
         public int CompareTo(object obj)
@@ -72,49 +116,6 @@ namespace Assignment1
         public int Population => residents.Count;
     }
 
-    public class CommEnum : IEnumerator
-    {
-        public SortedSet<Person> _people;
-        int position = -1;
-
-        public CommEnum(SortedSet<Person> list)
-        {
-            _people = list;
-        }
-        public bool MoveNext()
-        {
-
-            position++;
-            return (position < _people.Count);
-        }
-
-        public void Reset()
-        {
-            position = -1;
-        }
-
-        object IEnumerator.Current
-        {
-            get
-            {
-                return Current;
-            }
-        }
-        public Person Current
-        {
-            get
-            {
-                try
-                {
-                    return _people.ElementAt(position);
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-        }
-    }
     public class PropertyComparer : IComparer<Property>
     {
 
