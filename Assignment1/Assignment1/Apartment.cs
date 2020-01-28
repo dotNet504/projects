@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 1					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Apartment
+ *  Purpose   : Console application that displays the property details of Dekalb Community.				 *
+ *********************************************************************************************************/
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    //Swathi - made class public due to visibility issue in Community class
+    
     public class Apartment : Residential 
     {
         private string unit;

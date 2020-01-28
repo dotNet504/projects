@@ -1,3 +1,15 @@
+/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 1					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Community
+ *  Purpose   : Console application that displays the property details of Dekalb Community.				 *
+ *********************************************************************************************************/
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +17,7 @@ using System.Linq;
 
 namespace Assignment1
 {
+    //Implements Icomparable and IEnumerable interfaces
     public class Community : IComparable, IEnumerable
     {
         private SortedSet<Property> props;
@@ -13,7 +26,7 @@ namespace Assignment1
         private readonly string name;
         private uint mayorID;
 
-
+        //Default constructor with no arguments
         public Community()
         {
             props = new SortedSet<Property>();
@@ -22,7 +35,8 @@ namespace Assignment1
             name = "";
             mayorID = 0;
         }
-                                                                                        // Abdul => Added defaults (Future HW won't be Dekalb)
+
+        //Consturctor with input arguments
         public Community(List<Person> persons, List<House> houses, List<Apartment> apartments, uint ID = 99999, string nme = "Dekalb", uint myor = 0)
         {
             id = ID;
@@ -46,7 +60,7 @@ namespace Assignment1
 
 
         IEnumerator IEnumerable.GetEnumerator()
-        {       //Abdul ==> casted the getEnumerator into an IEnumerator type
+        {   
             return (IEnumerator) GetEnumerator();
         }
 
@@ -56,7 +70,7 @@ namespace Assignment1
         }
 
         public class CommEnum : IEnumerator
-        {                   //Abdul => Changes the name from _people to _residents
+        {                  
             public SortedSet<Person> _residents;
             int position = -1;
 
@@ -103,29 +117,32 @@ namespace Assignment1
             //todo
             throw new NotImplementedException();
         }
+
+        //Getter and setter methods for the attributes
         public uint Id => id;
         public SortedSet<Person> Residents { get { return residents; } set { residents = value; } }
         public SortedSet<Property> Props { get { return props; } set { props = value; } }
 
         public string Name => name;
+
         public uint MayorID
         {
             set { mayorID = value; }
             get { return mayorID; }
         }
+
+        //Calculating the population using count of residents
         public int Population => residents.Count;
     }
 
+    //Method to compare the Properties sorted set
     public class PropertyComparer : IComparer<Property>
     {
 
         public int Compare(Property x, Property y)
         {
             return x.CompareTo(y);
-            //return x.Id.CompareTo(y.Id);
         }
-
-
 
     }
 }
