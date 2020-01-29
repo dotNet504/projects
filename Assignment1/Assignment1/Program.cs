@@ -14,9 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment1
 {
@@ -24,7 +21,7 @@ namespace Assignment1
     {
         static void Main(string[] args)
         {
-            
+
             //Reading input files.
             string[] persons = File.ReadAllLines(@"../../InputFiles/p.txt");
             string[] houses = File.ReadAllLines(@"../../InputFiles/r.txt");
@@ -74,7 +71,7 @@ namespace Assignment1
                 Console.WriteLine("9.Remove yourself as an occupant from a property");
                 Console.WriteLine("10.Quit");
                 Console.WriteLine("\n");
-                
+
                 try
                 {
                     string streetAddress = "";
@@ -103,7 +100,7 @@ namespace Assignment1
                             switch (inputValue.ToLower())
                             {
                                 case "apartment":
-                                    {                                                                              
+                                    {
                                         Console.WriteLine("\nList of addresses of Apartment properties in the {0} community.", community.Name);
                                         Console.WriteLine("-------------------------------------------------------\n");
                                         foreach (var item in lstApartments)
@@ -114,7 +111,7 @@ namespace Assignment1
                                         break;
                                     }
                                 case "house":
-                                    {                                                                             
+                                    {
                                         Console.WriteLine("\nList of addresses of House properties in the {0} community.", community.Name);
                                         Console.WriteLine("-------------------------------------------------------\n");
                                         foreach (var item in lstHouses)
@@ -130,7 +127,7 @@ namespace Assignment1
                             }
                             break;
 
-                        case "3":                                                                   
+                        case "3":
                             Console.WriteLine("List of addresses for all FOR SALE properties in the {0} community.", community.Name);
                             Console.WriteLine("-------------------------------------------------------\n");
                             foreach (var item in lstApartments)
@@ -158,7 +155,7 @@ namespace Assignment1
                             }
                             break;
 
-                        case "4":                                                  
+                        case "4":
                             Console.WriteLine("List of residents living in the {0} community.", community.Name);
                             Console.WriteLine("------------------------------------------------");
 
@@ -201,7 +198,7 @@ namespace Assignment1
                         case "6":
                             // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
-                            streetAddress = Console.ReadLine(); 
+                            streetAddress = Console.ReadLine();
 
                             Property prop = community.Props
                                 .FirstOrDefault(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase));
@@ -221,7 +218,7 @@ namespace Assignment1
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
                             bool addressFound = false;
-                            
+
                             foreach (var item in community.Props)
                             {
                                 // TODO finalize requirement if multiple street address found
@@ -243,42 +240,62 @@ namespace Assignment1
                                 Console.WriteLine("Address not found!");
                             }
                             break;
+
                         case "8":
-                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
-                            if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
+                            List<Property> lstp = community.Props.Where(x => streetAddress != null && x.StreetAddr.ToLower().Contains(streetAddress.ToLower())).ToList();
+
+                            if (lstp.Count > 0)
                             {
-                                Console.WriteLine(streetAddress);
-                                Console.WriteLine("You are already a resident at this property!");
+                                if (lstp.All(x => x.OwnerID == community.MayorID))
+                                {
+                                    Console.WriteLine("You are already a resident at this property!");
+                                }
+                                else
+                                {
+                                    foreach (var p in lstp)
+                                    {
+                                        p.OwnerID = community.MayorID;
+                                    }
+                                    Console.WriteLine("Success! You have been added as a resident at this property.");
+                                }
                             }
                             else
                             {
-                                // todo add other properties
-                                Property p = new Property { StreetAddr = streetAddress };
-                                community.Props.Add(p);
-                                Console.WriteLine(streetAddress);
-                                Console.WriteLine("Success! You have been added as a resident at this property!");
+                                Console.WriteLine("Street Address not found.");
                             }
                             break;
+
                         case "9":
-                            // TODO finalize requirement if multiple street address found
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
-                            if (community.Props.Any(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)))
-                            {
-                                Console.WriteLine(streetAddress);
-                            string streetAdd = Console.ReadLine(); //"518 Oak Ave"; // 
+                            List<Property> lstpr = community.Props.Where(x => streetAddress != null && x.StreetAddr.ToLower().Contains(streetAddress.ToLower())).ToList();
 
-                                Console.WriteLine("You are already a resident at this property!");
+                            if (lstpr.Count > 0)
+                            {
+                                if (lstpr.Any(x => x.OwnerID == community.MayorID))
+                                {
+                                    foreach (var p in lstpr)
+                                    {
+                                        p.OwnerID = 1; // assigning to someone else
+                                    }
+                                    // use below code in case you want to remove property completely from the list,
+                                    // in doing so cannot use this property in other cases unless refresh the list from the file
+                                    //foreach (var p in lstpr)
+                                    //{
+                                    //    lstpr.Remove(p);
+                                    //}
+                                    Console.WriteLine("Success! You have been removed as a resident at this property.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("You do not currently reside at this property.");
+                                }
                             }
                             else
                             {
-                                // todo add other properties
-                                Property p = new Property { StreetAddr = streetAddress };
-                                community.Props.Add(p);
-                                Console.WriteLine(streetAddress);
-                                Console.WriteLine("Success! You have been added as a resident at this property!");
+                                Console.WriteLine("I'm sorry, i don't recognize this address: '" + streetAddress + "'.");
                             }
                             break;
 
@@ -315,7 +332,7 @@ namespace Assignment1
             {
                 Console.Write(h.Bedrooms + " bedrooms \\ " + h.Baths + " baths \\ " + h.Sqft + " sq.ft. \n");
 
-                if (h.AttachedGarage == true) 
+                if (h.AttachedGarage == true)
                 {
                     Console.Write("... with an attached garage : ");
                 }
@@ -327,17 +344,17 @@ namespace Assignment1
                 {
                     Console.Write("... with no garage : ");
                 }
-                    /*if (h.Garage)
-                    {
-                        Console.Write(h.AttachedGarage
-                            ? "... with an attached garage : "
-                            : "... with a detached garage : ");
-                    }
-                    else
-                    {
-                        Console.Write("... with no garage : ");
-                    }*/
-                    Console.Write(h.Floors + (h.Floors == 1 ? " floor." : " floors."));
+                /*if (h.Garage)
+                {
+                    Console.Write(h.AttachedGarage
+                        ? "... with an attached garage : "
+                        : "... with a detached garage : ");
+                }
+                else
+                {
+                    Console.Write("... with no garage : ");
+                }*/
+                Console.Write(h.Floors + (h.Floors == 1 ? " floor." : " floors."));
             }
             Console.WriteLine("\n");
         }
