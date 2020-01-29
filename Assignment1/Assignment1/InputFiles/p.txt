@@ -1,4 +1,4 @@
-﻿0	Konatham	Swathi	Student	2020	1	1	60148
+﻿0	Konatham	Swathi	Student	1993	1	1	60148
 1	Skywalker	Lilth	Vault Hunter	1990	4	1	31289
 10	Skywalker	Brick	Vault Hunter	1984	6	16	42865
 11	Skywalker	Maya	Vault Hunter	1991	1	15	56824
