@@ -19,21 +19,31 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    
+    //Apartment class, it stores info a apartment could possess  
+    //Apartment class is the son of Residential class 
     public class Apartment : Residential 
     {
         private string unit;
 
-
+        // Property for unit attr
+        // allows: set && get
         public string Unit
         {
             set { unit = value; }
             get { return unit; }
         }
+
+        // constructor for the Apartment class
+        // @params: String Array, broken down within the 
+        //          constructor to fill attr values
+        // Other fields are filled in its base class
         public Apartment(string[] args) : base(args)
         {
             unit = args[12];
         }
+        // Tostring method for the Apartment class
+        // The purpose of the ToString is to output some fields 
+        //         and to test whether house class het all the fields
         public override string ToString()
         {
             string ret = String.Format("Id         : {0 , -10 }\n", Id);
