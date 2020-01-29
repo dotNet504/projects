@@ -314,17 +314,30 @@ namespace Assignment1
             else if (h != null)
             {
                 Console.Write(h.Bedrooms + " bedrooms \\ " + h.Baths + " baths \\ " + h.Sqft + " sq.ft. \n");
-                if (h.Garage)
+
+                if (h.AttachedGarage == true) 
                 {
-                    Console.Write(h.AttachedGarage
-                        ? "... with an attached garage : "
-                        : "... with a detached garage : ");
+                    Console.Write("... with an attached garage : ");
+                }
+                else if (h.AttachedGarage == false)
+                {
+                    Console.Write("... with a detached garage : ");
                 }
                 else
                 {
                     Console.Write("... with no garage : ");
                 }
-                Console.Write(h.Floors + (h.Floors == 1 ? " floor." : " floors."));
+                    /*if (h.Garage)
+                    {
+                        Console.Write(h.AttachedGarage
+                            ? "... with an attached garage : "
+                            : "... with a detached garage : ");
+                    }
+                    else
+                    {
+                        Console.Write("... with no garage : ");
+                    }*/
+                    Console.Write(h.Floors + (h.Floors == 1 ? " floor." : " floors."));
             }
             Console.WriteLine("\n");
         }

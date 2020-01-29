@@ -23,7 +23,7 @@ namespace Assignment1
     public class House : Residential
     {
         private bool garage;
-        private bool attachedGarage;
+        private bool? attachedGarage;
         private uint floors;
 
 
@@ -33,7 +33,7 @@ namespace Assignment1
             get { return garage; }
         }
 
-        public bool AttachedGarage
+        public bool? AttachedGarage
         {
             set { attachedGarage = value; }
             get { return attachedGarage; }
@@ -45,20 +45,16 @@ namespace Assignment1
             get { return floors; }
         }
 
-        /*
-         * unique ID | ownerID | x | y | streetAddr | city | state | zip |
-         * forSale | bedrooms | baths | sqft | garage | attachedGarage | floors
-         */
-        /*
-         * 98213	0	250	250	6000 Mayor St.	DeKalb	Illinois	
-         * 60115	F	3	2	5000	T	T	2
-        */
+
  
         public House(string[] args):base(args)
         {
            
             garage = base.StringToBool(args[12]); //Convert.ToBoolean(args[12]);
-            attachedGarage = base.StringToBool(args[13]);//Convert.ToBoolean(args[13]);
+            if (garage == false)
+                attachedGarage = null;
+            else
+                attachedGarage = base.StringToBool(args[13]);//Convert.ToBoolean(args[13]);
             floors = Convert.ToUInt32(args[14]);
 
 
