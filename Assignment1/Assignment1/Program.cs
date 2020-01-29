@@ -48,6 +48,7 @@ namespace Assignment1
                 House h = new House(items);
                 lstHouses.Add(h);
             }
+            lstHouses.Sort(new PropertyComparer());
 
             foreach (var item in apartments)
             {
@@ -55,6 +56,8 @@ namespace Assignment1
                 Apartment a = new Apartment(items);
                 lstApartments.Add(a);
             }
+            lstApartments.Sort(new PropertyComparer());
+
             Community community = new Community(lstPersons, lstHouses, lstApartments);
 
             do

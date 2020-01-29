@@ -141,7 +141,9 @@ namespace Assignment1
 
         public int Compare(Property x, Property y)
         {
+            
             return x.CompareTo(y);
+
         }
 
     }

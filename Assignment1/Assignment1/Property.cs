@@ -72,10 +72,11 @@ namespace Assignment1
         // implementation of CompareTo method
         //     comapres first by State,then City,
         //     then streetName and Address number
+        //     then apartment unit
         // Exception if( Null object found )
         public int CompareTo(Object alpha)
         {
-            if (alpha == null) throw new ArgumentNullException("Person object being compared with is NULL");
+            if (alpha == null) throw new ArgumentNullException("Property object being compared with is NULL");
 
             Property rightOp = alpha as Property;
 
@@ -89,8 +90,16 @@ namespace Assignment1
                         {
                             if (AddNumber.CompareTo(rightOp.AddNumber) == 0)
                             {
-                                
-                                return (Id.CompareTo(rightOp.Id));
+                                if (rightOp is Apartment)
+                                { 
+                                    Apartment rightObject = (Apartment)rightOp;
+                                    Apartment thisObject = (Apartment)this;
+                                    return (thisObject.Unit.CompareTo(rightObject.Unit));
+                                }
+                                else
+                                {
+                                    throw new ArgumentNullException("Error:the address of house has beed inputted");
+                                }
                             }
                             else
                                 return AddNumber.CompareTo(rightOp.AddNumber);
@@ -108,7 +117,7 @@ namespace Assignment1
                     return State.CompareTo(rightOp.State);
             }
             else
-                throw new ArgumentNullException("Person object being compared with is NULL");
+                throw new ArgumentNullException("Property object being compared with is NULL");
         }
 
         //get-only prop for id attr
