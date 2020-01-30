@@ -226,7 +226,7 @@ namespace Assignment1
                         case "8":
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
-                            prop = community.Props.Where(x => streetAddress != null && x.StreetAddr.ToLower().Contains(streetAddress.ToLower())).ToList();
+                            prop = community.Props.Where(x => streetAddress != null && (x.StreetAddr.ToLower()==streetAddress.ToLower())).ToList();
 
                             if (prop.Count > 0)
                             {
@@ -252,7 +252,7 @@ namespace Assignment1
                         case "9":
                             Console.WriteLine("Enter the street address to lookup:");
                             streetAddress = Console.ReadLine();
-                            prop = community.Props.Where(x => streetAddress != null && x.StreetAddr.ToLower().Contains(streetAddress.ToLower())).ToList();
+                            prop = community.Props.Where(x => streetAddress != null && (x.StreetAddr.ToLower()==streetAddress.ToLower())).ToList();
 
                             if (prop.Count > 0)
                             {
