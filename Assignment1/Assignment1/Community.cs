@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Assignment1
+namespace ASX_Assign1
 {
     //Implements Icomparable and IEnumerable interfaces
     public class Community : IComparable, IEnumerable
@@ -69,6 +69,7 @@ namespace Assignment1
             return new CommEnum(residents);
         }
 
+        //Implementation of CommEnum class
         public class CommEnum : IEnumerator
         {                  
             public SortedSet<Person> _residents;
@@ -112,6 +113,7 @@ namespace Assignment1
             }
         }
 
+        //Overriding CompareTo method
         public int CompareTo(object obj)
         {
             //todo

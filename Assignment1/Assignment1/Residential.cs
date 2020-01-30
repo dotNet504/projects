@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment1
+namespace ASX_Assign1
 {
     // Residential class; derived from the Property class
     // @Base class: Property Class

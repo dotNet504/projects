@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Assignment1
+namespace ASX_Assign1
 {
     class Menu
     {
@@ -146,8 +146,8 @@ namespace Assignment1
                             break;
 
                         case "4":
-                            Console.WriteLine("List of residents living in the {0} community.", community.Name);
-                            Console.WriteLine("------------------------------------------------");
+                            Console.WriteLine("List of all residents living in the {0} community.", community.Name);
+                            Console.WriteLine("------------------------------------------------\n");
 
                             //Abdul => changed to community foreach 
                             foreach (Person p in community)
@@ -160,14 +160,14 @@ namespace Assignment1
 
                         case "5":
                             Console.WriteLine("Enter the street address to lookup:");
-                            streetAddress = Console.ReadLine();
-                            Console.WriteLine("List of residents living at " + streetAddress + ":\n");
-                            Console.WriteLine("------------------------------------------------");
+                            streetAddress = Console.ReadLine();                           
 
                             prop = community.Props
                                 .Where(x => string.Equals(x.StreetAddr, streetAddress, StringComparison.CurrentCultureIgnoreCase)).ToList();
                             if (prop.Count > 0)
                             {
+                                Console.WriteLine("List of residents living at " + streetAddress);
+                                Console.WriteLine("------------------------------------------------:\n");
                                 foreach (var pr in prop)
                                 {
                                     Person p = lstPersons.FirstOrDefault(x => x.Id == pr.OwnerID);
@@ -232,7 +232,7 @@ namespace Assignment1
                             {
                                 if (prop.All(x => x.OwnerID == community.MayorID))
                                 {
-                                    Console.WriteLine("You are already a resident at this property!");
+                                    Console.WriteLine("You are already a resident at this property.");
                                 }
                                 else
                                 {
@@ -260,15 +260,10 @@ namespace Assignment1
                                 {
                                     foreach (var p in prop)
                                     {
-                                        p.OwnerID = 1; // assigning to someone else
+                                        p.OwnerID = 1;
                                     }
-                                    // use below code in case you want to remove property completely from the list,
-                                    // in doing so cannot use this property in other cases unless refresh the list from the file
-                                    //foreach (var p in lstpr)
-                                    //{
-                                    //    lstpr.Remove(p);
-                                    //}
-                                    Console.WriteLine("Success! You have been removed as a resident at this property.");
+                                    
+                                    Console.WriteLine("Success! You have been removed as a resident from this property.");
                                 }
                                 else
                                 {
@@ -277,14 +272,14 @@ namespace Assignment1
                             }
                             else
                             {
-                                Console.WriteLine("I'm sorry, i don't recognize this address: '" + streetAddress + "'.");
+                                Console.WriteLine("I'm sorry, I don't recognize this address: '" + streetAddress + "'.");
                             }
                             break;
                         case "10":
                             return;
 
                         default:
-                            Console.WriteLine("Invalid input. Choose input value from 1 to 10");// todo
+                            Console.WriteLine("Invalid input. Choose input value from 1 to 10");
                             break;
                     }
                 }

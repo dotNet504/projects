@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment1
+namespace ASX_Assign1
 {
     //Property class, it stores generic info a property could possess  
     // @implements : IComparable for the "CompareTo" method

@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment1
+namespace ASX_Assign1
 {
     //Apartment class, it stores info a apartment could possess  
     //Apartment class is the son of Residential class 
