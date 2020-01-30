@@ -280,6 +280,8 @@ namespace Assignment1
                                 Console.WriteLine("I'm sorry, i don't recognize this address: '" + streetAddress + "'.");
                             }
                             break;
+                        case "10":
+                            return;
 
                         default:
                             Console.WriteLine("Invalid input. Choose input value from 1 to 10");// todo
