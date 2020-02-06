@@ -37,7 +37,7 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.radioButton1.Location = new System.Drawing.Point(100, 57);
-            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Name = "dekalbRadioButton";
             this.radioButton1.Padding = new System.Windows.Forms.Padding(5);
             this.radioButton1.Size = new System.Drawing.Size(130, 43);
             this.radioButton1.TabIndex = 0;
@@ -51,7 +51,7 @@
             this.radioButton2.AutoSize = true;
             this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.radioButton2.Location = new System.Drawing.Point(100, 107);
-            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Name = "sycamoreRadioButton";
             this.radioButton2.Padding = new System.Windows.Forms.Padding(5);
             this.radioButton2.Size = new System.Drawing.Size(162, 43);
             this.radioButton2.TabIndex = 1;
