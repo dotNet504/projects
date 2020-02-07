@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLoader;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,12 @@ namespace ASX_Assign2
 {
     public partial class Form1 : Form
     {
+        private BusinessLayer _businessLayer;
         public Form1()
         {
             InitializeComponent();
+            _businessLayer = new BusinessLayer();
+            // Create method in Business Layer and use in this form for future re-usability
         }
 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
