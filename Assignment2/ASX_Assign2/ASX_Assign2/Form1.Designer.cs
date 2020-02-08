@@ -109,6 +109,7 @@
             this.personListBox.Name = "personListBox";
             this.personListBox.Size = new System.Drawing.Size(420, 629);
             this.personListBox.TabIndex = 9;
+            this.personListBox.SelectedIndexChanged += new System.EventHandler(this.personSelectionChanged);
             // 
             // residenceListBox
             // 

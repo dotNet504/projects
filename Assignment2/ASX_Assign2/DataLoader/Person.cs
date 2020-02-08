@@ -17,6 +17,7 @@ namespace DataLoader
         private string occupation;
         private readonly DateTime birthday;
         private List<uint> residenceIds = new List<uint>();
+        private uint newResidenceId;
 
         // Implements CompareTo using FullName,
         //      property as main sorting criteria
@@ -69,6 +70,11 @@ namespace DataLoader
             int month = Convert.ToInt32(args[5]);
             int day = Convert.ToInt32(args[6]);
             residenceIds.Add(Convert.ToUInt32(args[7]));
+            if(args.Length == 9)
+            {
+                newResidenceId = Convert.ToUInt32(args[8]);
+            }
+                
 
             DateTime birth = new DateTime(year, month, day);
 
@@ -127,6 +133,9 @@ namespace DataLoader
         // get-only property for lastName
         //  and firstName concatenate
         public string FullName => LastName + ", " + FirstName;
+
+        //get-only prop for the new residenceID 
+        public uint NewResidenceId => newResidenceId;
 
     }
 }
