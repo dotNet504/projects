@@ -29,8 +29,8 @@ namespace ASX_Assign2
             dekalbPersons = _businessLayer.lstDekalbPersons;
             dekalbHouses = _businessLayer.lstDekalbHouses;
             dekalbApartments = _businessLayer.lstDekalbApartments;
-            //Button dekalbButton = (Button)sender;
-            displayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments);
+            RadioButton dekalbButton = (RadioButton)sender;
+            displayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments,"Dekalb");
 
         }
 
@@ -43,10 +43,11 @@ namespace ASX_Assign2
             sycamoreHouses = _businessLayer.lstSycamoreHouses;
             sycamoreApartments = _businessLayer.lstSycamoreApartments;
             //Button dekalbButton = (Button)sender;
-            displayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments);
+            displayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments, "Sycamore");
         }
 
-        private void displayCommunityResults(List<Person> personList, List<House> housesList, List<Apartment> apartmentsList)
+        private void displayCommunityResults(List<Person> personList, List<House> housesList, 
+                                            List<Apartment> apartmentsList, String selButton)
         {
             //Sorting of persons - pending
             personListBox.Items.Clear();
@@ -72,11 +73,19 @@ namespace ASX_Assign2
                 residenceListBox.Items.Add(String.Format("   {0}  # {1}",
                     details.StreetAddr, details.Unit));
             }
+            outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            //this.Text = "URL Opener";
 
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel();
+            flowPanel.AutoSize = true;
+            flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(flowPanel);
         }
     }
 }

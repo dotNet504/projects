@@ -28,70 +28,72 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.dekalbRadioButton = new System.Windows.Forms.RadioButton();
+            this.sycamoreRadioButton = new System.Windows.Forms.RadioButton();
+            this.personLabel = new System.Windows.Forms.Label();
+            this.residenceLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.personListBox = new System.Windows.Forms.ListBox();
             this.residenceListBox = new System.Windows.Forms.ListBox();
+            this.outputRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.outputLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // radioButton1
+            // dekalbRadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.radioButton1.Location = new System.Drawing.Point(22, 46);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Padding = new System.Windows.Forms.Padding(5);
-            this.radioButton1.Size = new System.Drawing.Size(134, 44);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Dekalb";
-            this.radioButton1.UseVisualStyleBackColor = false;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.DekalbButton_CheckedChanged);
+            this.dekalbRadioButton.AutoSize = true;
+            this.dekalbRadioButton.BackColor = System.Drawing.SystemColors.Control;
+            this.dekalbRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.dekalbRadioButton.Location = new System.Drawing.Point(22, 46);
+            this.dekalbRadioButton.Name = "dekalbRadioButton";
+            this.dekalbRadioButton.Padding = new System.Windows.Forms.Padding(5);
+            this.dekalbRadioButton.Size = new System.Drawing.Size(134, 44);
+            this.dekalbRadioButton.TabIndex = 0;
+            this.dekalbRadioButton.TabStop = true;
+            this.dekalbRadioButton.Text = "Dekalb";
+            this.dekalbRadioButton.UseVisualStyleBackColor = false;
+            this.dekalbRadioButton.CheckedChanged += new System.EventHandler(this.DekalbButton_CheckedChanged);
             // 
-            // radioButton2
+            // sycamoreRadioButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.BackColor = System.Drawing.SystemColors.Control;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.radioButton2.Location = new System.Drawing.Point(22, 96);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Padding = new System.Windows.Forms.Padding(5);
-            this.radioButton2.Size = new System.Drawing.Size(170, 44);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Sycamore";
-            this.radioButton2.UseVisualStyleBackColor = false;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.SycamoreButton_CheckedChanged);
+            this.sycamoreRadioButton.AutoSize = true;
+            this.sycamoreRadioButton.BackColor = System.Drawing.SystemColors.Control;
+            this.sycamoreRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.sycamoreRadioButton.Location = new System.Drawing.Point(22, 96);
+            this.sycamoreRadioButton.Name = "sycamoreRadioButton";
+            this.sycamoreRadioButton.Padding = new System.Windows.Forms.Padding(5);
+            this.sycamoreRadioButton.Size = new System.Drawing.Size(170, 44);
+            this.sycamoreRadioButton.TabIndex = 1;
+            this.sycamoreRadioButton.TabStop = true;
+            this.sycamoreRadioButton.Text = "Sycamore";
+            this.sycamoreRadioButton.UseVisualStyleBackColor = false;
+            this.sycamoreRadioButton.CheckedChanged += new System.EventHandler(this.SycamoreButton_CheckedChanged);
             // 
-            // label1
+            // personLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(599, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(106, 31);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Person";
+            this.personLabel.AutoSize = true;
+            this.personLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
+            this.personLabel.Location = new System.Drawing.Point(599, 25);
+            this.personLabel.Name = "personLabel";
+            this.personLabel.Size = new System.Drawing.Size(106, 31);
+            this.personLabel.TabIndex = 5;
+            this.personLabel.Text = "Person";
             // 
-            // label2
+            // residenceLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(1055, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(360, 31);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Residence (* == For Sale )";
+            this.residenceLabel.AutoSize = true;
+            this.residenceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
+            this.residenceLabel.Location = new System.Drawing.Point(1055, 25);
+            this.residenceLabel.Name = "residenceLabel";
+            this.residenceLabel.Size = new System.Drawing.Size(360, 31);
+            this.residenceLabel.TabIndex = 6;
+            this.residenceLabel.Text = "Residence (* == For Sale )";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Controls.Add(this.radioButton2);
+            this.groupBox1.Controls.Add(this.dekalbRadioButton);
+            this.groupBox1.Controls.Add(this.sycamoreRadioButton);
             this.groupBox1.Location = new System.Drawing.Point(40, 48);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(333, 183);
@@ -105,7 +107,7 @@
             this.personListBox.ItemHeight = 25;
             this.personListBox.Location = new System.Drawing.Point(598, 80);
             this.personListBox.Name = "personListBox";
-            this.personListBox.Size = new System.Drawing.Size(328, 629);
+            this.personListBox.Size = new System.Drawing.Size(420, 629);
             this.personListBox.TabIndex = 9;
             // 
             // residenceListBox
@@ -114,19 +116,39 @@
             this.residenceListBox.ItemHeight = 25;
             this.residenceListBox.Location = new System.Drawing.Point(1066, 80);
             this.residenceListBox.Name = "residenceListBox";
-            this.residenceListBox.Size = new System.Drawing.Size(333, 629);
+            this.residenceListBox.Size = new System.Drawing.Size(428, 629);
             this.residenceListBox.TabIndex = 10;
+            // 
+            // outputRichTextBox
+            // 
+            this.outputRichTextBox.Location = new System.Drawing.Point(62, 844);
+            this.outputRichTextBox.Name = "outputRichTextBox";
+            this.outputRichTextBox.Size = new System.Drawing.Size(1423, 178);
+            this.outputRichTextBox.TabIndex = 11;
+            this.outputRichTextBox.Text = "";
+            // 
+            // outputLabel
+            // 
+            this.outputLabel.AutoSize = true;
+            this.outputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
+            this.outputLabel.Location = new System.Drawing.Point(68, 795);
+            this.outputLabel.Name = "outputLabel";
+            this.outputLabel.Size = new System.Drawing.Size(102, 31);
+            this.outputLabel.TabIndex = 12;
+            this.outputLabel.Text = "Output";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1561, 737);
+            this.ClientSize = new System.Drawing.Size(1561, 1171);
+            this.Controls.Add(this.outputLabel);
+            this.Controls.Add(this.outputRichTextBox);
             this.Controls.Add(this.residenceListBox);
             this.Controls.Add(this.personListBox);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.residenceLabel);
+            this.Controls.Add(this.personLabel);
             this.Name = "Form1";
             this.Text = "ASX\' Real Estate Management Application";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -139,13 +161,15 @@
 
         #endregion
 
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RadioButton dekalbRadioButton;
+        private System.Windows.Forms.RadioButton sycamoreRadioButton;
+        private System.Windows.Forms.Label personLabel;
+        private System.Windows.Forms.Label residenceLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox personListBox;
         private System.Windows.Forms.ListBox residenceListBox;
+        private System.Windows.Forms.RichTextBox outputRichTextBox;
+        private System.Windows.Forms.Label outputLabel;
     }
 }
 
