@@ -48,10 +48,12 @@ namespace ASX_Assign2
 
         private void displayCommunityResults(List<Person> personList, List<House> housesList, List<Apartment> apartmentsList)
         {
+            //Sorting of persons - pending
             personListBox.Items.Clear();
+            //personListBox.ColumnWidth = 100;
             foreach (Person details in personList)
             {
-                personListBox.Items.Add(String.Format("{0}      {1}     {2}",
+                personListBox.Items.Add(String.Format("{0} \t{1}  {2}",
                     details.FirstName, BusinessLayer.GetAge(details.Birthday), details.Occupation));
             }
             residenceListBox.Items.Clear();

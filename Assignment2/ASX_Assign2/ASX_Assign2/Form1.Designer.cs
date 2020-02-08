@@ -82,7 +82,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(883, 25);
+            this.label2.Location = new System.Drawing.Point(1055, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(360, 31);
             this.label2.TabIndex = 6;
@@ -105,23 +105,23 @@
             this.personListBox.ItemHeight = 25;
             this.personListBox.Location = new System.Drawing.Point(598, 80);
             this.personListBox.Name = "personListBox";
-            this.personListBox.Size = new System.Drawing.Size(272, 629);
+            this.personListBox.Size = new System.Drawing.Size(328, 629);
             this.personListBox.TabIndex = 9;
             // 
             // residenceListBox
             // 
             this.residenceListBox.FormattingEnabled = true;
             this.residenceListBox.ItemHeight = 25;
-            this.residenceListBox.Location = new System.Drawing.Point(898, 80);
+            this.residenceListBox.Location = new System.Drawing.Point(1066, 80);
             this.residenceListBox.Name = "residenceListBox";
-            this.residenceListBox.Size = new System.Drawing.Size(356, 629);
+            this.residenceListBox.Size = new System.Drawing.Size(333, 629);
             this.residenceListBox.TabIndex = 10;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1343, 737);
+            this.ClientSize = new System.Drawing.Size(1561, 737);
             this.Controls.Add(this.residenceListBox);
             this.Controls.Add(this.personListBox);
             this.Controls.Add(this.groupBox1);
