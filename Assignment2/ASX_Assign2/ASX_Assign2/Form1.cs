@@ -108,10 +108,9 @@ namespace ASX_Assign2
                         
                     }
                     
-                }
-                outputRichTextBox.Text += "\n\n### END OUTPUT ###";
+                }                
             }
-            
+            outputRichTextBox.Text += "\n\n### END OUTPUT ###";
         }
 
         private void Form1_Load(object sender, EventArgs e)
