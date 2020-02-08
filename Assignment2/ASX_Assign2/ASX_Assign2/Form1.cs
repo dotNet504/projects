@@ -23,12 +23,53 @@ namespace ASX_Assign2
 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
         {
+            List<Person> dekalbPersons = new List<Person>();
+            List<House> dekalbHouses = new List<House>();
+            List<Apartment> dekalbApartments = new List<Apartment>();
+            dekalbPersons = _businessLayer.lstDekalbPersons;
+            dekalbHouses = _businessLayer.lstDekalbHouses;
+            dekalbApartments = _businessLayer.lstDekalbApartments;
+            //Button dekalbButton = (Button)sender;
+            displayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments);
 
         }
 
         private void SycamoreButton_CheckedChanged(object sender, EventArgs e)
         {
+            List<Person> sycamorePersons = new List<Person>();
+            List<House> sycamoreHouses = new List<House>();
+            List<Apartment> sycamoreApartments = new List<Apartment>();
+            sycamorePersons = _businessLayer.lstSycamorePersons;
+            sycamoreHouses = _businessLayer.lstSycamoreHouses;
+            sycamoreApartments = _businessLayer.lstSycamoreApartments;
+            //Button dekalbButton = (Button)sender;
+            displayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments);
+        }
 
+        private void displayCommunityResults(List<Person> personList, List<House> housesList, List<Apartment> apartmentsList)
+        {
+            personListBox.Items.Clear();
+            foreach (Person details in personList)
+            {
+                personListBox.Items.Add(String.Format("{0}      {1}     {2}",
+                    details.FirstName, BusinessLayer.GetAge(details.Birthday), details.Occupation));
+            }
+            residenceListBox.Items.Clear();
+            residenceListBox.Items.Add("Houses:");
+            residenceListBox.Items.Add("------------");
+            foreach (House details in housesList)
+            {
+                residenceListBox.Items.Add(String.Format("   {0}",
+                    details.StreetAddr));
+            }
+            residenceListBox.Items.Add("");
+            residenceListBox.Items.Add("Apartments:");
+            residenceListBox.Items.Add("------------");
+            foreach (Apartment details in apartmentsList)
+            {
+                residenceListBox.Items.Add(String.Format("   {0}  # {1}",
+                    details.StreetAddr, details.Unit));
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)

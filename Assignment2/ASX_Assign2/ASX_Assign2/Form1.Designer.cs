@@ -30,11 +30,11 @@
         {
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.personListRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.personListBox = new System.Windows.Forms.ListBox();
+            this.residenceListBox = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,22 +68,6 @@
             this.radioButton2.UseVisualStyleBackColor = false;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.SycamoreButton_CheckedChanged);
             // 
-            // personListRichTextBox
-            // 
-            this.personListRichTextBox.Location = new System.Drawing.Point(599, 66);
-            this.personListRichTextBox.Name = "personListRichTextBox";
-            this.personListRichTextBox.Size = new System.Drawing.Size(259, 577);
-            this.personListRichTextBox.TabIndex = 2;
-            this.personListRichTextBox.Text = "";
-            // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(883, 66);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(259, 577);
-            this.richTextBox2.TabIndex = 3;
-            this.richTextBox2.Text = "";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -115,16 +99,34 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Communities";
             // 
+            // personListBox
+            // 
+            this.personListBox.FormattingEnabled = true;
+            this.personListBox.ItemHeight = 25;
+            this.personListBox.Location = new System.Drawing.Point(598, 80);
+            this.personListBox.Name = "personListBox";
+            this.personListBox.Size = new System.Drawing.Size(272, 629);
+            this.personListBox.TabIndex = 9;
+            // 
+            // residenceListBox
+            // 
+            this.residenceListBox.FormattingEnabled = true;
+            this.residenceListBox.ItemHeight = 25;
+            this.residenceListBox.Location = new System.Drawing.Point(898, 80);
+            this.residenceListBox.Name = "residenceListBox";
+            this.residenceListBox.Size = new System.Drawing.Size(356, 629);
+            this.residenceListBox.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1343, 737);
+            this.Controls.Add(this.residenceListBox);
+            this.Controls.Add(this.personListBox);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.richTextBox2);
-            this.Controls.Add(this.personListRichTextBox);
             this.Name = "Form1";
             this.Text = "ASX\' Real Estate Management Application";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -139,11 +141,11 @@
 
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RichTextBox personListRichTextBox;
-        private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ListBox personListBox;
+        private System.Windows.Forms.ListBox residenceListBox;
     }
 }
 
