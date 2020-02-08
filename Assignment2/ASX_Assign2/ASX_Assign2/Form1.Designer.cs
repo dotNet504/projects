@@ -50,7 +50,6 @@
             this.dekalbRadioButton.Padding = new System.Windows.Forms.Padding(5);
             this.dekalbRadioButton.Size = new System.Drawing.Size(134, 44);
             this.dekalbRadioButton.TabIndex = 0;
-            this.dekalbRadioButton.TabStop = true;
             this.dekalbRadioButton.Text = "Dekalb";
             this.dekalbRadioButton.UseVisualStyleBackColor = false;
             this.dekalbRadioButton.CheckedChanged += new System.EventHandler(this.DekalbButton_CheckedChanged);
@@ -65,7 +64,6 @@
             this.sycamoreRadioButton.Padding = new System.Windows.Forms.Padding(5);
             this.sycamoreRadioButton.Size = new System.Drawing.Size(170, 44);
             this.sycamoreRadioButton.TabIndex = 1;
-            this.sycamoreRadioButton.TabStop = true;
             this.sycamoreRadioButton.Text = "Sycamore";
             this.sycamoreRadioButton.UseVisualStyleBackColor = false;
             this.sycamoreRadioButton.CheckedChanged += new System.EventHandler(this.SycamoreButton_CheckedChanged);
@@ -119,9 +117,12 @@
             this.residenceListBox.Name = "residenceListBox";
             this.residenceListBox.Size = new System.Drawing.Size(428, 629);
             this.residenceListBox.TabIndex = 10;
+            this.residenceListBox.SelectedIndexChanged += new System.EventHandler(this.residenceSelectionChanged);
             // 
             // outputRichTextBox
             // 
+            this.outputRichTextBox.Font = new System.Drawing.Font("Arial", 9.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputRichTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.outputRichTextBox.Location = new System.Drawing.Point(62, 844);
             this.outputRichTextBox.Name = "outputRichTextBox";
             this.outputRichTextBox.Size = new System.Drawing.Size(1423, 178);

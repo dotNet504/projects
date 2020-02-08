@@ -33,27 +33,26 @@ namespace ASX_Assign2
             sycamoreHouses = new List<House>();
             sycamoreApartments = new List<Apartment>();
             CommunitiesList = _businessLayer.Communities;
+            dekalbPersons = _businessLayer.lstDekalbPersons;
+            sycamorePersons = _businessLayer.lstSycamorePersons;
+            outputRichTextBox.Text = "There are " + dekalbPersons.Count() + " people living in Dekalb.\n";
+            outputRichTextBox.Text += "There are " + sycamorePersons.Count() + " people living in Sycamore.";
             // Create method in Business Layer and use in this form for future re-usability
         }
 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
-        {
-            
-            dekalbPersons = _businessLayer.lstDekalbPersons;
+        {           
             dekalbHouses = _businessLayer.lstDekalbHouses;
             dekalbApartments = _businessLayer.lstDekalbApartments;
-            RadioButton dekalbButton = (RadioButton)sender;
+            //RadioButton dekalbButton = (RadioButton)sender;
             DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments,"Dekalb");
 
         }
 
         private void SycamoreButton_CheckedChanged(object sender, EventArgs e)
-        {
-            
-            sycamorePersons = _businessLayer.lstSycamorePersons;
+        {     
             sycamoreHouses = _businessLayer.lstSycamoreHouses;
             sycamoreApartments = _businessLayer.lstSycamoreApartments;
-            //Button dekalbButton = (Button)sender;
             DisplayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments, "Sycamore");
         }
 
@@ -72,7 +71,7 @@ namespace ASX_Assign2
             residenceListBox.Items.Add("------------");
             foreach (House details in housesList)
             {
-                residenceListBox.Items.Add(String.Format("   {0}",
+                residenceListBox.Items.Add(String.Format("{0}",
                     details.StreetAddr));
             }
             residenceListBox.Items.Add("");
@@ -80,7 +79,7 @@ namespace ASX_Assign2
             residenceListBox.Items.Add("------------");
             foreach (Apartment details in apartmentsList)
             {
-                residenceListBox.Items.Add(String.Format("   {0}  # {1}",
+                residenceListBox.Items.Add(String.Format("{0}  # {1}",
                     details.StreetAddr, details.Unit));
             }
             outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
@@ -98,6 +97,7 @@ namespace ASX_Assign2
                 {
                     outputRichTextBox.Text = resident[0].FullName + ", Age(" + BusinessLayer.GetAge(resident[0].Birthday)
                                                 + "), Occupation: " + resident[0].Occupation + ", who resides at:";
+                    //sort the addresses here
                     prop = item.Props.Where(x => (resident[0].ResidenceIds.Contains(x.Id) || x.OwnerID == resident[0].Id)).ToList();
                     if(prop.Count > 0)
                     {                        
@@ -113,9 +113,53 @@ namespace ASX_Assign2
             outputRichTextBox.Text += "\n\n### END OUTPUT ###";
         }
 
+        private void residenceSelectionChanged(object sender, EventArgs e)
+        {
+            string communityVal;
+            string selResidence = residenceListBox.GetItemText(residenceListBox.SelectedItem);
+            List<Property> prop;
+            List<Person> resident;
+            foreach (var item in CommunitiesList)
+            {
+                if (selResidence.Contains("#")) {
+                    prop = item.Props.Where(
+                        x => (string.Equals(x.StreetAddr,selResidence.Split('#')[0], StringComparison.CurrentCultureIgnoreCase) 
+                         )).ToList();
+                }
+                else
+                {
+                    //Not sure why this is not working..
+                    prop = item.Props.ToList();
+                    //.Where(x => (x.StreetName.Contains("515 Oak Ave."))).ToList();
+                    //.Where(x => (x.StreetAddr.Contains(selResidence))).ToList();
+                }
+                if (dekalbRadioButton.Checked)
+                    communityVal = "Dekalb";
+                else
+                    communityVal = "Sycamore";
+
+                outputRichTextBox.Text = prop[0].StreetName;
+                resident = item.Residents.Where(x => x.Id == prop[0].OwnerID).ToList();
+                if (resident.Count > 0)
+                {
+                    outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                                + ", owned by " + resident[0].FullName + ":";
+                    outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                    foreach (var res in resident)
+                    {
+                        outputRichTextBox.Text += String.Format("{0} \t{1}  {2}",
+                                                    res.FirstName,
+                                                    BusinessLayer.GetAge(res.Birthday),
+                                                    res.Occupation);
+                    }
+                }
+            }
+            outputRichTextBox.Text += "\n\n### END OUTPUT ###";
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Logic to autosizing the output window
+            //Logic to autosize the output window
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
@@ -123,6 +167,8 @@ namespace ASX_Assign2
             flowPanel.AutoSize = true;
             flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.Controls.Add(flowPanel);
+            
         }
+       
     }
 }
