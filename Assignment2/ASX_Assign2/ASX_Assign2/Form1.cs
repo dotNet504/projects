@@ -98,7 +98,7 @@ namespace ASX_Assign2
                 {
                     outputRichTextBox.Text = resident[0].FullName + ", Age(" + BusinessLayer.GetAge(resident[0].Birthday)
                                                 + "), Occupation: " + resident[0].Occupation + ", who resides at:";
-                    prop = item.Props.Where(x => (x.Id == resident[0].NewResidenceId || x.OwnerID == resident[0].Id)).ToList();
+                    prop = item.Props.Where(x => (resident[0].ResidenceIds.Contains(x.Id) || x.OwnerID == resident[0].Id)).ToList();
                     if(prop.Count > 0)
                     {                        
                         foreach (var p in prop)
@@ -110,20 +110,8 @@ namespace ASX_Assign2
                     
                 }
                 outputRichTextBox.Text += "\n\n### END OUTPUT ###";
-
-
-
             }
             
-            //foreach (Person details in dekalbPersons)
-            //{                
-            //    if (string.Equals(details.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase))
-            //    {
-            //        outputRichTextBox.Text = details.FullName + ", Age(" + BusinessLayer.GetAge(details.Birthday)
-            //                                + "), Occupation: " + details.Occupation + ", who resides at:\n"
-            //                                +"";
-            //    }
-            //}
         }
 
         private void Form1_Load(object sender, EventArgs e)
