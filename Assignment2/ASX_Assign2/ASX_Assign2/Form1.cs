@@ -169,6 +169,5 @@ namespace ASX_Assign2
             this.Controls.Add(flowPanel);
             
         }
-       
     }
 }
