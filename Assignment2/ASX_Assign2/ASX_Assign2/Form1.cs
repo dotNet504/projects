@@ -21,6 +21,9 @@ namespace ASX_Assign2
         private List<House> sycamoreHouses;
         private List<Apartment> sycamoreApartments;
         private List<Community> CommunitiesList;
+        private const string houseVal = "Houses:";
+        private const string hyphen = "---------------------------";
+        private const string apartmentVal = "Apartments:";
 
         public Form1()
         {
@@ -67,19 +70,19 @@ namespace ASX_Assign2
                     details.FirstName, BusinessLayer.GetAge(details.Birthday), details.Occupation));
             }
             residenceListBox.Items.Clear();
-            residenceListBox.Items.Add("Houses:");
-            residenceListBox.Items.Add("------------");
+            residenceListBox.Items.Add(houseVal);
+            residenceListBox.Items.Add(hyphen);
             foreach (House details in housesList)
             {
                 residenceListBox.Items.Add(String.Format("{0}",
                     details.StreetAddr));
             }
             residenceListBox.Items.Add("");
-            residenceListBox.Items.Add("Apartments:");
-            residenceListBox.Items.Add("------------");
+            residenceListBox.Items.Add(apartmentVal);
+            residenceListBox.Items.Add(hyphen);
             foreach (Apartment details in apartmentsList)
             {
-                residenceListBox.Items.Add(String.Format("{0}  # {1}",
+                residenceListBox.Items.Add(String.Format("{0}\t# {1}",
                     details.StreetAddr, details.Unit));
             }
             outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
@@ -90,71 +93,89 @@ namespace ASX_Assign2
             string selPerson = personListBox.GetItemText(personListBox.SelectedItem);
             List<Property> prop;
             List<Person> resident;
-            foreach (var item in CommunitiesList)
+            if(selPerson != null && selPerson != "")
             {
-                resident = item.Residents.Where(x => string.Equals(x.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase)).ToList();
-                if (resident.Count > 0)
+                foreach (var item in CommunitiesList)
                 {
-                    outputRichTextBox.Text = resident[0].FullName + ", Age(" + BusinessLayer.GetAge(resident[0].Birthday)
-                                                + "), Occupation: " + resident[0].Occupation + ", who resides at:";
-                    //sort the addresses here
-                    prop = item.Props.Where(x => (resident[0].ResidenceIds.Contains(x.Id) || x.OwnerID == resident[0].Id)).ToList();
-                    if(prop.Count > 0)
-                    {                        
-                        foreach (var p in prop)
+                    resident = item.Residents.Where(x => string.Equals(x.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase)).ToList();
+                    if (resident.Count > 0)
+                    {
+                        outputRichTextBox.Text = resident[0].FullName + ", Age(" + BusinessLayer.GetAge(resident[0].Birthday)
+                                                    + "), Occupation: " + resident[0].Occupation + ", who resides at:";
+                        //sort the addresses here
+                        prop = item.Props.Where(x => (resident[0].ResidenceIds.Contains(x.Id) || x.OwnerID == resident[0].Id)).ToList();
+                        if (prop.Count > 0)
                         {
-                            outputRichTextBox.Text += "\n\t" + p.StreetAddr;
+                            foreach (var p in prop)
+                            {
+                                outputRichTextBox.Text += "\n\t" + p.StreetAddr;
+                            }
+
                         }
-                        
+
                     }
-                    
-                }                
-            }
-            outputRichTextBox.Text += "\n\n### END OUTPUT ###";
+                }
+                outputRichTextBox.Text += "\n\n### END OUTPUT ###";
+            }           
         }
 
         private void residenceSelectionChanged(object sender, EventArgs e)
         {
             string communityVal;
             string selResidence = residenceListBox.GetItemText(residenceListBox.SelectedItem);
-            List<Property> prop;
-            List<Person> resident;
-            foreach (var item in CommunitiesList)
+            if (dekalbRadioButton.Checked)
+                communityVal = "Dekalb";
+            else
+                communityVal = "Sycamore";
+            if (selResidence != null && selResidence != "" && selResidence != houseVal && 
+                selResidence != hyphen && selResidence != apartmentVal)
             {
-                if (selResidence.Contains("#")) {
-                    prop = item.Props.Where(
-                        x => (string.Equals(x.StreetAddr,selResidence.Split('#')[0], StringComparison.CurrentCultureIgnoreCase) 
-                         )).ToList();
-                }
-                else
+                List<Property> prop;
+                List<Person> resident;
+                foreach (var item in CommunitiesList)
                 {
-                    //Not sure why this is not working..
-                    prop = item.Props.ToList();
-                    //.Where(x => (x.StreetName.Contains("515 Oak Ave."))).ToList();
-                    //.Where(x => (x.StreetAddr.Contains(selResidence))).ToList();
+                    if (item.Name == communityVal)
+                    {                        
+                        if (selResidence.Contains("#"))
+                        {                            
+                            prop = item.Props.Where(
+                                x => ((string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
+                                StringComparison.CurrentCultureIgnoreCase)
+                                 ))).ToList();
+                            
+                        }
+                        else
+                        {
+                            prop = item.Props
+                            .Where(x => x.StreetAddr.ToLower().Equals(selResidence.ToLower())).ToList();
+                        }
+                        if(prop.Count > 0) { 
+                            resident = item.Residents
+                                .Where(x => (x.Id == prop[0].OwnerID || x.ResidenceIds.Contains(prop[0].Id))).ToList();
+                            
+                            if (resident.Count > 0)
+                            {
+                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                                            + ", owned by " + resident[0].FullName + ":";
+                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                foreach (var res in resident)
+                                {
+                                    //Apartment Logic pending..
+                                    //var aptResident = dekalbApartments.Where
+                                    //    (x => (x.Unit == selResidence.Split('#')[1] && x.OwnerID == res.Id)).ToList();
+                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
+                                                                res.FullName,
+                                                                BusinessLayer.GetAge(res.Birthday),
+                                                                res.Occupation) + "\n";
+                                   
+                                }
+                            }
+                        }
+                    }                    
                 }
-                if (dekalbRadioButton.Checked)
-                    communityVal = "Dekalb";
-                else
-                    communityVal = "Sycamore";
-
-                outputRichTextBox.Text = prop[0].StreetName;
-                resident = item.Residents.Where(x => x.Id == prop[0].OwnerID).ToList();
-                if (resident.Count > 0)
-                {
-                    outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
-                                                + ", owned by " + resident[0].FullName + ":";
-                    outputRichTextBox.Text += "\n------------------------------------------------------------\n";
-                    foreach (var res in resident)
-                    {
-                        outputRichTextBox.Text += String.Format("{0} \t{1}  {2}",
-                                                    res.FirstName,
-                                                    BusinessLayer.GetAge(res.Birthday),
-                                                    res.Occupation);
-                    }
-                }
+                outputRichTextBox.Text += "\n### END OUTPUT ###";
             }
-            outputRichTextBox.Text += "\n\n### END OUTPUT ###";
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
