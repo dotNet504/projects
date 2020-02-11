@@ -81,8 +81,8 @@ namespace ASX_Assign2
             foreach (House details in housesList)
             {
                 //add houses to the residenceListBox --> Abdul
-                residenceListBox.Items.Add(String.Format("{0}",
-                    details.StreetAddr));
+                residenceListBox.Items.Add(String.Format("{0} {1}",
+                    details.StreetAddr, (details.ForSale ? "*" : "")));
 
                 //add houses to the residenceComboBox --> Abdul
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
@@ -99,8 +99,8 @@ namespace ASX_Assign2
             foreach (Apartment details in apartmentsList)
             {
                 //add apartments to the residenceListBox
-                residenceListBox.Items.Add(String.Format("{0}\t# {1}",
-                    details.StreetAddr, details.Unit));
+                residenceListBox.Items.Add(String.Format("{0}\t# {1} {2}",
+                    details.StreetAddr, details.Unit, (details.ForSale ? "*" : "")));
 
                 //add apartments to the residenceComboBox --> Abdul
                 residenceComboBox.Items.Add(String.Format("{0}\t# {1}", details.StreetAddr,
