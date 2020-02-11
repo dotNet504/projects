@@ -50,14 +50,14 @@ namespace ASX_Assign2
             //RadioButton dekalbButton = (RadioButton)sender;
             DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments, "Dekalb");
 
-        }
+        }// end of DekalbButton_CheckedChanged
 
         private void SycamoreButton_CheckedChanged(object sender, EventArgs e)
         {
             sycamoreHouses = _businessLayer.lstSycamoreHouses;
             sycamoreApartments = _businessLayer.lstSycamoreApartments;
             DisplayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments, "Sycamore");
-        }
+        }// end of SycamoreButton_CheckedChanged
 
         private void DisplayCommunityResults(List<Person> personList, List<House> housesList,
                                             List<Apartment> apartmentsList, String selButton)
@@ -69,24 +69,47 @@ namespace ASX_Assign2
                 personListBox.Items.Add(String.Format("{0} \t{1}  {2}",
                     details.FirstName, BusinessLayer.GetAge(details.Birthday), details.Occupation));
             }
+            //Add data to the residenceListBox
             residenceListBox.Items.Clear();
             residenceListBox.Items.Add(houseVal);
             residenceListBox.Items.Add(hyphen);
+
+            //add house-data to the residenceComboBox --> Abdul
+            residenceComboBox.Items.Clear();
+            residenceComboBox.Items.Add(houseVal);
+            residenceComboBox.Items.Add(hyphen);
+
             foreach (House details in housesList)
             {
+                //add houses to the residenceListBox
                 residenceListBox.Items.Add(String.Format("{0}",
                     details.StreetAddr));
+
+                //add houses to the residenceComboBox --> Abdul
+                residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
             }
+            // Add apartment-data to the residenceListBox
             residenceListBox.Items.Add("");
             residenceListBox.Items.Add(apartmentVal);
             residenceListBox.Items.Add(hyphen);
+
+            // Add apartment-data to the residenceComboBox --> Abdul
+            residenceComboBox.Items.Add("");
+            residenceComboBox.Items.Add(apartmentVal);
+            residenceComboBox.Items.Add(hyphen);
+
             foreach (Apartment details in apartmentsList)
             {
+                //add apartments to the residenceListBox
                 residenceListBox.Items.Add(String.Format("{0}\t# {1}",
                     details.StreetAddr, details.Unit));
+
+                //add apartments to the residenceComboBox --> Abdul
+                residenceComboBox.Items.Add(String.Format("{0}\t# {1}",details.StreetAddr,
+                    details.Unit));
             }
             outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
-        }
+        }// end of DisplayCommunityResults
 
         private void personSelectionChanged(object sender, EventArgs e)
         {
@@ -117,7 +140,14 @@ namespace ASX_Assign2
                 }
                 outputRichTextBox.Text += "\n\n### END OUTPUT ###";
             }
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        }// end of personSelectionChanged
+=======
+>>>>>>> Stashed changes
         }
+>>>>>>> 6b190648a635b8c30ba9bf50e84506555cbd409a
 
         private void residenceSelectionChanged(object sender, EventArgs e)
         {
@@ -205,7 +235,14 @@ namespace ASX_Assign2
                 outputRichTextBox.Text += "\n### END OUTPUT ###";
             }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        }// end of residenceSelectionChanged
+=======
+>>>>>>> Stashed changes
         }
+>>>>>>> 6b190648a635b8c30ba9bf50e84506555cbd409a
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -218,11 +255,138 @@ namespace ASX_Assign2
             flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.Controls.Add(flowPanel);
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        }// end of Form1_Load
+
+        private void addNewResidentButton_Click(object sender, EventArgs e)
+        {
+            string newName = nameTextBox.Text;
+            string newOccu = occupationTextBox.Text;
+            DateTime newBday = bdayDateTimePicker.Value;
+            string newResChoice = residenceComboBox.Text;
+            string newFirst, newLast;
+            bool nameError, bdayError, occuError, resError; // Error messages flags
+            nameError = bdayError = occuError = resError = false;
+            newFirst = newLast = "";
+
+            //validate all above properties
+            if ((newName.Length != 0) && newName.Contains(' '))
+            {
+                string[] fullName = newName.Split(' ');
+                if (fullName.Length == 2)
+                {
+                    newFirst = fullName[0];
+                    newLast = fullName[1];
+                }
+                else
+                {
+                    //error message
+                    nameError = true;
+                    outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                         "First-Name space then Last-Name e.g John Doe";
+                }
+            }
+            else
+            {
+                //error message
+                nameError = true;
+                outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                    "First-Name space then Last-Name e.g John Doe";
+            }
+
+            //Validation of names 
+            if(newFirst.Length < 1 ||newLast.Length < 1)
+            {
+                //error message
+                nameError = true;
+                outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                    "First-Name space then Last-Name e.g John Doe";
+            }
+
+            //validate newBday is not in the future
+            if ((newBday > DateTime.Now) && !nameError)
+            {
+                //error message
+                bdayError = true;
+                outputRichTextBox.Text = "ERROR: Choose a valid birthday (You don't live in the future)";
+            }
+
+            //Occupation length isn't empty
+            if(!(newOccu.Length > 0) && !nameError && !bdayError)
+            {
+                //error message
+                occuError = true;
+                outputRichTextBox.Text = "ERROR: Please enter a valid Occupation " +
+                    "(Enter \"none\" if in-between jobs)";
+            }
+
+            //Validate residence choice
+            if (!nameError && !bdayError && !nameError && !occuError) {
+                if (!(newResChoice.Length > 0) || (newResChoice == hyphen)
+                    || (newResChoice == apartmentVal) || (newResChoice == houseVal))
+                {
+                    //error message
+                    resError = true;
+                    outputRichTextBox.Text = "ERROR: You have chosen an invalid residence choice!";
+                }
+                else if(false) //check (newResChoice is not address in the community list)
+                {
+                    //error message
+                    resError = true;
+                    outputRichTextBox.Text = "ERROR: You have chosen an invalid residence choice!";
+                }
+                else
+                {
+                    //add resident to the person list
+                    outputRichTextBox.Text = "Success! " + newFirst + " has been added as" +
+                        "a resident to "; //+community
+                    nameTextBox.Clear();
+                    occupationTextBox.Clear();
+                    residenceComboBox.ResetText();
+                    bdayDateTimePicker.ResetText();
+
+                }
+            }
+        } // end of addNewResidentButton_Click
+
+        private void addProptButton_Click(object sender, EventArgs e)
+        {
+            string newStrAddr = streetAddrTextBox.Text;
+            decimal newSqFt = sqFtUpDown.Value;
+            decimal newBedrm = bedrmUpDown.Value;
+            decimal newFlr = 0;
+            bool hasGarage = false;
+            bool garageAttached = false;
+            string newApt = aptNoTextBox.Text; //try casting to int
+
+
+            if(newApt.Length != 0)
+            {
+                newFlr = floorsUpDown.Value;
+                if (garageCheckBox.Checked)
+                {
+                    hasGarage = true;
+                    // if attached is checked
+                }
+            }
+
+        } // end of addProptButton_Click
+
+        private void aptNoTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //Disable garage and floors for apt(!empty).
+            //Enable garage and floors for apt(empty).
+        }// end of aptNoTextBox_TextChanged
+=======
+>>>>>>> Stashed changes
         }
         public override string ToString()
         {
             //todo
             return base.ToString();
         }
+>>>>>>> 6b190648a635b8c30ba9bf50e84506555cbd409a
     }
 }
