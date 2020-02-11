@@ -123,7 +123,15 @@ namespace DataLoader
         public uint Id => id;
 
         //get-only prop for the residenceID 
-        public uint[] ResidenceIds => residenceIds.ToArray();
+        //public uint[] ResidenceIds => residenceIds.ToArray();
+        public List<uint> ResidenceIds
+        {
+            get
+            {
+                return residenceIds;
+            }
+            set { residenceIds = value; }
+        }
 
         //ge-only prop for birthday date obj
         public DateTime Birthday => birthday;
