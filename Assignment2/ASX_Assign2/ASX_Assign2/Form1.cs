@@ -364,5 +364,10 @@ namespace ASX_Assign2
                 }
             }
         }
+
+        private void bathUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
