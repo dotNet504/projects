@@ -572,7 +572,7 @@ namespace ASX_Assign2
                         p_temp.ForSale = !p_temp.ForSale;
                         //MessageBox.Show("this is for sale:( Nice!");
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString()+"*";
-                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*') + " is not sale now.";
+                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*') + " is for sale now.";
                     }
                     //MessageBox.Show(prop_forToggle.Count.ToString());
 
