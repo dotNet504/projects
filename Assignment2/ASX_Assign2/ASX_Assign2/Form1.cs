@@ -44,22 +44,22 @@ namespace ASX_Assign2
         }
 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
-        {           
+        {
             dekalbHouses = _businessLayer.lstDekalbHouses;
             dekalbApartments = _businessLayer.lstDekalbApartments;
             //RadioButton dekalbButton = (RadioButton)sender;
-            DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments,"Dekalb");
+            DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments, "Dekalb");
 
         }
 
         private void SycamoreButton_CheckedChanged(object sender, EventArgs e)
-        {     
+        {
             sycamoreHouses = _businessLayer.lstSycamoreHouses;
             sycamoreApartments = _businessLayer.lstSycamoreApartments;
             DisplayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments, "Sycamore");
         }
 
-        private void DisplayCommunityResults(List<Person> personList, List<House> housesList, 
+        private void DisplayCommunityResults(List<Person> personList, List<House> housesList,
                                             List<Apartment> apartmentsList, String selButton)
         {
             //Sorting of persons - pending
@@ -93,7 +93,7 @@ namespace ASX_Assign2
             string selPerson = personListBox.GetItemText(personListBox.SelectedItem);
             List<Property> prop;
             List<Person> resident;
-            if(selPerson != null && selPerson != "")
+            if (selPerson != null && selPerson != "")
             {
                 foreach (var item in CommunitiesList)
                 {
@@ -116,7 +116,7 @@ namespace ASX_Assign2
                     }
                 }
                 outputRichTextBox.Text += "\n\n### END OUTPUT ###";
-            }           
+            }
         }
 
         private void residenceSelectionChanged(object sender, EventArgs e)
@@ -127,22 +127,34 @@ namespace ASX_Assign2
                 communityVal = "Dekalb";
             else
                 communityVal = "Sycamore";
-            if (selResidence != null && selResidence != "" && selResidence != houseVal && 
+            if (selResidence != null && selResidence != "" && selResidence != houseVal &&
                 selResidence != hyphen && selResidence != apartmentVal)
             {
-                List<Property> prop;
-                List<Person> resident;
+                List<Person> resident = new List<Person>();
+                List<Property> prop = new List<Property>();              
+
                 foreach (var item in CommunitiesList)
                 {
-                    if (item.Name == communityVal)
-                    {                        
+                    if (item.Name.ToString() == communityVal)
+                    {
+                        List<Apartment> lstApt = new List<Apartment>();
                         if (selResidence.Contains("#"))
-                        {                            
-                            prop = item.Props.Where(
-                                x => ((string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
-                                StringComparison.CurrentCultureIgnoreCase)
-                                 ))).ToList();
-                            
+                        {  
+                            if (communityVal == "Dekalb")
+                            {
+                                lstApt = dekalbApartments.Where
+                                        (x => ((x.Unit == selResidence.Split('#')[1].Trim() &&
+                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
+                                StringComparison.CurrentCultureIgnoreCase))))).ToList();
+                            }
+                            else
+                            {                                
+                                lstApt = sycamoreApartments.Where
+                                        (x => ((x.Unit == selResidence.Split('#')[1].Trim() &&
+                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
+                                StringComparison.CurrentCultureIgnoreCase))))).ToList();
+                            }
+
                         }
                         else
                         {
@@ -160,9 +172,6 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    //Apartment Logic pending..
-                                    //var aptResident = dekalbApartments.Where
-                                    //    (x => (x.Unit == selResidence.Split('#')[1] && x.OwnerID == res.Id)).ToList();
                                     outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday),
@@ -171,11 +180,31 @@ namespace ASX_Assign2
                                 }
                             }
                         }
+                        if(lstApt.Count > 0)
+                        {
+                            resident = item.Residents
+                                .Where(x => (x.Id == lstApt[0].OwnerID || x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
+
+                            if (resident.Count > 0)
+                            {
+                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                                            + ", owned by " + resident[0].FullName + ":";
+                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                foreach (var res in resident)
+                                {                                   
+                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
+                                                                res.FullName,
+                                                                BusinessLayer.GetAge(res.Birthday),
+                                                                res.Occupation) + "\n";
+
+                                }
+                            }
+                        }
                     }                    
                 }
                 outputRichTextBox.Text += "\n### END OUTPUT ###";
             }
-           
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -188,7 +217,12 @@ namespace ASX_Assign2
             flowPanel.AutoSize = true;
             flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.Controls.Add(flowPanel);
-            
+
+        }
+        public override string ToString()
+        {
+            //todo
+            return base.ToString();
         }
     }
 }
