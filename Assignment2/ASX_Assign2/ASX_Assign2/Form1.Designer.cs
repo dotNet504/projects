@@ -146,19 +146,21 @@
             // 
             this.personListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.personListBox.FormattingEnabled = true;
+            this.personListBox.IntegralHeight = false;
             this.personListBox.ItemHeight = 30;
             this.personListBox.Location = new System.Drawing.Point(914, 89);
             this.personListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personListBox.Name = "personListBox";
-            this.personListBox.Size = new System.Drawing.Size(350, 844);
+            this.personListBox.Size = new System.Drawing.Size(350, 854);
             this.personListBox.TabIndex = 9;
             this.personListBox.SelectedIndexChanged += new System.EventHandler(this.personSelectionChanged);
             // 
             // residenceListBox
             // 
             this.residenceListBox.FormattingEnabled = true;
+            this.residenceListBox.IntegralHeight = false;
             this.residenceListBox.ItemHeight = 25;
-            this.residenceListBox.Location = new System.Drawing.Point(1290, 81);
+            this.residenceListBox.Location = new System.Drawing.Point(1290, 89);
             this.residenceListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.residenceListBox.Name = "residenceListBox";
             this.residenceListBox.Size = new System.Drawing.Size(488, 854);
@@ -277,6 +279,7 @@
             // 
             // bdayDateTimePicker
             // 
+            this.bdayDateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bdayDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bdayDateTimePicker.Location = new System.Drawing.Point(9, 281);
             this.bdayDateTimePicker.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
