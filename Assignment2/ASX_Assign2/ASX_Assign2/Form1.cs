@@ -143,7 +143,7 @@ namespace ASX_Assign2
         private void residenceSelectionChanged(object sender, EventArgs e)
         {
             string communityVal;
-            string selResidence = residenceListBox.GetItemText(residenceListBox.SelectedItem);
+            string selResidence = residenceListBox.GetItemText(residenceListBox.SelectedItem).TrimEnd(' ','*');
             if (dekalbRadioButton.Checked)
                 communityVal = "Dekalb";
             else
@@ -498,29 +498,29 @@ namespace ASX_Assign2
         private void ToggleForSale_click(object sender, EventArgs e)
         {
             List<Property> prop_forToggle = null;
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+            if (residenceListBox.SelectedIndex != -1)
+            {            
+                string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+                string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
 
-
-
-
-            foreach (var item in CommunitiesList)
-            {
-                if (item.Name == "Dekalb")
+                foreach (var item in CommunitiesList)
                 {
-                    prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    if (item.Name == "Dekalb")
+                    {
+                        prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    }
+
+
                 }
-
-
-            }
-            if (prop_forToggle.Count > 0)
-            {
-                foreach (var p_temp in prop_forToggle)
+                if (prop_forToggle.Count > 0)
                 {
-                    p_temp.ForSale = !p_temp.ForSale;
-                    MessageBox.Show(p_temp.ForSale.ToString());
+                    foreach (var p_temp in prop_forToggle)
+                    {
+                        p_temp.ForSale = !p_temp.ForSale;
+                        MessageBox.Show(p_temp.ForSale.ToString());
+                    }
+                    //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
                 }
-                //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
             }
         }
     }
