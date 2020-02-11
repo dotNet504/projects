@@ -369,5 +369,159 @@ namespace ASX_Assign2
         {
 
         }
+
+        private void RemoveResident_click(object sender, EventArgs e)
+        {
+            List<Property> propRemoveResident_lst = null;
+            List<Person> personRemoveResident_lst = null;
+            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
+            string personBuyerFirstName = personStringArr[0];
+            string personBuyerAge = personStringArr[2];
+            string personBuyerOccupation = personStringArr[3];
+
+
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    personRemoveResident_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
+                }
+
+            }
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    propRemoveResident_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                }
+            }
+            if ((propRemoveResident_lst.Count == 1) && (personRemoveResident_lst.Count == 1))
+            {
+                foreach (var p_temp in personRemoveResident_lst)
+                {
+                    p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);
+                }
+
+            }
+        }
+
+        private void AddResident_click(object sender, EventArgs e)
+        {
+            List<Property> propAddResident_lst = null;
+            List<Person> personAddResident_lst = null;
+            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
+            string personBuyerFirstName = personStringArr[0];
+            string personBuyerAge = personStringArr[2];
+            string personBuyerOccupation = personStringArr[3];
+
+
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    personAddResident_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
+                }
+
+            }
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    propAddResident_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                }
+            }
+            if ((propAddResident_lst.Count == 1) && (personAddResident_lst.Count == 1))
+            {
+                foreach (var p_temp in personAddResident_lst)
+                {
+                    p_temp.ResidenceIds.Add(propAddResident_lst[0].Id);
+                    //test msg box
+                    for (int i = 0; i < p_temp.ResidenceIds.ToArray().Count(); i++)
+                        MessageBox.Show(p_temp.ResidenceIds.ToArray()[i].ToString());
+
+                }
+
+            }
+        }
+
+        private void BuyProperty_click(object sender, EventArgs e)
+        {
+            List<Property> propBuyProperty_lst = null;
+            List<Person> personBuyProperty_lst = null;
+            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
+            string personBuyerFirstName = personStringArr[0];
+            string personBuyerAge = personStringArr[2];
+            string personBuyerOccupation = personStringArr[3];
+
+
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+
+                    personBuyProperty_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
+                }
+
+            }
+            MessageBox.Show(personBuyProperty_lst[0].Id.ToString());
+
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    propBuyProperty_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                }
+
+
+            }
+            if ((propBuyProperty_lst.Count == 1) && (personBuyProperty_lst.Count == 1))
+            {
+                foreach (var p_temp in propBuyProperty_lst)
+                {
+                    p_temp.OwnerID = personBuyProperty_lst[0].Id;
+                    MessageBox.Show(propBuyProperty_lst[0].OwnerID.ToString());
+
+                }
+                //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
+            }
+        }
+
+        private void ToggleForSale_click(object sender, EventArgs e)
+        {
+            List<Property> prop_forToggle = null;
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+
+
+
+
+            foreach (var item in CommunitiesList)
+            {
+                if (item.Name == "Dekalb")
+                {
+                    prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                }
+
+
+            }
+            if (prop_forToggle.Count > 0)
+            {
+                foreach (var p_temp in prop_forToggle)
+                {
+                    p_temp.ForSale = !p_temp.ForSale;
+                    MessageBox.Show(p_temp.ForSale.ToString());
+                }
+                //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
+            }
+        }
     }
 }

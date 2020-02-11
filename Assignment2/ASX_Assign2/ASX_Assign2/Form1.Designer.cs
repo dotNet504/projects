@@ -546,6 +546,7 @@
             this.button1.TabIndex = 15;
             this.button1.Text = "Toggle For-Sale";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.ToggleForSale_click);
             // 
             // button2
             // 
@@ -555,6 +556,7 @@
             this.button2.TabIndex = 16;
             this.button2.Text = "Buy Property";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.BuyProperty_click);
             // 
             // button3
             // 
@@ -564,6 +566,7 @@
             this.button3.TabIndex = 17;
             this.button3.Text = "Add Resident";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.AddResident_click);
             // 
             // button4
             // 
@@ -573,6 +576,7 @@
             this.button4.TabIndex = 18;
             this.button4.Text = "Remove Resident";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.RemoveResident_click);
             // 
             // Form1
             // 
