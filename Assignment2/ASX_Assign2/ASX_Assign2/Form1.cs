@@ -498,16 +498,11 @@ namespace ASX_Assign2
         private void ToggleForSale_click(object sender, EventArgs e)
         {
 
-
             List<Property> prop_forToggle = null;
-            if (residenceListBox.SelectedIndex != -1)
-            {            
-                string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-                string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum =  null;
+            string addressByStreetNum = null;
             string addressByUnit = null;
-            uint apartmentID=1;
+            uint apartmentID = 1;
             addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
             string communityName = null;
 
@@ -521,7 +516,7 @@ namespace ASX_Assign2
             {
                 MessageBox.Show("No property is selected. Please select one");
             }
-              
+
             if (addressStringArr.Contains("#"))//apartment
             {
 
@@ -539,12 +534,12 @@ namespace ASX_Assign2
                                 {
                                     apartmentID = temp.Id;
                                 }
-                            }     
+                            }
                         }
                         if (item.Name == communityName)
                         {
-                            prop_forToggle = item.Props.Where(x => (x.Id == apartmentID)).ToList(); 
-                        }   
+                            prop_forToggle = item.Props.Where(x => (x.Id == apartmentID)).ToList();
+                        }
                     }
                 }
             }
@@ -574,7 +569,7 @@ namespace ASX_Assign2
                         MessageBox.Show("this is not for sale:(");
                     }
                     //MessageBox.Show(prop_forToggle.Count.ToString());
-                    
+
                 }
 
 
@@ -582,34 +577,6 @@ namespace ASX_Assign2
             }
 
 
-        }
-
-
-
-
-
-
-    }
-}
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == "Dekalb")
-                    {
-                        prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
-                    }
-
-
-                }
-                if (prop_forToggle.Count > 0)
-                {
-                    foreach (var p_temp in prop_forToggle)
-                    {
-                        p_temp.ForSale = !p_temp.ForSale;
-                        MessageBox.Show(p_temp.ForSale.ToString());
-                    }
-                    //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
-                }
-            }
         }
     }
 }
