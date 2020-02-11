@@ -497,31 +497,93 @@ namespace ASX_Assign2
 
         private void ToggleForSale_click(object sender, EventArgs e)
         {
+
+
             List<Property> prop_forToggle = null;
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+            string addressByStreetNum =  null;
+            string addressByUnit = null;
+            uint apartmentID=1;
+            addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+            string communityName = null;
+
+            if (dekalbRadioButton.Checked)
+                communityName = "Dekalb";
+            else
+                communityName = "Sycamore";
 
 
-
-
-            foreach (var item in CommunitiesList)
+            if (residenceListBox.SelectedIndex == -1) //no property is selected
             {
-                if (item.Name == "Dekalb")
+                MessageBox.Show("No property is selected. Please select one");
+            }
+              
+            if (addressStringArr.Contains("#"))//apartment
+            {
+
+                foreach (var item in CommunitiesList)
                 {
-                    prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    if (item.Name == communityName)
+                    {
+                        addressByUnit = addressStringArr[4];
+                        foreach (var apt_temp in item.Props)
+                        {
+                            if (apt_temp is Apartment)
+                            {
+                                Apartment temp = (Apartment)apt_temp;
+                                if (temp.Unit == addressByUnit)
+                                {
+                                    apartmentID = temp.Id;
+                                }
+                            }     
+                        }
+                        if (item.Name == communityName)
+                        {
+                            prop_forToggle = item.Props.Where(x => (x.Id == apartmentID)).ToList(); 
+                        }   
+                    }
                 }
-
-
+            }
+            else //house
+            {
+                foreach (var item in CommunitiesList)
+                {
+                    if (item.Name == communityName)
+                    {
+                        prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    }
+                }
             }
             if (prop_forToggle.Count > 0)
             {
                 foreach (var p_temp in prop_forToggle)
                 {
-                    p_temp.ForSale = !p_temp.ForSale;
-                    MessageBox.Show(p_temp.ForSale.ToString());
+                    if (p_temp.ForSale == true)
+                    {
+                        p_temp.ForSale = !p_temp.ForSale;
+                        MessageBox.Show(p_temp.ForSale.ToString());
+                        MessageBox.Show("this is for sale now!!:)");
+                        residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
+                    }
+                    else
+                    {
+                        MessageBox.Show("this is not for sale:(");
+                    }
+                    //MessageBox.Show(prop_forToggle.Count.ToString());
+                    
                 }
+
+
                 //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
             }
+
+
         }
+
+
+
+
+
+
     }
 }
