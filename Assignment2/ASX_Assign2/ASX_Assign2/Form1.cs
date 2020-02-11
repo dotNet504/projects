@@ -498,6 +498,12 @@ namespace ASX_Assign2
         private void ToggleForSale_click(object sender, EventArgs e)
         {
 
+            if ((residenceListBox.SelectedItem == houseVal)|| (residenceListBox.SelectedItem == hyphen)|| (residenceListBox.SelectedItem == apartmentVal)||(residenceListBox.SelectedItem =="")|| (residenceListBox.SelectedIndex == -1)) //no property is selected
+            {
+                MessageBox.Show("No property is selected. Please select one");
+                return;
+            }
+
             List<Property> prop_forToggle = null;
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
             string addressByStreetNum = null;
@@ -512,10 +518,7 @@ namespace ASX_Assign2
                 communityName = "Sycamore";
 
 
-            if (residenceListBox.SelectedIndex == -1) //no property is selected
-            {
-                MessageBox.Show("No property is selected. Please select one");
-            }
+
 
             if (addressStringArr.Contains("#"))//apartment
             {
@@ -560,13 +563,16 @@ namespace ASX_Assign2
                     if (p_temp.ForSale == true)
                     {
                         p_temp.ForSale = !p_temp.ForSale;
-                        MessageBox.Show(p_temp.ForSale.ToString());
-                        MessageBox.Show("this is for sale now!!:)");
+                        //MessageBox.Show("this is not for sale now!!:( SAd");
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
+                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString() +" is not for sale now.";
                     }
                     else
                     {
-                        MessageBox.Show("this is not for sale:(");
+                        p_temp.ForSale = !p_temp.ForSale;
+                        //MessageBox.Show("this is for sale:( Nice!");
+                        residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString()+"*";
+                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*') + " is not sale now.";
                     }
                     //MessageBox.Show(prop_forToggle.Count.ToString());
 
