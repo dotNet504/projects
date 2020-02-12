@@ -372,6 +372,9 @@ namespace ASX_Assign2
 
         private void RemoveResident_click(object sender, EventArgs e)
         {
+            
+
+
             List<Property> propRemoveResident_lst = null;
             List<Person> personRemoveResident_lst = null;
             string[] personStringArr = personListBox.SelectedItem.ToString().Split();
@@ -452,44 +455,100 @@ namespace ASX_Assign2
 
         private void BuyProperty_click(object sender, EventArgs e)
         {
+            //if user select wrong thing(s)
+            if((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "")||(residenceListBox.SelectedIndex==-1) || (personListBox.SelectedIndex == -1))
+            {
+                outputRichTextBox.Text = "You should select one preperty and one person";
+                return;
+            }
             List<Property> propBuyProperty_lst = null;
             List<Person> personBuyProperty_lst = null;
             string[] personStringArr = personListBox.SelectedItem.ToString().Split();
+            string communityName = null;
+            string addressByUnit = null;
+            uint apartmentID = 1;
             string personBuyerFirstName = personStringArr[0];
-            string personBuyerAge = personStringArr[2];
-            string personBuyerOccupation = personStringArr[3];
-
+            
 
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
             string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
 
+            if (dekalbRadioButton.Checked)
+                communityName = "Dekalb";
+            else
+                communityName = "Sycamore";
+
+            
+            //search the selected person
             foreach (var item in CommunitiesList)
             {
-                if (item.Name == "Dekalb")
+                if (item.Name == communityName)
                 {
 
                     personBuyProperty_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
                 }
 
             }
-            MessageBox.Show(personBuyProperty_lst[0].Id.ToString());
+            //MessageBox.Show(personBuyProperty_lst[0].Id.ToString());
 
-            foreach (var item in CommunitiesList)
+            //search the selected property
+            if (addressStringArr.Contains("#"))
             {
-                if (item.Name == "Dekalb")
+                foreach (var item in CommunitiesList)
                 {
-                    propBuyProperty_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    if (item.Name == communityName)
+                    {
+                        addressByUnit = addressStringArr[4];
+                        foreach (var apt_temp in item.Props)
+                        {
+                            if (apt_temp is Apartment)
+                            {
+                                Apartment temp = (Apartment)apt_temp;
+                                if (temp.Unit == addressByUnit)
+                                {
+                                    apartmentID = temp.Id;
+                                }
+                            }
+                        }
+                        if (item.Name == communityName)
+                        {
+                            propBuyProperty_lst = item.Props.Where(x => (x.Id == apartmentID)).ToList();
+                        }
+                    }
                 }
-
-
             }
-            if ((propBuyProperty_lst.Count == 1) && (personBuyProperty_lst.Count == 1))
+            else
+            {
+                foreach (var item in CommunitiesList)
+                {
+                    if (item.Name == communityName)
+                    {
+                        propBuyProperty_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    }
+                }
+            }
+            // MessageBox.Show(propBuyProperty_lst[0].StreetAddr);
+            if (propBuyProperty_lst[0].OwnerID == personBuyProperty_lst[0].Id )
+            {
+                outputRichTextBox.Text = "ERROR: " + personBuyProperty_lst[0].FirstName + " already owns the property fount at " + residenceListBox.SelectedItem.ToString().TrimEnd('*');
+                return;
+            }
+            if (propBuyProperty_lst[0].ForSale == false)
+            {
+                outputRichTextBox.Text = "ERROR: could not purchase the property at " + propBuyProperty_lst[0].StreetAddr + "as it is not listed for sale";
+                return;
+            }
+
+            if ((personBuyProperty_lst.Count == 1) && (personBuyProperty_lst.Count == 1))
             {
                 foreach (var p_temp in propBuyProperty_lst)
                 {
                     p_temp.OwnerID = personBuyProperty_lst[0].Id;
-                    MessageBox.Show(propBuyProperty_lst[0].OwnerID.ToString());
+                    //MessageBox.Show(propBuyProperty_lst[0].OwnerID.ToString());
 
+                    outputRichTextBox.Text = "Success: " + personBuyProperty_lst[0].FirstName + "has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*');
+                    residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
+                    residenceListBox.ClearSelected();
                 }
                 //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
             }
