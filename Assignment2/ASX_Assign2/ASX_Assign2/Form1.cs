@@ -440,7 +440,7 @@ namespace ASX_Assign2
                     }
                 }
             }
-            MessageBox.Show(propRemoveResident_lst[0].Id.ToString());
+            //MessageBox.Show(propRemoveResident_lst[0].Id.ToString());
 
 
             if ( personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id)==false)
