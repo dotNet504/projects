@@ -221,13 +221,25 @@ namespace ASX_Assign2
                         }
                         if (lstApt.Count > 0)
                         {
+                            //resident = item.Residents
+                                //.Where(x => (x.Id == lstApt[0].OwnerID || x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
+                            
+                            landlord = item.Residents
+                                .Where(x => (x.Id == lstApt[0].OwnerID)).ToList();
                             resident = item.Residents
-                                .Where(x => (x.Id == lstApt[0].OwnerID || x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
+                                .Where(x => (x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
 
-                            if (resident.Count > 0)
+                            if (resident.Count == 0)
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
-                                                            + ", owned by " + resident[0].FullName + ":";
+                                                        + ", owned by " + landlord[0].FullName + ":";
+                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "No resident lives in this property.\n";
+                            }
+                            else
+                            {
+                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                                            + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
@@ -566,22 +578,26 @@ namespace ASX_Assign2
         #endregion
 
         #region Xuezhi's code
+
+
+        //search the selected person
+        //  return the list<person> which includes selected person in the personListBox
         private List<Person> SearchSelectedPerson()
         {
-            List<Person> personSelected = null;
+            List<Person> personSelected = null;        
+            string communityName = null; //record the commuynity name, eg.Dekalb or sycamore
             string[] personStringArr = personListBox.SelectedItem.ToString().Split();
-            string communityName = null;
-            string personFirstName = null;
+            string personFirstName = null; //record the first name in the personListBox
             personFirstName = personStringArr[0];
 
-
-
-
+            //identify which community the user is looking for
             if (dekalbRadioButton.Checked)
                 communityName = "Dekalb";
             else
                 communityName = "Sycamore";
 
+            //if the person in CommunitiesList has the same first name with the selected
+            //  add it to the List<Person>
             foreach (var item in CommunitiesList)  //seaech person
             {
                 if (item.Name == communityName)
@@ -590,25 +606,33 @@ namespace ASX_Assign2
                 }
 
             }
+
+            //return the list including selected person
             return personSelected;
         }
+
+        //search selected property
+        //  return the list<property> which is selected in the residence listbox
         private List<Property> SearchSelectedProperty()
         {
             List<Property> propsSelected = null;
-            string communityName = null;
-            string addressByStreetNum = null;
-            string addressByUnit = null;
-            uint apartmentID = 1;
+            string communityName = null; //record the commuynity name, eg.Dekalb or sycamore
+            string addressByStreetNum = null; //record the street address of the residenceListBox
+            string addressByUnit = null; // record the unit of the residenceListBox if user selects an apartment
+            uint apartmentID = 1; // record the id of the selected apartment
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
 
             addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
 
+            //identify which community the user is looking for
             if (dekalbRadioButton.Checked)
                 communityName = "Dekalb";
             else
                 communityName = "Sycamore";
 
-            if (addressStringArr.Contains("#")) //search property
+            //if the property in CommunitiesList has the same address with the selected property
+            //  add it to the List<Property>
+            if (addressStringArr.Contains("#")) //if user selects an apartment, the unit and street addres would be compared
             {
                 foreach (var item in CommunitiesList)
                 {
@@ -620,8 +644,10 @@ namespace ASX_Assign2
                             if (apt_temp is Apartment)
                             {
                                 Apartment temp = (Apartment)apt_temp;
-                                if (temp.Unit == addressByUnit)
+
+                                if ((temp.Unit == addressByUnit) && (addressByStreetNum.CompareTo(temp.StreetAddr))==0)
                                 {
+
                                     apartmentID = temp.Id;
                                 }
                             }
@@ -633,7 +659,7 @@ namespace ASX_Assign2
                     }
                 }
             }
-            else
+            else //if user selects a house, the street addres would be compared
             {
                 foreach (var item in CommunitiesList)
                 {
@@ -643,6 +669,8 @@ namespace ASX_Assign2
                     }
                 }
             }
+
+            //return the list including selected property
             return propsSelected;
 
 
