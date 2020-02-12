@@ -47,6 +47,7 @@ namespace DataLoader
                 Person p = new Person(items);
                 lstDekalbPersons.Add(p);
             }
+            lstDekalbPersons.Sort(new PersonComparer());
 
             foreach (var item in houses)
             {
@@ -67,6 +68,13 @@ namespace DataLoader
             Community community = new Community(lstDekalbPersons, lstDekalbHouses, lstDekalbApartments);
             Communities.Add(community);
         }
+        public class PersonComparer : IComparer<Person>
+        {
+            public int Compare(Person x, Person y)
+            {
+                return x.CompareTo(y);
+            }
+        }
         private void LoadSycamoreCommunityData()
         {
             //Reading input files.
@@ -85,6 +93,7 @@ namespace DataLoader
                 Person p = new Person(items);
                 lstSycamorePersons.Add(p);
             }
+            lstSycamorePersons.Sort(new PersonComparer());
 
             foreach (var item in houses)
             {
