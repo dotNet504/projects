@@ -29,7 +29,8 @@ namespace DataLoader
             Person rightOp = alpha as Person;
 
             if (rightOp != null)
-                return FullName.CompareTo(rightOp.FullName);
+                //return FullName.CompareTo(rightOp.FullName);
+                return FirstName.CompareTo(rightOp.FirstName);
             else
                 throw new ArgumentNullException("[Person]: CompareTo argument is not a Person");
         }

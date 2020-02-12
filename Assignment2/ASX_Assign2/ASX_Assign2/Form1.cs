@@ -38,9 +38,18 @@ namespace ASX_Assign2
             CommunitiesList = _businessLayer.Communities;
             dekalbPersons = _businessLayer.lstDekalbPersons;
             sycamorePersons = _businessLayer.lstSycamorePersons;
+            sycamorePersons.Sort(new PersonComparer());
+            dekalbPersons.Sort(new PersonComparer());
             outputRichTextBox.Text = "There are " + dekalbPersons.Count() + " people living in Dekalb.\n";
             outputRichTextBox.Text += "There are " + sycamorePersons.Count() + " people living in Sycamore.";
             // Create method in Business Layer and use in this form for future re-usability
+        }
+        public class PersonComparer : IComparer<Person>
+        {
+            public int Compare(Person x, Person y)
+            {
+                return x.CompareTo(y);
+            }
         }
 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
