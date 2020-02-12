@@ -565,7 +565,7 @@ namespace ASX_Assign2
 
         #endregion
 
-        #region Tony's code
+        #region Xuezhi's code
         private List<Person> SearchSelectedPerson()
         {
             List<Person> personSelected = null;
@@ -649,182 +649,149 @@ namespace ASX_Assign2
         }
 
 
-
+        // Remove the a resident to a property
+        // After user selects a person and a property,
+        //         then click the Remove Resident button,
+        //         the id of property is removed from the residnet list of the person
         private void RemoveResident_click(object sender, EventArgs e)
         {
+            // if user selects wrong thing(s), return message and quit this method
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
             {
                 outputRichTextBox.Text = "You should select one preperty and one person";
                 return;
             }
+
+            // search selected person and property in the listbox
             List<Property> propRemoveResident_lst = null;
             List<Person> personRemoveResident_lst = null;
-            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
-            string personBuyerFirstName = personStringArr[0];
-            string communityName = null;
-            string addressByUnit = null;
-            uint apartmentID = 1;
-
-
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
-
             personRemoveResident_lst = SearchSelectedPerson();
             propRemoveResident_lst = SearchSelectedProperty();
 
+            // if the selected person is not a resident in this property, return message and quit this method
             if (personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id) == false)
             {
                 outputRichTextBox.Text = "ERROR: " + personRemoveResident_lst[0].FirstName + " doesn't currently reside at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
                 return;
             }
 
+            // if one property and one person is selected, this method change the the resident list of person 
+            // the ID of house is removed from the person' resident list
             if ((propRemoveResident_lst.Count == 1) && (personRemoveResident_lst.Count == 1))
             {
                 foreach (var p_temp in personRemoveResident_lst)
                 {
-                    p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);
-                    outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
+                    p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);                    
                 }
+                outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
             }
         }
 
+        // Add the a resident to a property
+        // After user selects a person and a property,
+        //         then click the Add Resident button,
+        //         the id of property is added to the residnet list of the person
+        
         private void AddResident_click(object sender, EventArgs e)
         {
+            // if user selects wrong thing(s), return message and quit this method
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
             {
                 outputRichTextBox.Text = "You should select one preperty and one person";
                 return;
             }
 
+            // search selected person and property in the listbox
             List<Property> propAddResident_lst = null;
             List<Person> personAddResident_lst = null;
-            string communityName = null;
-            uint apartmentID = 1;
-
-
-            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
-            string personBuyerFirstName = personStringArr[0];
-
-
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-            string addressByUnit = null;
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
-
             personAddResident_lst = SearchSelectedPerson();
             propAddResident_lst = SearchSelectedProperty();
 
+            // if the selected person is already as resident in this property, return message and quit this method
             if (personAddResident_lst[0].ResidenceIds.Contains(propAddResident_lst[0].Id))
             {
                 outputRichTextBox.Text = "ERROR: " + personAddResident_lst[0].FirstName + " already resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
                 return;
             }
+
+            // if one property and one person is selected, this method change the the resident list of person 
+            // the ID of house is add to the person' resident list
             if ((propAddResident_lst.Count == 1) && (personAddResident_lst.Count == 1))
             {
                 foreach (var p_temp in personAddResident_lst)
                 {
                     p_temp.ResidenceIds.Add(propAddResident_lst[0].Id);
                     outputRichTextBox.Text = "Success! " + personAddResident_lst[0].FirstName + " now resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
-
-                    //test msg box
-                    //for (int i = 0; i < p_temp.ResidenceIds.ToArray().Count(); i++)
-                    //   MessageBox.Show(p_temp.ResidenceIds.ToArray()[i].ToString());
-
                 }
 
             }
         }
 
+        // Change the owner of a property
+        // After user select a person and a property,
+        //         then click the buy Property button,
+        //         the onwer of the property will be changed to selectded person
         private void BuyProperty_click(object sender, EventArgs e)
         {
-            //if user select wrong thing(s)
+            // if user selects wrong thing(s), return message and quit this method
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
             {
                 outputRichTextBox.Text = "You should select one preperty and one person";
                 return;
             }
+
+            // search selected items in the listbox
             List<Property> propBuyProperty_lst = null;
             List<Person> personBuyProperty_lst = null;
-            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
-            string communityName = null;
-            string addressByUnit = null;
-            uint apartmentID = 1;
-            string personBuyerFirstName = personStringArr[0];
-
-
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
-
             propBuyProperty_lst = SearchSelectedProperty();
             personBuyProperty_lst = SearchSelectedPerson();
 
-            // MessageBox.Show(propBuyProperty_lst[0].StreetAddr);
+            // if the person is the owner of the property, return message and quit this method
             if (propBuyProperty_lst[0].OwnerID == personBuyProperty_lst[0].Id)
             {
                 outputRichTextBox.Text = "ERROR: " + personBuyProperty_lst[0].FirstName + " already owns the property found at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
                 return;
             }
+
+            // if the property is not for sall, return message and quit this method
             if (propBuyProperty_lst[0].ForSale == false)
             {
                 outputRichTextBox.Text = "ERROR: Could not purchase the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ", as it is not listed for sale.";
                 return;
             }
 
+            // if one property and one person is selected, this method change the owner of property
             if ((personBuyProperty_lst.Count == 1) && (personBuyProperty_lst.Count == 1))
             {
                 foreach (var p_temp in propBuyProperty_lst)
                 {
                     p_temp.OwnerID = personBuyProperty_lst[0].Id;
-                    //MessageBox.Show(propBuyProperty_lst[0].OwnerID.ToString());
-
-                    outputRichTextBox.Text = "Success! " + personBuyProperty_lst[0].FirstName + "has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
                     residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
-                    //residenceListBox.ClearSelected();
-                    //personListBox.ClearSelected();
                 }
-                //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
+                outputRichTextBox.Text = "Success! " + personBuyProperty_lst[0].FirstName + "has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
+
             }
         }
 
+        // Change the forsale variable of a property
+        // After user select  a property,
+        //         then click the ToggleForSale button,
+        //         the forsale variable of a property will be negated
         private void ToggleForSale_click(object sender, EventArgs e)
         {
-
+            // if user selects wrong thing(s), return message and quit this method
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1)) //no property is selected
             {
                 MessageBox.Show("No property is selected. Please select one");
                 return;
             }
 
+            // search selectedproperty in the listbox
             List<Property> prop_forToggle = null;
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
-            string addressByStreetNum = null;
-            string addressByUnit = null;
-            uint apartmentID = 1;
-            addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-            string communityName = null;
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
-
-
             prop_forToggle = SearchSelectedProperty();
-            if (prop_forToggle.Count > 0)
+
+            // if one property is selected,change the forsale variable and then output the message
+            if (prop_forToggle.Count ==1 )
             {
                 foreach (var p_temp in prop_forToggle)
                 {
@@ -845,15 +812,9 @@ namespace ASX_Assign2
                     //MessageBox.Show(prop_forToggle.Count.ToString());
 
                 }
-
-
-                //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
             }
-
-
         }
         #endregion
-
 
     }
 }
