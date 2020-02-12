@@ -551,6 +551,90 @@ namespace ASX_Assign2
         #endregion
 
         #region Tony's code
+        private List<Person> SearchSelectedPerson()
+        {
+            List<Person> personSelected = null;
+            string[] personStringArr = personListBox.SelectedItem.ToString().Split();
+            string communityName = null;
+            string personFirstName = null;
+            personFirstName = personStringArr[0];
+
+
+
+
+            if (dekalbRadioButton.Checked)
+                communityName = "Dekalb";
+            else
+                communityName = "Sycamore";
+
+            foreach (var item in CommunitiesList)  //seaech person
+            {
+                if (item.Name == communityName)
+                {
+                    personSelected = item.Residents.Where(x => x.FirstName.ToLower().Equals(personFirstName.ToLower())).ToList();
+                }
+
+            }
+            return personSelected;
+        }
+        private List<Property> SearchSelectedProperty()
+        {
+            List<Property> propsSelected = null;
+            string communityName = null;
+            string addressByStreetNum = null;
+            string addressByUnit = null;
+            uint apartmentID = 1;
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            
+            addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
+
+            if (dekalbRadioButton.Checked)
+                communityName = "Dekalb";
+            else
+                communityName = "Sycamore";
+
+            if (addressStringArr.Contains("#")) //search property
+            {
+                foreach (var item in CommunitiesList)
+                {
+                    if (item.Name == communityName)
+                    {
+                        addressByUnit = addressStringArr[4];
+                        foreach (var apt_temp in item.Props)
+                        {
+                            if (apt_temp is Apartment)
+                            {
+                                Apartment temp = (Apartment)apt_temp;
+                                if (temp.Unit == addressByUnit)
+                                {
+                                    apartmentID = temp.Id;
+                                }
+                            }
+                        }
+                        if (item.Name == communityName)
+                        {
+                            propsSelected = item.Props.Where(x => (x.Id == apartmentID)).ToList();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in CommunitiesList)
+                {
+                    if (item.Name == communityName)
+                    {
+                        propsSelected = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
+                    }
+                }
+            }
+            return propsSelected;
+
+
+        }
+
+
+
         private void RemoveResident_click(object sender, EventArgs e)
         {
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
@@ -575,54 +659,8 @@ namespace ASX_Assign2
             else
                 communityName = "Sycamore";
 
-
-            foreach (var item in CommunitiesList)  //seaech person
-            {
-                if (item.Name == communityName)
-                {
-                    personRemoveResident_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
-                }
-
-            }
-
-
-            if (addressStringArr.Contains("#")) //search property
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        addressByUnit = addressStringArr[4];
-                        foreach (var apt_temp in item.Props)
-                        {
-                            if (apt_temp is Apartment)
-                            {
-                                Apartment temp = (Apartment)apt_temp;
-                                if (temp.Unit == addressByUnit)
-                                {
-                                    apartmentID = temp.Id;
-                                }
-                            }
-                        }
-                        if (item.Name == communityName)
-                        {
-                            propRemoveResident_lst = item.Props.Where(x => (x.Id == apartmentID)).ToList();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        propRemoveResident_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
-                    }
-                }
-            }
-            //MessageBox.Show(propRemoveResident_lst[0].Id.ToString());
-
+            personRemoveResident_lst = SearchSelectedPerson();
+            propRemoveResident_lst = SearchSelectedProperty();
 
             if ( personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id)==false)
             {
@@ -630,18 +668,13 @@ namespace ASX_Assign2
                 return;
             }
 
-
-
             if ((propRemoveResident_lst.Count == 1) && (personRemoveResident_lst.Count == 1))
             {
                 foreach (var p_temp in personRemoveResident_lst)
                 {
                     p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);
                     outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + " !";
-
-
                 }
-
             }
         }
 
@@ -672,52 +705,9 @@ namespace ASX_Assign2
             else
                 communityName = "Sycamore";
 
+            personAddResident_lst = SearchSelectedPerson();
+            propAddResident_lst = SearchSelectedProperty();
 
-
-            foreach (var item in CommunitiesList) //search person
-            {
-                if (item.Name == communityName)
-                {
-                    personAddResident_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
-                }
-
-            }
-
-            if (addressStringArr.Contains("#")) //search property
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        addressByUnit = addressStringArr[4];
-                        foreach (var apt_temp in item.Props)
-                        {
-                            if (apt_temp is Apartment)
-                            {
-                                Apartment temp = (Apartment)apt_temp;
-                                if (temp.Unit == addressByUnit)
-                                {
-                                    apartmentID = temp.Id;
-                                }
-                            }
-                        }
-                        if (item.Name == communityName)
-                        {
-                            propAddResident_lst = item.Props.Where(x => (x.Id == apartmentID)).ToList();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        propAddResident_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
-                    }
-                }
-            }
             if (personAddResident_lst[0].ResidenceIds.Contains(propAddResident_lst[0].Id))
             {
                 outputRichTextBox.Text = "ERROR: " + personAddResident_lst[0].FirstName + " already resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*');
@@ -764,55 +754,9 @@ namespace ASX_Assign2
             else
                 communityName = "Sycamore";
 
-            
-            //search the selected person
-            foreach (var item in CommunitiesList)
-            {
-                if (item.Name == communityName)
-                {
+            propBuyProperty_lst = SearchSelectedProperty();
+            personBuyProperty_lst = SearchSelectedPerson();
 
-                    personBuyProperty_lst = item.Residents.Where(x => x.FirstName.ToLower().Equals(personBuyerFirstName.ToLower())).ToList();
-                }
-
-            }
-            //MessageBox.Show(personBuyProperty_lst[0].Id.ToString());
-
-            //search the selected property
-            if (addressStringArr.Contains("#"))
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        addressByUnit = addressStringArr[4];
-                        foreach (var apt_temp in item.Props)
-                        {
-                            if (apt_temp is Apartment)
-                            {
-                                Apartment temp = (Apartment)apt_temp;
-                                if (temp.Unit == addressByUnit)
-                                {
-                                    apartmentID = temp.Id;
-                                }
-                            }
-                        }
-                        if (item.Name == communityName)
-                        {
-                            propBuyProperty_lst = item.Props.Where(x => (x.Id == apartmentID)).ToList();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        propBuyProperty_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
-                    }
-                }
-            }
             // MessageBox.Show(propBuyProperty_lst[0].StreetAddr);
             if (propBuyProperty_lst[0].OwnerID == personBuyProperty_lst[0].Id )
             {
@@ -864,44 +808,7 @@ namespace ASX_Assign2
                 communityName = "Sycamore";
 
 
-
-
-            if (addressStringArr.Contains("#"))//apartment
-            {
-
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        addressByUnit = addressStringArr[4];
-                        foreach (var apt_temp in item.Props)
-                        {
-                            if (apt_temp is Apartment)
-                            {
-                                Apartment temp = (Apartment)apt_temp;
-                                if (temp.Unit == addressByUnit)
-                                {
-                                    apartmentID = temp.Id;
-                                }
-                            }
-                        }
-                        if (item.Name == communityName)
-                        {
-                            prop_forToggle = item.Props.Where(x => (x.Id == apartmentID)).ToList();
-                        }
-                    }
-                }
-            }
-            else //house
-            {
-                foreach (var item in CommunitiesList)
-                {
-                    if (item.Name == communityName)
-                    {
-                        prop_forToggle = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
-                    }
-                }
-            }
+            prop_forToggle = SearchSelectedProperty();
             if (prop_forToggle.Count > 0)
             {
                 foreach (var p_temp in prop_forToggle)
