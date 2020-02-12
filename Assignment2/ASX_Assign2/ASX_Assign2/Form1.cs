@@ -52,6 +52,7 @@ namespace ASX_Assign2
             }
         }
 
+        #region Swathi's code
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
         {
             dekalbHouses = _businessLayer.lstDekalbHouses;
@@ -236,6 +237,7 @@ namespace ASX_Assign2
             }
 
         }
+        #endregion
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -255,10 +257,20 @@ namespace ASX_Assign2
             return base.ToString();
         }
 
+        #region Abdul's code
         private void aptNoTextBox_TextChanged(object sender, EventArgs e)
         {
             //Disable garage and floors for apt(!empty).
-            //Enable garage and floors for apt(empty).
+            if(aptNoTextBox.Text.Length > 0)
+            {
+                garageCheckBox.Visible = false;
+                floorsUpDown.Enabled = false;
+            }          
+            else if (aptNoTextBox.Text.Length == 0)
+            {
+                garageCheckBox.Visible = true;
+                floorsUpDown.Enabled = true;
+            }
         }
 
         private void addNewResidentButton_Click(object sender, EventArgs e)
@@ -266,20 +278,20 @@ namespace ASX_Assign2
             string newName = nameTextBox.Text;
             string newOccu = occupationTextBox.Text;
             DateTime newBday = bdayDateTimePicker.Value;
-            string newResChoice = residenceComboBox.Text;
-            string newFirst, newLast;
+            string newStreetAddr = residenceComboBox.Text;
+            string newFirst, newLast, presentCommunity;
             bool nameError, bdayError, occuError, resError; // Error messages flags
             nameError = bdayError = occuError = resError = false;
-            newFirst = newLast = "";
+            newFirst = newLast = presentCommunity= "";
 
             //validate all above properties
             if ((newName.Length != 0) && newName.Contains(' '))
             {
-                string[] fullName = newName.Split(' ');
-                if (fullName.Length == 2)
+                string[] fullrName = newName.Split(' ');
+                if (fullrName.Length == 2)
                 {
-                    newFirst = fullName[0];
-                    newLast = fullName[1];
+                    newFirst = fullrName[0];
+                    newLast = fullrName[1];
                 }
                 else
                 {
@@ -296,6 +308,8 @@ namespace ASX_Assign2
                 outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
                     "First-Name space then Last-Name e.g John Doe";
             }
+
+            string fullName = newLast + ", " + newFirst;
 
             //Validation of names 
             if (newFirst.Length < 1 || newLast.Length < 1)
@@ -323,31 +337,51 @@ namespace ASX_Assign2
                     "(Enter \"none\" if in-between jobs)";
             }
 
+            //Get checked community
+            if (dekalbRadioButton.Checked)
+            {
+                presentCommunity = "Dekalb";
+            }
+            else if (sycamoreRadioButton.Checked)
+            {
+                presentCommunity = "Sycamore";
+            }
+
             //Validate residence choice
             if (!nameError && !bdayError && !nameError && !occuError)
             {
-                if (!(newResChoice.Length > 0) || (newResChoice == hyphen)
-                    || (newResChoice == apartmentVal) || (newResChoice == houseVal))
+                if (!(newStreetAddr.Length > 0) || (newStreetAddr == hyphen)
+                    || (newStreetAddr == apartmentVal) || (newStreetAddr == houseVal))
                 {
                     //error message
                     resError = true;
                     outputRichTextBox.Text = "ERROR: You have chosen an invalid residence choice!";
                 }
-                else if (false) //check (newResChoice is not address in the community list)
+                else if (personExists(fullName, presentCommunity)) //check person already in community
                 {
                     //error message
                     resError = true;
-                    outputRichTextBox.Text = "ERROR: You have chosen an invalid residence choice!";
+                    outputRichTextBox.Text = "ERROR: This person already exists in the selected Community!";
+                    return;
                 }
                 else
                 {
+                    uint resID = getApartmentId(newStreetAddr, presentCommunity);
+
                     //add resident to the person list
+                    string[] newPerson = { "0" , newLast, newFirst, newOccu, newBday.Year.ToString(),
+                                             newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
+
+                    Person p = new Person(newPerson);
+                    addPersonToList(p, presentCommunity);
+
                     outputRichTextBox.Text = "Success! " + newFirst + " has been added as" +
-                        "a resident to "; //+community
+                        " a resident to " + presentCommunity + "!"; 
                     nameTextBox.Clear();
                     occupationTextBox.Clear();
                     residenceComboBox.ResetText();
                     bdayDateTimePicker.ResetText();
+               
                 }
             }
         }
@@ -358,10 +392,25 @@ namespace ASX_Assign2
             decimal newSqFt = sqFtUpDown.Value;
             decimal newBedrm = bedrmUpDown.Value;
             decimal newFlr = 0;
+            string presentCommunity = "";
             bool hasGarage = false;
             bool garageAttached = false;
-            string newApt = aptNoTextBox.Text; //try casting to int
+            string newApt = aptNoTextBox.Text;
 
+            //Get checked community
+            if (dekalbRadioButton.Checked)
+            {
+                presentCommunity = "Dekalb";
+            }
+            else if (sycamoreRadioButton.Checked)
+            {
+                presentCommunity = "Sycamore";
+            }
+            else     //Check if user selected a community, return error else
+            {
+                outputRichTextBox.Text = "ERROR: Please choose valid property Community!";
+                return;
+            }
 
             if (newApt.Length != 0)
             {
@@ -369,16 +418,146 @@ namespace ASX_Assign2
                 if (garageCheckBox.Checked)
                 {
                     hasGarage = true;
-                    // if attached is checked
+                    if (attachedCheckBox.Checked)
+                    {
+                        garageAttached = true;
+                    }
                 }
+            }
+
+            //Check if the address already exists
+            propertyExists(newStrAddr,newApt, presentCommunity);
+
+            //else add property to property
+
+            //write a method to refresh the ListBoxes after new resident or propt is added
+        }
+
+        private void garageCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (garageCheckBox.Checked)
+            {
+                attachedCheckBox.Visible = true;
+            }
+            else
+            {
+                attachedCheckBox.Visible = false;
+            }
+        }
+        //
+        // Helper methods
+        //
+        private bool personExists(string fullName, string community)
+        {
+            if (community == "Dekalb")
+            {
+                //loop and find person in Dekalb
+                foreach (Person p in _businessLayer.lstDekalbPersons)
+                {
+                    if (p.FullName.ToLower().CompareTo(fullName.ToLower()) == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else if (community == "Sycamore")
+            {
+                //loop and find person in Sycamore
+                foreach (Person p in _businessLayer.lstSycamorePersons)
+                {
+                    if (p.FullName.ToLower().CompareTo(fullName.ToLower()) == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void addPersonToList(Person p, string community)
+        {
+            if(community == "Dekalb")
+            { 
+                _businessLayer.lstDekalbPersons.Add(p);
+                return;
+            }
+            else if (community == "Sycamore")
+            {
+                _businessLayer.lstSycamorePersons.Add(p);
+                return;
             }
         }
 
-        private void bathUpDown_ValueChanged(object sender, EventArgs e)
+        private uint getApartmentId(string srtAddr, string community)
         {
+            string street, unit;
 
+            if (community == "Dekalb")
+            {
+                if (srtAddr.Contains("#"))
+                {
+                    //loop though, if streetAddr is same and unit number is same
+                    string[] addr = srtAddr.Split('#');
+                    street = addr[0];
+                    unit = addr[1];
+                    foreach(Apartment a in _businessLayer.lstDekalbApartments)
+                    {
+                        if((street == a.StreetAddr) && (unit == a.Unit))
+                        {
+                            return a.Id;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (House h in _businessLayer.lstDekalbHouses)
+                    {
+                        if (srtAddr == h.StreetAddr)
+                        {
+                            return h.Id;
+                        }
+                    }
+                }
+            }
+            else if (community == "Sycamore")
+            {
+                if (srtAddr.Contains("#"))
+                {
+                    //loop though, if streetAddr is same and unit number is same
+                    string[] addr = srtAddr.Split('#');
+                    street = addr[0];
+                    unit = addr[1];
+                    foreach (Apartment a in _businessLayer.lstSycamoreApartments)
+                    {
+                        if ((street == a.StreetAddr) && (unit == a.Unit))
+                        {
+                            return a.Id;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (House h in _businessLayer.lstSycamoreHouses)
+                    {
+                        if (srtAddr == h.StreetAddr)
+                        {
+                            return h.Id;
+                        }
+                    }
+                }
+
+            }
+            return 0;
         }
 
+        private bool propertyExists(string newStrAddr, string newApt, string community)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region Tony's code
         private void RemoveResident_click(object sender, EventArgs e)
         {
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
@@ -758,5 +937,8 @@ namespace ASX_Assign2
 
 
         }
+        #endregion
+
+
     }
 }
