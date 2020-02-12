@@ -383,10 +383,25 @@ namespace ASX_Assign2
             decimal newSqFt = sqFtUpDown.Value;
             decimal newBedrm = bedrmUpDown.Value;
             decimal newFlr = 0;
+            string presentCommunity = "";
             bool hasGarage = false;
             bool garageAttached = false;
             string newApt = aptNoTextBox.Text;
 
+            //Get checked community
+            if (dekalbRadioButton.Checked)
+            {
+                presentCommunity = "Dekalb";
+            }
+            else if (sycamoreRadioButton.Checked)
+            {
+                presentCommunity = "Sycamore";
+            }
+            else     //Check if user selected a community, return error else
+            {
+                outputRichTextBox.Text = "ERROR: Please choose valid property Community!";
+                return;
+            }
 
             if (newApt.Length != 0)
             {
@@ -400,8 +415,12 @@ namespace ASX_Assign2
                     }
                 }
             }
-            //Check if user selected a community, return error else
+
             //Check if the address already exists
+            propertyExists(newStrAddr,newApt, presentCommunity);
+
+            //else add property to property
+
             //write a method to refresh the ListBoxes after new resident or propt is added
         }
 
@@ -522,7 +541,10 @@ namespace ASX_Assign2
             return 0;
         }
 
-        
+        private bool propertyExists(string newStrAddr, string newApt, string community)
+        {
+            return true;
+        }
 
         #endregion
 
