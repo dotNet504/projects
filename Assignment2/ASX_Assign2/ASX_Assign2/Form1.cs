@@ -155,7 +155,9 @@ namespace ASX_Assign2
                 selResidence != hyphen && selResidence != apartmentVal)
             {
                 List<Person> resident = new List<Person>();
-                List<Property> prop = new List<Property>();              
+                List<Property> prop = new List<Property>();
+
+                List<Person> landlord = new List<Person>();
 
                 foreach (var item in CommunitiesList)
                 {
@@ -185,14 +187,26 @@ namespace ASX_Assign2
                             prop = item.Props
                             .Where(x => x.StreetAddr.ToLower().Equals(selResidence.ToLower())).ToList();
                         }
-                        if(prop.Count > 0) { 
+                        if(prop.Count > 0) {
+                            landlord = item.Residents
+                                .Where(x => (x.Id == prop[0].OwnerID )).ToList();
                             resident = item.Residents
-                                .Where(x => (x.Id == prop[0].OwnerID || x.ResidenceIds.Contains(prop[0].Id))).ToList();
+                                .Where(x => (x.ResidenceIds.Contains(prop[0].Id))).ToList();
+
+                            //resident = item.Residents
+                            //    .Where(x => (x.Id == prop[0].OwnerID || x.ResidenceIds.Contains(prop[0].Id))).ToList();
                             
-                            if (resident.Count > 0)
+                            if (resident.Count == 0)
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
-                                                            + ", owned by " + resident[0].FullName + ":";
+                                                        + ", owned by " + landlord[0].FullName + ":";
+                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "No resident lives in this property.\n";
+                            }
+                            else
+                            {
+                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                                            + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
@@ -559,9 +573,6 @@ namespace ASX_Assign2
             string personFirstName = null;
             personFirstName = personStringArr[0];
 
-
-
-
             if (dekalbRadioButton.Checked)
                 communityName = "Dekalb";
             else
@@ -629,12 +640,7 @@ namespace ASX_Assign2
                 }
             }
             return propsSelected;
-
-
         }
-
-
-
         private void RemoveResident_click(object sender, EventArgs e)
         {
             if ((residenceListBox.SelectedItem == houseVal) || (residenceListBox.SelectedItem == hyphen) || (residenceListBox.SelectedItem == apartmentVal) || (residenceListBox.SelectedItem == "") || (residenceListBox.SelectedIndex == -1) || (personListBox.SelectedIndex == -1))
@@ -653,11 +659,6 @@ namespace ASX_Assign2
 
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
             string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
 
             personRemoveResident_lst = SearchSelectedPerson();
             propRemoveResident_lst = SearchSelectedProperty();
@@ -690,20 +691,11 @@ namespace ASX_Assign2
             List<Person> personAddResident_lst = null;
             string communityName = null;
             uint apartmentID = 1;
-
-
             string[] personStringArr = personListBox.SelectedItem.ToString().Split();
             string personBuyerFirstName = personStringArr[0];
-
-
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
             string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
             string addressByUnit = null;
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
 
             personAddResident_lst = SearchSelectedPerson();
             propAddResident_lst = SearchSelectedProperty();
@@ -719,11 +711,6 @@ namespace ASX_Assign2
                 {
                     p_temp.ResidenceIds.Add(propAddResident_lst[0].Id);
                     outputRichTextBox.Text = "Success!" + personAddResident_lst[0].FirstName + " now resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + " !";
-
-                    //test msg box
-                    //for (int i = 0; i < p_temp.ResidenceIds.ToArray().Count(); i++)
-                    //   MessageBox.Show(p_temp.ResidenceIds.ToArray()[i].ToString());
-
                 }
 
             }
@@ -748,11 +735,6 @@ namespace ASX_Assign2
 
             string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
             string addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
-
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
 
             propBuyProperty_lst = SearchSelectedProperty();
             personBuyProperty_lst = SearchSelectedPerson();
@@ -802,12 +784,6 @@ namespace ASX_Assign2
             addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
             string communityName = null;
 
-            if (dekalbRadioButton.Checked)
-                communityName = "Dekalb";
-            else
-                communityName = "Sycamore";
-
-
             prop_forToggle = SearchSelectedProperty();
             if (prop_forToggle.Count > 0)
             {
@@ -828,14 +804,9 @@ namespace ASX_Assign2
                         outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*') + " is for sale now.";
                     }
                     //MessageBox.Show(prop_forToggle.Count.ToString());
-
                 }
-
-
                 //Console.WriteLine(streetAddress + " is now listed as " + (prop.FirstOrDefault().ForSale ? "" : "NOT ") + "for sale!");
             }
-
-
         }
         #endregion
 
