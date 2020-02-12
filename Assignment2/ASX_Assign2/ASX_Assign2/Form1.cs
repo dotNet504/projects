@@ -434,14 +434,16 @@ namespace ASX_Assign2
             {
                 foreach (var item in CommunitiesList)
                 {
-                    if (item.Name == "communityName")
+                    if (item.Name == communityName)
                     {
                         propRemoveResident_lst = item.Props.Where(x => x.StreetAddr.ToLower().Equals(addressByStreetNum.ToLower())).ToList();
                     }
                 }
             }
+            MessageBox.Show(propRemoveResident_lst[0].Id.ToString());
 
-            if (!personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id))
+
+            if ( personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id)==false)
             {
                 outputRichTextBox.Text = "ERROR: " + personRemoveResident_lst[0].FirstName + " does not already reside at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*');
                 return;
