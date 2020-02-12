@@ -217,6 +217,7 @@
             // residenceComboBox
             // 
             this.residenceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.residenceComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.residenceComboBox.FormattingEnabled = true;
             this.residenceComboBox.Location = new System.Drawing.Point(5, 194);
             this.residenceComboBox.Name = "residenceComboBox";

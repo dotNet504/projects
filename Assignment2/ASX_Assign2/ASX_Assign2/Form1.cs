@@ -265,7 +265,6 @@ namespace ASX_Assign2
             bool nameError, bdayError, occuError, resError; // Error messages flags
             nameError = bdayError = occuError = resError = false;
             newFirst = newLast = presentCommunity= "";
-            int propFlag = 0;
 
             //validate all above properties
             if ((newName.Length != 0) && newName.Contains(' '))
@@ -324,12 +323,10 @@ namespace ASX_Assign2
             if (dekalbRadioButton.Checked)
             {
                 presentCommunity = "Dekalb";
-                propFlag = 1;
             }
             else if (sycamoreRadioButton.Checked)
             {
                 presentCommunity = "Sycamore";
-                propFlag = 2;
             }
 
             //Validate residence choice
@@ -351,12 +348,15 @@ namespace ASX_Assign2
                 }
                 else
                 {
+                    uint resID = getApartmentId(newStreetAddr, presentCommunity);
+
                     //add resident to the person list
                     string[] newPerson = { "0" , newLast, newFirst, newOccu, newBday.Year.ToString(),
-                                             newBday.Month.ToString(),newBday.Day.ToString(),"45218" };
+                                             newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
+
                     Person p = new Person(newPerson);
                     addPersonToList(p, presentCommunity);
-                    //a person has a residentList<uniqueId>
+
                     outputRichTextBox.Text = "Success! " + newFirst + " has been added as" +
                         " a resident to " + presentCommunity + "!"; 
                     nameTextBox.Clear();
@@ -400,7 +400,7 @@ namespace ASX_Assign2
             if (community == "Dekalb")
             {
                 //loop and find person in Dekalb
-                foreach (Person p in dekalbPersons)
+                foreach (Person p in _businessLayer.lstDekalbPersons)
                 {
                     if (p.FullName.ToLower().CompareTo(fullName.ToLower()) == 0)
                     {
@@ -411,7 +411,7 @@ namespace ASX_Assign2
             else if (community == "Sycamore")
             {
                 //loop and find person in Sycamore
-                foreach (Person p in sycamorePersons)
+                foreach (Person p in _businessLayer.lstSycamorePersons)
                 {
                     if (p.FullName.ToLower().CompareTo(fullName.ToLower()) == 0)
                     {
@@ -422,16 +422,80 @@ namespace ASX_Assign2
             return false;
         }
 
-        private bool addPersonToList(Person p, string community)
+        private void addPersonToList(Person p, string community)
         {
             if(community == "Dekalb")
-            {
-                dekalbPersons.Add(p);
-            }else if (community == "Sycamore")
-            {
-                sycamorePersons.Add(p);
+            { 
+                _businessLayer.lstDekalbPersons.Add(p);
+                return;
             }
-            return true;
+            else if (community == "Sycamore")
+            {
+                _businessLayer.lstSycamorePersons.Add(p);
+                return;
+            }
+        }
+
+        private uint getApartmentId(string srtAddr, string community)
+        {
+            string street, unit;
+
+            if (community == "Dekalb")
+            {
+                if (srtAddr.Contains("#"))
+                {
+                    //loop though, if streetAddr is same and unit number is same
+                    string[] addr = srtAddr.Split('#');
+                    street = addr[0];
+                    unit = addr[1];
+                    foreach(Apartment a in _businessLayer.lstDekalbApartments)
+                    {
+                        if((street == a.StreetAddr) && (unit == a.Unit))
+                        {
+                            return a.Id;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (House h in _businessLayer.lstDekalbHouses)
+                    {
+                        if (srtAddr == h.StreetAddr)
+                        {
+                            return h.Id;
+                        }
+                    }
+                }
+            }
+            else if (community == "Sycamore")
+            {
+                if (srtAddr.Contains("#"))
+                {
+                    //loop though, if streetAddr is same and unit number is same
+                    string[] addr = srtAddr.Split('#');
+                    street = addr[0];
+                    unit = addr[1];
+                    foreach (Apartment a in _businessLayer.lstSycamoreApartments)
+                    {
+                        if ((street == a.StreetAddr) && (unit == a.Unit))
+                        {
+                            return a.Id;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (House h in _businessLayer.lstSycamoreHouses)
+                    {
+                        if (srtAddr == h.StreetAddr)
+                        {
+                            return h.Id;
+                        }
+                    }
+                }
+
+            }
+            return 0;
         }
 
         #endregion
