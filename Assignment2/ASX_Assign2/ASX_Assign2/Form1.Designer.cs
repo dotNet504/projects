@@ -66,6 +66,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.attachedCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.add_res_groupBox.SuspendLayout();
             this.add_prop_groupBox.SuspendLayout();
@@ -303,6 +304,7 @@
             // 
             // add_prop_groupBox
             // 
+            this.add_prop_groupBox.Controls.Add(this.attachedCheckBox);
             this.add_prop_groupBox.Controls.Add(this.addProptButton);
             this.add_prop_groupBox.Controls.Add(this.garageCheckBox);
             this.add_prop_groupBox.Controls.Add(this.label10);
@@ -348,6 +350,7 @@
             this.garageCheckBox.TabIndex = 13;
             this.garageCheckBox.Text = "Garage?";
             this.garageCheckBox.UseVisualStyleBackColor = true;
+            this.garageCheckBox.CheckedChanged += new System.EventHandler(this.garageCheckBox_CheckedChanged);
             // 
             // label10
             // 
@@ -424,7 +427,6 @@
             0,
             0,
             0});
-            this.bathUpDown.ValueChanged += new System.EventHandler(this.bathUpDown_ValueChanged);
             // 
             // bedrmUpDown
             // 
@@ -566,6 +568,18 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.RemoveResident_click);
             // 
+            // attachedCheckBox
+            // 
+            this.attachedCheckBox.AutoSize = true;
+            this.attachedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attachedCheckBox.Location = new System.Drawing.Point(99, 198);
+            this.attachedCheckBox.Name = "attachedCheckBox";
+            this.attachedCheckBox.Size = new System.Drawing.Size(80, 19);
+            this.attachedCheckBox.TabIndex = 15;
+            this.attachedCheckBox.Text = "Attached?";
+            this.attachedCheckBox.UseVisualStyleBackColor = true;
+            this.attachedCheckBox.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -644,6 +658,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.CheckBox attachedCheckBox;
     }
 }
 

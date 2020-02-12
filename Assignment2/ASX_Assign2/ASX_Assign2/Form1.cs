@@ -252,7 +252,16 @@ namespace ASX_Assign2
         private void aptNoTextBox_TextChanged(object sender, EventArgs e)
         {
             //Disable garage and floors for apt(!empty).
-            //Enable garage and floors for apt(empty).
+            if(aptNoTextBox.Text.Length > 0)
+            {
+                garageCheckBox.Visible = false;
+                floorsUpDown.Enabled = false;
+            }          
+            else if (aptNoTextBox.Text.Length == 0)
+            {
+                garageCheckBox.Visible = true;
+                floorsUpDown.Enabled = true;
+            }
         }
 
         private void addNewResidentButton_Click(object sender, EventArgs e)
@@ -376,7 +385,7 @@ namespace ASX_Assign2
             decimal newFlr = 0;
             bool hasGarage = false;
             bool garageAttached = false;
-            string newApt = aptNoTextBox.Text; //try casting to int
+            string newApt = aptNoTextBox.Text;
 
 
             if (newApt.Length != 0)
@@ -385,16 +394,31 @@ namespace ASX_Assign2
                 if (garageCheckBox.Checked)
                 {
                     hasGarage = true;
-                    // if attached is checked
+                    if (attachedCheckBox.Checked)
+                    {
+                        garageAttached = true;
+                    }
                 }
             }
+            //Check if user selected a community, return error else
+            //Check if the address already exists
+            //write a method to refresh the ListBoxes after new resident or propt is added
         }
 
-        private void bathUpDown_ValueChanged(object sender, EventArgs e)
+        private void garageCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (garageCheckBox.Checked)
+            {
+                attachedCheckBox.Visible = true;
+            }
+            else
+            {
+                attachedCheckBox.Visible = false;
+            }
         }
-
+        //
+        // Helper methods
+        //
         private bool personExists(string fullName, string community)
         {
             if (community == "Dekalb")
@@ -497,6 +521,8 @@ namespace ASX_Assign2
             }
             return 0;
         }
+
+        
 
         #endregion
 
@@ -881,5 +907,7 @@ namespace ASX_Assign2
 
         }
         #endregion
+
+
     }
 }
