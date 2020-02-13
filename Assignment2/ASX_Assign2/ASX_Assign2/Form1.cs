@@ -121,6 +121,11 @@ namespace ASX_Assign2
             {
                 foreach (var item in CommunitiesList)
                 {
+                    /*foreach (var y in item.Residents)
+                    {
+                        var g = y.FirstName;
+                        var k = selPerson.Split(' ')[0];
+                    }*/
                     resident = item.Residents.Where(x => string.Equals(x.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase)).ToList();
                     if (resident.Count > 0)
                     {
@@ -495,6 +500,7 @@ namespace ASX_Assign2
             if (community == "Dekalb")
             {
                 _businessLayer.lstDekalbPersons.Add(p);
+                _businessLayer.Communities.FirstOrDefault(x => x.Name == "Dekalb").Residents.Add(p);
                 DisplayCommunityResults(_businessLayer.lstDekalbPersons,
                                         _businessLayer.lstDekalbHouses,
                                         _businessLayer.lstDekalbApartments, community);
@@ -503,6 +509,7 @@ namespace ASX_Assign2
             else if (community == "Sycamore")
             {
                 _businessLayer.lstSycamorePersons.Add(p);
+                _businessLayer.Communities.FirstOrDefault(x => x.Name == "Sycamore").Residents.Add(p);
                 DisplayCommunityResults(_businessLayer.lstSycamorePersons,
                                         _businessLayer.lstSycamoreHouses,
                                         _businessLayer.lstSycamoreApartments, community);

@@ -221,12 +221,12 @@
             // residenceComboBox
             // 
             this.residenceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.residenceComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.residenceComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.residenceComboBox.FormattingEnabled = true;
             this.residenceComboBox.Location = new System.Drawing.Point(13, 373);
             this.residenceComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.residenceComboBox.Name = "residenceComboBox";
-            this.residenceComboBox.Size = new System.Drawing.Size(454, 45);
+            this.residenceComboBox.Size = new System.Drawing.Size(454, 37);
             this.residenceComboBox.TabIndex = 9;
             // 
             // addNewResidentButton
