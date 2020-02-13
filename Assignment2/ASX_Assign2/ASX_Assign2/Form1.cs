@@ -141,6 +141,7 @@ namespace ASX_Assign2
                                                     + "), Occupation: " + resident[0].Occupation + ", who resides at:";
                         //sort the addresses here
                         prop = item.Props.Where(x => (resident[0].ResidenceIds.Contains(x.Id) || x.OwnerID == resident[0].Id)).ToList();
+                        prop.Reverse();
                         if (prop.Count > 0)
                         {
                             foreach (var p in prop)
