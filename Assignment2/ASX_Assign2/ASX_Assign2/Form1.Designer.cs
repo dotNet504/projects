@@ -83,7 +83,7 @@
             this.dekalbRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.dekalbRadioButton.ForeColor = System.Drawing.Color.White;
             this.dekalbRadioButton.Location = new System.Drawing.Point(22, 46);
-            this.dekalbRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dekalbRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.dekalbRadioButton.Name = "dekalbRadioButton";
             this.dekalbRadioButton.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.dekalbRadioButton.Size = new System.Drawing.Size(132, 46);
@@ -99,7 +99,7 @@
             this.sycamoreRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.sycamoreRadioButton.ForeColor = System.Drawing.Color.White;
             this.sycamoreRadioButton.Location = new System.Drawing.Point(22, 96);
-            this.sycamoreRadioButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sycamoreRadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.sycamoreRadioButton.Name = "sycamoreRadioButton";
             this.sycamoreRadioButton.Padding = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.sycamoreRadioButton.Size = new System.Drawing.Size(168, 46);
@@ -139,9 +139,9 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(10, 48);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(492, 162);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
@@ -154,7 +154,7 @@
             this.personListBox.IntegralHeight = false;
             this.personListBox.ItemHeight = 27;
             this.personListBox.Location = new System.Drawing.Point(1044, 77);
-            this.personListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.personListBox.Margin = new System.Windows.Forms.Padding(4);
             this.personListBox.Name = "personListBox";
             this.personListBox.Size = new System.Drawing.Size(456, 866);
             this.personListBox.TabIndex = 9;
@@ -167,7 +167,7 @@
             this.residenceListBox.IntegralHeight = false;
             this.residenceListBox.ItemHeight = 27;
             this.residenceListBox.Location = new System.Drawing.Point(1537, 77);
-            this.residenceListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.residenceListBox.Margin = new System.Windows.Forms.Padding(4);
             this.residenceListBox.Name = "residenceListBox";
             this.residenceListBox.Size = new System.Drawing.Size(532, 866);
             this.residenceListBox.TabIndex = 10;
@@ -179,7 +179,7 @@
             this.outputRichTextBox.Font = new System.Drawing.Font("Courier New", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputRichTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.outputRichTextBox.Location = new System.Drawing.Point(8, 969);
-            this.outputRichTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.outputRichTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.outputRichTextBox.Name = "outputRichTextBox";
             this.outputRichTextBox.Size = new System.Drawing.Size(2061, 231);
             this.outputRichTextBox.TabIndex = 11;
@@ -211,9 +211,9 @@
             this.add_res_groupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.add_res_groupBox.ForeColor = System.Drawing.Color.White;
             this.add_res_groupBox.Location = new System.Drawing.Point(8, 308);
-            this.add_res_groupBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.add_res_groupBox.Margin = new System.Windows.Forms.Padding(6);
             this.add_res_groupBox.Name = "add_res_groupBox";
-            this.add_res_groupBox.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.add_res_groupBox.Padding = new System.Windows.Forms.Padding(6);
             this.add_res_groupBox.Size = new System.Drawing.Size(494, 506);
             this.add_res_groupBox.TabIndex = 13;
             this.add_res_groupBox.TabStop = false;
@@ -222,10 +222,10 @@
             // residenceComboBox
             // 
             this.residenceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.residenceComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.residenceComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.residenceComboBox.FormattingEnabled = true;
             this.residenceComboBox.Location = new System.Drawing.Point(12, 373);
-            this.residenceComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.residenceComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.residenceComboBox.Name = "residenceComboBox";
             this.residenceComboBox.Size = new System.Drawing.Size(454, 37);
             this.residenceComboBox.TabIndex = 9;
@@ -235,7 +235,7 @@
             this.addNewResidentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addNewResidentButton.ForeColor = System.Drawing.Color.Black;
             this.addNewResidentButton.Location = new System.Drawing.Point(344, 437);
-            this.addNewResidentButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.addNewResidentButton.Margin = new System.Windows.Forms.Padding(6);
             this.addNewResidentButton.Name = "addNewResidentButton";
             this.addNewResidentButton.Size = new System.Drawing.Size(118, 46);
             this.addNewResidentButton.TabIndex = 8;
@@ -267,10 +267,11 @@
             // 
             // occupationTextBox
             // 
-            this.occupationTextBox.Location = new System.Drawing.Point(12, 181);
-            this.occupationTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.occupationTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.occupationTextBox.Location = new System.Drawing.Point(12, 183);
+            this.occupationTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.occupationTextBox.Name = "occupationTextBox";
-            this.occupationTextBox.Size = new System.Drawing.Size(452, 43);
+            this.occupationTextBox.Size = new System.Drawing.Size(452, 34);
             this.occupationTextBox.TabIndex = 4;
             this.occupationTextBox.Tag = "";
             // 
@@ -290,7 +291,7 @@
             this.bdayDateTimePicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bdayDateTimePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bdayDateTimePicker.Location = new System.Drawing.Point(12, 281);
-            this.bdayDateTimePicker.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.bdayDateTimePicker.Margin = new System.Windows.Forms.Padding(6);
             this.bdayDateTimePicker.Name = "bdayDateTimePicker";
             this.bdayDateTimePicker.Size = new System.Drawing.Size(452, 34);
             this.bdayDateTimePicker.TabIndex = 2;
@@ -309,11 +310,13 @@
             // 
             // nameTextBox
             // 
+            this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameTextBox.Location = new System.Drawing.Point(12, 96);
-            this.nameTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.nameTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(448, 43);
+            this.nameTextBox.Size = new System.Drawing.Size(448, 34);
             this.nameTextBox.TabIndex = 0;
+            this.nameTextBox.TabStop = false;
             this.nameTextBox.Tag = "";
             // 
             // add_prop_groupBox
@@ -336,9 +339,9 @@
             this.add_prop_groupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.add_prop_groupBox.ForeColor = System.Drawing.Color.White;
             this.add_prop_groupBox.Location = new System.Drawing.Point(556, 308);
-            this.add_prop_groupBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.add_prop_groupBox.Margin = new System.Windows.Forms.Padding(6);
             this.add_prop_groupBox.Name = "add_prop_groupBox";
-            this.add_prop_groupBox.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.add_prop_groupBox.Padding = new System.Windows.Forms.Padding(6);
             this.add_prop_groupBox.Size = new System.Drawing.Size(458, 506);
             this.add_prop_groupBox.TabIndex = 14;
             this.add_prop_groupBox.TabStop = false;
@@ -349,7 +352,7 @@
             this.addProptButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addProptButton.ForeColor = System.Drawing.Color.Black;
             this.addProptButton.Location = new System.Drawing.Point(312, 438);
-            this.addProptButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.addProptButton.Margin = new System.Windows.Forms.Padding(6);
             this.addProptButton.Name = "addProptButton";
             this.addProptButton.Size = new System.Drawing.Size(114, 44);
             this.addProptButton.TabIndex = 14;
@@ -362,7 +365,7 @@
             this.attachedCheckBox.AutoSize = true;
             this.attachedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F);
             this.attachedCheckBox.Location = new System.Drawing.Point(198, 381);
-            this.attachedCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.attachedCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.attachedCheckBox.Name = "attachedCheckBox";
             this.attachedCheckBox.Size = new System.Drawing.Size(169, 35);
             this.attachedCheckBox.TabIndex = 15;
@@ -375,7 +378,7 @@
             this.garageCheckBox.AutoSize = true;
             this.garageCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.garageCheckBox.Location = new System.Drawing.Point(12, 381);
-            this.garageCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.garageCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.garageCheckBox.Name = "garageCheckBox";
             this.garageCheckBox.Size = new System.Drawing.Size(151, 35);
             this.garageCheckBox.TabIndex = 13;
@@ -420,7 +423,7 @@
             // 
             this.floorsUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.floorsUpDown.Location = new System.Drawing.Point(292, 283);
-            this.floorsUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.floorsUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.floorsUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -444,7 +447,7 @@
             // 
             this.bathUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bathUpDown.Location = new System.Drawing.Point(166, 283);
-            this.bathUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.bathUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.bathUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -468,7 +471,7 @@
             // 
             this.bedrmUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bedrmUpDown.Location = new System.Drawing.Point(12, 285);
-            this.bedrmUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.bedrmUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.bedrmUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -508,7 +511,7 @@
             0,
             0});
             this.sqFtUpDown.Location = new System.Drawing.Point(12, 187);
-            this.sqFtUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.sqFtUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.sqFtUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -552,26 +555,28 @@
             // 
             // aptNoTextBox
             // 
+            this.aptNoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aptNoTextBox.Location = new System.Drawing.Point(340, 98);
-            this.aptNoTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.aptNoTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.aptNoTextBox.Name = "aptNoTextBox";
-            this.aptNoTextBox.Size = new System.Drawing.Size(68, 43);
+            this.aptNoTextBox.Size = new System.Drawing.Size(68, 34);
             this.aptNoTextBox.TabIndex = 1;
             this.aptNoTextBox.TextChanged += new System.EventHandler(this.aptNoTextBox_TextChanged);
             // 
             // streetAddrTextBox
             // 
+            this.streetAddrTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.streetAddrTextBox.Location = new System.Drawing.Point(12, 98);
-            this.streetAddrTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.streetAddrTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.streetAddrTextBox.Name = "streetAddrTextBox";
-            this.streetAddrTextBox.Size = new System.Drawing.Size(316, 43);
+            this.streetAddrTextBox.Size = new System.Drawing.Size(316, 34);
             this.streetAddrTextBox.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(736, 77);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(280, 50);
             this.button1.TabIndex = 15;
@@ -583,7 +588,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(736, 135);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(280, 50);
             this.button2.TabIndex = 16;
@@ -595,7 +600,7 @@
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.Location = new System.Drawing.Point(736, 190);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(280, 50);
             this.button3.TabIndex = 17;
@@ -607,7 +612,7 @@
             // 
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(736, 246);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(280, 50);
             this.button4.TabIndex = 18;
@@ -634,7 +639,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.residenceLabel);
             this.Controls.Add(this.personLabel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "ASX\' Real Estate Management Application";
             this.Load += new System.EventHandler(this.Form1_Load);

@@ -69,7 +69,6 @@ namespace ASX_Assign2
         {
             dekalbHouses = _businessLayer.lstDekalbHouses;
             dekalbApartments = _businessLayer.lstDekalbApartments;
-            //RadioButton dekalbButton = (RadioButton)sender;
             DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments, "Dekalb");
 
         }
@@ -109,9 +108,7 @@ namespace ASX_Assign2
             {
                 //add houses to the residenceListBox
                 residenceListBox.Items.Add(String.Format("{0,25} {1}",
-                    details.StreetAddr, (details.ForSale ? "*" : "")));
-                //residenceListBox.Items.Add(String.Format("{0} {1}",
-                //    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));                
+                    details.StreetAddr, (details.ForSale ? "*" : "")));                              
 
                 //add houses to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));

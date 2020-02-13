@@ -98,7 +98,7 @@ namespace DataLoader
                                 }
                                 else
                                 {
-                                    throw new ArgumentNullException("Error:the address of house has beed inputted");
+                                    throw new ArgumentNullException("Error:the address of house has been inputted");
                                 }
                             }
                             else
