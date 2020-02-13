@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace ASX_Assign2
 {
     public partial class Form1 : Form
@@ -432,9 +433,37 @@ namespace ASX_Assign2
                     uint resID = getApartmentId(newStreetAddr, presentCommunity);
 
                     //add resident to the person list
-                    string[] newPerson = { "9999" , newLast, newFirst, newOccu, newBday.Year.ToString(),
-                                             newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
 
+                    //
+                    //generate a new ID for the new person
+                    //
+                    Random rand = new Random();
+                    bool newPersonIDValid = false;
+                    List<Person> personSelected = null;
+                    int newPersonID = rand.Next(2000);
+                    while (newPersonIDValid ==false) //make sure the id is unique
+                    {
+                        newPersonID = rand.Next(2000);
+                        foreach (var item in CommunitiesList)  
+                        {
+                            if (item.Name == presentCommunity)
+                            {
+                                personSelected = item.Residents.Where(x => x.Id.Equals(newPersonID)).ToList();
+                            }
+
+                        }
+                        if(personSelected.Count ==0)
+                        {
+                            newPersonIDValid = true;
+                        }
+                    }
+                    //
+                    //a new ID is generatered.
+                    //
+
+                    string[] newPerson = { newPersonID.ToString() , newLast, newFirst, newOccu, newBday.Year.ToString(),
+                                             newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
+                    MessageBox.Show(newPersonID.ToString());
                     Person p = new Person(newPerson);
                     addPersonToList(p, presentCommunity);
 
