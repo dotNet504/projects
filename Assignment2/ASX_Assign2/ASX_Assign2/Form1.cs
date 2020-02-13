@@ -229,7 +229,7 @@ namespace ASX_Assign2
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
-                                                                res.FirstName,
+                                                                res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
@@ -245,7 +245,7 @@ namespace ASX_Assign2
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
-                                                                res.FirstName,
+                                                                res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
@@ -284,7 +284,7 @@ namespace ASX_Assign2
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
-                                                                res.FirstName,
+                                                                res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
@@ -299,7 +299,7 @@ namespace ASX_Assign2
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
-                                                                res.FirstName,
+                                                                res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
