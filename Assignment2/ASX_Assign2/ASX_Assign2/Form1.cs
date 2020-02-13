@@ -1,4 +1,16 @@
-﻿using DataLoader;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 2					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form1
+ *  Purpose   : Windows application that displays the property details of Dekalb & Sycamore Communities. *
+ *********************************************************************************************************/
+
+using DataLoader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
