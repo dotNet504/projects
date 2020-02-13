@@ -59,7 +59,6 @@ namespace ASX_Assign2
 
             outputRichTextBox.Text = "There are " + dekalbPersons.Count() + " people living in Dekalb.\n";
             outputRichTextBox.Text += "There are " + sycamorePersons.Count() + " people living in Sycamore.";
-            // Create method in Business Layer and use in this form for future re-usability
         }
         #endregion
 
@@ -109,8 +108,13 @@ namespace ASX_Assign2
             foreach (House details in housesList)
             {
                 //add houses to the residenceListBox
-                residenceListBox.Items.Add(String.Format("{0} {1}",
-                    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));
+                residenceListBox.Items.Add(String.Format("{0,25} {1}",
+                    details.StreetAddr, (details.ForSale ? "*" : "")));
+                //residenceListBox.Items.Add(String.Format("{0} {1}",
+                //    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));
+                //residenceListBox.ColumnWidth = 20;
+                //residenceListBox.Items.Add(details.StreetAddr.PadLeft(40 - details.StreetAddr.Length)
+                //                            + " " + (details.ForSale ? "*" : ""));
 
                 //add houses to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
@@ -251,7 +255,7 @@ namespace ASX_Assign2
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
+                                                                res.Occupation.PadLeft(30 - res.Occupation.Length).TrimEnd()) + "\n";
 
 
 
@@ -267,7 +271,7 @@ namespace ASX_Assign2
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
+                                                                res.Occupation.PadLeft(30 - res.Occupation.Length).TrimEnd()) + "\n";
 
                                 }
                             }
@@ -303,7 +307,7 @@ namespace ASX_Assign2
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
+                                                                res.Occupation.PadLeft(35 - res.Occupation.Length).TrimEnd()) + "\n";
 
                                 }
                             }
@@ -318,7 +322,7 @@ namespace ASX_Assign2
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
+                                                                res.Occupation.PadLeft(35 - res.Occupation.Length).TrimEnd()) + "\n";
 
                                 }
                             }
