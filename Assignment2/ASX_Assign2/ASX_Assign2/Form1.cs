@@ -501,6 +501,8 @@ namespace ASX_Assign2
             {
                 _businessLayer.lstDekalbPersons.Add(p);
                 _businessLayer.Communities.FirstOrDefault(x => x.Name == "Dekalb").Residents.Add(p);
+
+                _businessLayer.lstDekalbPersons.Sort(new BusinessLayer.PersonComparer());//sort the people in the _businessLayer.lstDekalbPersons
                 DisplayCommunityResults(_businessLayer.lstDekalbPersons,
                                         _businessLayer.lstDekalbHouses,
                                         _businessLayer.lstDekalbApartments, community);
@@ -510,6 +512,7 @@ namespace ASX_Assign2
             {
                 _businessLayer.lstSycamorePersons.Add(p);
                 _businessLayer.Communities.FirstOrDefault(x => x.Name == "Sycamore").Residents.Add(p);
+                _businessLayer.lstSycamorePersons.Sort(new BusinessLayer.PersonComparer()); // sort the people in the _businessLayer.lstDekalbPersons
                 DisplayCommunityResults(_businessLayer.lstSycamorePersons,
                                         _businessLayer.lstSycamoreHouses,
                                         _businessLayer.lstSycamoreApartments, community);
