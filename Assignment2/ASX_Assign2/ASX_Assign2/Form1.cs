@@ -24,8 +24,11 @@ using System.Windows.Forms;
 
 namespace ASX_Assign2
 {
+
+    #region - Swathi's code
     public partial class Form1 : Form
     {
+        //Declaration of variables
         private BusinessLayer _businessLayer;
         private List<Person> dekalbPersons;
         private List<House> dekalbHouses;
@@ -38,6 +41,8 @@ namespace ASX_Assign2
         private const string hyphen = "-------------";
         private const string apartmentVal = "Apartments:";
 
+        #region - constructor
+        //Constructor - initialization of Dekalb and Sycamore communities
         public Form1()
         {
             InitializeComponent();
@@ -56,9 +61,11 @@ namespace ASX_Assign2
             outputRichTextBox.Text += "There are " + sycamorePersons.Count() + " people living in Sycamore.";
             // Create method in Business Layer and use in this form for future re-usability
         }
+        #endregion
 
 
-        #region Swathi's code
+        #region DekalbButton_CheckedChanged
+        //DekalbButton_CheckedChanged called when Dekalb button is clicked 
         private void DekalbButton_CheckedChanged(object sender, EventArgs e)
         {
             dekalbHouses = _businessLayer.lstDekalbHouses;
@@ -67,18 +74,23 @@ namespace ASX_Assign2
             DisplayCommunityResults(dekalbPersons, dekalbHouses, dekalbApartments, "Dekalb");
 
         }
+        #endregion
 
+        #region SycamoreButton_CheckedChanged
+        //SycamoreButton_CheckedChanged - called when Sycamore button is clicked
         private void SycamoreButton_CheckedChanged(object sender, EventArgs e)
         {
             sycamoreHouses = _businessLayer.lstSycamoreHouses;
             sycamoreApartments = _businessLayer.lstSycamoreApartments;
             DisplayCommunityResults(sycamorePersons, sycamoreHouses, sycamoreApartments, "Sycamore");
         }
+        #endregion
 
+        #region DisplayCommunityResults
+        //Reusable method to display the results in Person and Residence listboxes along with output
         private void DisplayCommunityResults(List<Person> personList, List<House> housesList,
                                             List<Apartment> apartmentsList, String selButton)
         {
-            //Sorting of persons - pending
             personListBox.Items.Clear();
             foreach (Person details in personList)
             {
@@ -90,17 +102,17 @@ namespace ASX_Assign2
             residenceListBox.Items.Add(houseVal);
             residenceListBox.Items.Add(hyphen);
 
-            //add house-data to the residenceComboBox --> Abdul
+            //add house-data to the residenceComboBox
             residenceComboBox.Items.Clear();
             residenceComboBox.Items.Add(houseVal);
             residenceComboBox.Items.Add(hyphen);
             foreach (House details in housesList)
             {
-                //add houses to the residenceListBox --> Abdul
+                //add houses to the residenceListBox
                 residenceListBox.Items.Add(String.Format("{0} {1}",
                     details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));
 
-                //add houses to the residenceComboBox --> Abdul
+                //add houses to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
             }
             // Add apartment-data to the residenceListBox
@@ -124,7 +136,10 @@ namespace ASX_Assign2
             }
             outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
         }
+        #endregion
 
+        #region personSelectionChanged
+        //This method is called when the person is selected in the listbox.
         private void personSelectionChanged(object sender, EventArgs e)
         {
             string selPerson = personListBox.GetItemText(personListBox.SelectedItem);
@@ -133,7 +148,7 @@ namespace ASX_Assign2
             if (selPerson != null && selPerson != "")
             {
                 foreach (var item in CommunitiesList)
-                {                   
+                {
                     resident = item.Residents.Where(x => string.Equals(x.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase)).ToList();
                     if (resident.Count > 0)
                     {
@@ -156,7 +171,10 @@ namespace ASX_Assign2
                 outputRichTextBox.Text += "\n\n### END OUTPUT ###";
             }
         }
+        #endregion
 
+        #region residenceSelectionChanged
+        //This method is called when the resident is selected in the Residence listbox.
         private void residenceSelectionChanged(object sender, EventArgs e)
         {
             string communityVal;
@@ -179,7 +197,7 @@ namespace ASX_Assign2
                     {
                         List<Apartment> lstApt = new List<Apartment>();
                         if (selResidence.Contains("#"))
-                        {                            
+                        {
                             if (communityVal == "Dekalb")
                             {
                                 lstApt = dekalbApartments.Where
@@ -208,9 +226,7 @@ namespace ASX_Assign2
                             resident = item.Residents
                                 .Where(x => (x.ResidenceIds.Contains(prop[0].Id))).ToList();
 
-                            //resident = item.Residents
-                            //    .Where(x => (x.Id == prop[0].OwnerID || x.ResidenceIds.Contains(prop[0].Id))).ToList();
-                            if ((landlord.Count==0) && (resident.Count == 0) )
+                            if ((landlord.Count == 0) && (resident.Count == 0))
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
@@ -218,17 +234,17 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
 
-                            else if ((landlord.Count > 0) && (resident.Count == 0) )
+                            else if ((landlord.Count > 0) && (resident.Count == 0))
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
-                            else if ((landlord.Count == 0) && (resident.Count > 0) )
+                            else if ((landlord.Count == 0) && (resident.Count > 0))
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
-                                                        + ", owned by " +  ":";
+                                                        + ", owned by " + ":";
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
@@ -237,7 +253,7 @@ namespace ASX_Assign2
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
                                                                 res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
 
-                                    
+
 
                                 }
                             }
@@ -258,9 +274,6 @@ namespace ASX_Assign2
                         }
                         if (lstApt.Count > 0)
                         {
-                            //resident = item.Residents
-                                //.Where(x => (x.Id == lstApt[0].OwnerID || x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
-                            
                             landlord = item.Residents
                                 .Where(x => (x.Id == lstApt[0].OwnerID)).ToList();
                             resident = item.Residents
@@ -317,6 +330,7 @@ namespace ASX_Assign2
 
         }
         #endregion
+        #endregion
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -330,8 +344,9 @@ namespace ASX_Assign2
             this.Controls.Add(flowPanel);
 
         }
-       
+
         #region Abdul's code
+        //Method called when apartment number text box is changed
         private void aptNoTextBox_TextChanged(object sender, EventArgs e)
         {
             //Disable garage and floors for apt(!empty).
@@ -347,6 +362,7 @@ namespace ASX_Assign2
             }
         }
 
+        //Method called when Add New Resident button is clicked
         private void addNewResidentButton_Click(object sender, EventArgs e)
         {
             string newName = nameTextBox.Text;
@@ -371,7 +387,7 @@ namespace ASX_Assign2
                 {
                     //error message
                     nameError = true;
-                    outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
+                    outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain " +
                          "First-Name space then Last-Name e.g John Doe)";
                 }
             }
@@ -379,7 +395,7 @@ namespace ASX_Assign2
             {
                 //error message
                 nameError = true;
-                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
+                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain " +
                     "First-Name space then Last-Name e.g John Doe)";
             }
 
@@ -390,7 +406,7 @@ namespace ASX_Assign2
             {
                 //error message
                 nameError = true;
-                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
+                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain " +
                     "First-Name space then Last-Name e.g John Doe)";
             }
 
@@ -449,11 +465,11 @@ namespace ASX_Assign2
                     Random rand = new Random();
                     bool newPersonIDValid = false;
                     List<Person> personSelected = null;
-                    int newPersonID = rand.Next(1,2000);
-                    while (newPersonIDValid ==false) //make sure the id is unique
+                    int newPersonID = rand.Next(1, 2000);
+                    while (newPersonIDValid == false) //make sure the id is unique
                     {
-                        newPersonID = rand.Next(1,2000);
-                        foreach (var item in CommunitiesList)  
+                        newPersonID = rand.Next(1, 2000);
+                        foreach (var item in CommunitiesList)
                         {
                             if (item.Name == presentCommunity)
                             {
@@ -461,7 +477,7 @@ namespace ASX_Assign2
                             }
 
                         }
-                        if(personSelected.Count ==0)
+                        if (personSelected.Count == 0)
                         {
                             newPersonIDValid = true;
                         }
@@ -495,6 +511,7 @@ namespace ASX_Assign2
             }
         }
 
+        //Method called when Add Property button is clicked
         private void addProptButton_Click(object sender, EventArgs e)
         {
             string newStrAddr = streetAddrTextBox.Text;
@@ -524,11 +541,12 @@ namespace ASX_Assign2
                 return;
             }
 
-            if ( (strInfo.Length != 3) || !(strInfo[0].All(char.IsDigit)) )
+            if ((strInfo.Length != 3) || !(strInfo[0].All(char.IsDigit)))
             {
                 outputRichTextBox.Text = "ERROR: Please enter a valid street Address!";
                 return;
-            }else if (!(strInfo[2].Length > 0))
+            }
+            else if (!(strInfo[2].Length > 0))
             {
                 outputRichTextBox.Text = "ERROR: Please enter a valid street Address!";
                 return;
@@ -549,7 +567,7 @@ namespace ASX_Assign2
 
 
             //Check if the address already exists
-           if( propertyExists(newStrAddr, newApt, presentCommunity))
+            if (propertyExists(newStrAddr, newApt, presentCommunity))
             {
                 outputRichTextBox.Text = "ERROR: This property already exists!";
                 return;
@@ -562,7 +580,7 @@ namespace ASX_Assign2
                 Random rand = new Random();
                 bool newPropertyIDValid = false;
                 List<Property> PropertySelected = null;
-                int newPropertyID = rand.Next(10000,99999);
+                int newPropertyID = rand.Next(10000, 99999);
                 while (newPropertyIDValid == false) //make sure the id is unique
                 {
                     newPropertyID = rand.Next(10000, 99999);
@@ -590,9 +608,8 @@ namespace ASX_Assign2
                 string[] aptArray = { newPropertyID.ToString(), "99999", "98", "50" , newStrAddr,
                                               presentCommunity, "Illinois", "60505",
                                            "T",newBedrm.ToString(), newBath.ToString(),newSqFt.ToString(),
-                                            }; //12
+                                            };
 
-                
                 List<string> newProperty = aptArray.ToList();
                 if (newFlr > 0)
                 {
@@ -606,13 +623,14 @@ namespace ASX_Assign2
                     newProperty.Add(newApt);
                     addPropertyToList(newProperty.ToArray(), true, presentCommunity);
                 }
-                outputRichTextBox.Text = "Success! A new property at # has been added to "+ presentCommunity +"!";
+                outputRichTextBox.Text = "Success! A new property at # has been added to " + presentCommunity + "!";
 
             }
 
-            
+
         }
 
+        //Method called when Garage Checkbox is selected
         private void garageCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (garageCheckBox.Checked)
@@ -624,6 +642,7 @@ namespace ASX_Assign2
                 attachedCheckBox.Visible = false;
             }
         }
+
         //
         // Helper methods
         //
@@ -654,6 +673,7 @@ namespace ASX_Assign2
             return false;
         }
 
+        //Reusable method to add new person to the list
         private void addPersonToList(Person p, string community)
         {
             if (community == "Dekalb")
@@ -671,7 +691,7 @@ namespace ASX_Assign2
             {
                 _businessLayer.lstSycamorePersons.Add(p);
                 _businessLayer.Communities.FirstOrDefault(x => x.Name == "Sycamore").Residents.Add(p);
-                _businessLayer.lstSycamorePersons.Sort(new BusinessLayer.PersonComparer()); 
+                _businessLayer.lstSycamorePersons.Sort(new BusinessLayer.PersonComparer());
                 DisplayCommunityResults(_businessLayer.lstSycamorePersons,
                                         _businessLayer.lstSycamoreHouses,
                                         _businessLayer.lstSycamoreApartments, community);
@@ -679,7 +699,8 @@ namespace ASX_Assign2
             }
         }
 
-        private void addPropertyToList(string [] arr, bool isApt, string community)
+        //Reusable method to add property to the list
+        private void addPropertyToList(string[] arr, bool isApt, string community)
         {
             if (community == "Dekalb")
             {
@@ -689,7 +710,8 @@ namespace ASX_Assign2
                     _businessLayer.lstDekalbApartments.Add(a);
                     _businessLayer.Communities.FirstOrDefault(x => x.Name == "Dekalb").Props.Add(a);
                     _businessLayer.lstDekalbApartments.Sort(new PropertyComparer());
-                } else
+                }
+                else
                 {
                     House house = new House(arr);
                     _businessLayer.lstDekalbHouses.Add(house);
@@ -724,6 +746,7 @@ namespace ASX_Assign2
             }
         }
 
+        //Method to get the apartment Id
         private uint getApartmentId(string srtAddr, string community)
         {
             string street, unit;
@@ -786,6 +809,7 @@ namespace ASX_Assign2
             return 0;
         }
 
+        //Method used to check if the property already exists
         private bool propertyExists(string newStrAddr, string newApt, string community)
         {
             //dismatle newStrAddr
@@ -804,11 +828,12 @@ namespace ASX_Assign2
                         }
                         if (a.StreetAddr.ToLower().CompareTo(newStrAddr.ToLower()) == 0)
                         {
-                            if(a.Unit.ToLower().CompareTo(newApt.ToLower()) == 0)
+                            if (a.Unit.ToLower().CompareTo(newApt.ToLower()) == 0)
                                 return true;
                         }
                     }
-                } else
+                }
+                else
                 {
                     foreach (House house in _businessLayer.lstDekalbHouses)
                     {
@@ -874,7 +899,7 @@ namespace ASX_Assign2
         //  return the list<person> which includes selected person in the personListBox
         private List<Person> SearchSelectedPerson()
         {
-            List<Person> personSelected = null;        
+            List<Person> personSelected = null;
             string communityName = null; //record the commuynity name, eg.Dekalb or sycamore
             string[] personStringArr = personListBox.SelectedItem.ToString().Split();
             string personFirstName = null; //record the first name in the personListBox
@@ -935,7 +960,7 @@ namespace ASX_Assign2
                             {
                                 Apartment temp = (Apartment)apt_temp;
 
-                                if ((temp.Unit == addressByUnit) && (addressByStreetNum.CompareTo(temp.StreetAddr))==0)
+                                if ((temp.Unit == addressByUnit) && (addressByStreetNum.CompareTo(temp.StreetAddr)) == 0)
                                 {
 
                                     apartmentID = temp.Id;
@@ -999,7 +1024,7 @@ namespace ASX_Assign2
             {
                 foreach (var p_temp in personRemoveResident_lst)
                 {
-                    p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);                    
+                    p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);
                 }
                 outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + "!";
             }
@@ -1009,7 +1034,7 @@ namespace ASX_Assign2
         // After user selects a person and a property,
         //         then click the Add Resident button,
         //         the id of property is added to the residnet list of the person
-        
+
         private void AddResident_click(object sender, EventArgs e)
         {
             // if user selects wrong thing(s), return message and quit this method
@@ -1109,7 +1134,7 @@ namespace ASX_Assign2
             prop_forToggle = SearchSelectedProperty();
 
             // if one property is selected,change the forsale variable and then output the message
-            if (prop_forToggle.Count ==1 )
+            if (prop_forToggle.Count == 1)
             {
                 foreach (var p_temp in prop_forToggle)
                 {
@@ -1118,19 +1143,15 @@ namespace ASX_Assign2
                         var f = residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim();
                         var j = residenceListBox.Items[residenceListBox.SelectedIndex];
                         p_temp.ForSale = !p_temp.ForSale;
-                        //MessageBox.Show("this is not for sale now!!:( SAd");
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
                         outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().Trim() + " is not for sale now.";
                     }
                     else
                     {
                         p_temp.ForSale = !p_temp.ForSale;
-                        //MessageBox.Show("this is for sale:( Nice!");
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString() + "*";
                         outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + " is now listed FOR SALE!";
                     }
-                    //MessageBox.Show(prop_forToggle.Count.ToString());
-
                 }
             }
         }
