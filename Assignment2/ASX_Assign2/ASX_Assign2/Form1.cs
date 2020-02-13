@@ -70,7 +70,7 @@ namespace ASX_Assign2
             foreach (Person details in personList)
             {
                 personListBox.Items.Add(String.Format("{0} \t{1}  {2}",
-                    details.FirstName, BusinessLayer.GetAge(details.Birthday), details.Occupation));
+                    details.FirstName, BusinessLayer.GetAge(details.Birthday), details.ToString()));
             }
             //add house-data to the residenceListBox
             residenceListBox.Items.Clear();
@@ -259,12 +259,7 @@ namespace ASX_Assign2
             this.Controls.Add(flowPanel);
 
         }
-        public override string ToString()
-        {
-            //todo
-            return base.ToString();
-        }
-
+       
         #region Abdul's code
         private void aptNoTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -390,6 +385,7 @@ namespace ASX_Assign2
                     residenceComboBox.ResetText();
                     bdayDateTimePicker.ResetText();
 
+
                 }
             }
         }
@@ -487,11 +483,17 @@ namespace ASX_Assign2
             if (community == "Dekalb")
             {
                 _businessLayer.lstDekalbPersons.Add(p);
+                DisplayCommunityResults(_businessLayer.lstDekalbPersons,
+                                        _businessLayer.lstDekalbHouses,
+                                        _businessLayer.lstDekalbApartments, community);
                 return;
             }
             else if (community == "Sycamore")
             {
                 _businessLayer.lstSycamorePersons.Add(p);
+                DisplayCommunityResults(_businessLayer.lstSycamorePersons,
+                                        _businessLayer.lstSycamoreHouses,
+                                        _businessLayer.lstSycamoreApartments, community);
                 return;
             }
         }
@@ -854,6 +856,20 @@ namespace ASX_Assign2
         }
         #endregion
 
+        /**public void displayPersonDetails(List<Person> personsList)
+        {
+            personListBox.Items.Clear();
+            foreach (Person details in personsList)
+            {
+                personListBox.Items.Add(String.Format("{0} \t{1}  {2}",
+                    details.FirstName, BusinessLayer.GetAge(details.Birthday), details.ToString()));
+            }
+        }
+
+        public void displayPropertyDetails(List<Community> communityList)
+        {
+
+        }**/
 
     }
 }

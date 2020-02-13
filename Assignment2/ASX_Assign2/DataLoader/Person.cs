@@ -39,13 +39,15 @@ namespace DataLoader
         // Stringifies object in a well, 
         //     formatted way.
         public override string ToString()
-        {
-            string ret = String.Format("Id         : {0 , -10 }\n", id);
+        { 
+            /*string ret = String.Format("Id         : {0 , -10 }\n", id);
             ret += String.Format("FirstName  : {0}\n", FirstName);
             ret += String.Format("LastName   : {0}\n", LastName);
-            ret += String.Format("Occupation : {0}\n", Occupation);
+            ret += String.Format("Occupation : {0}\n", this.Occupation.Length <= 11 ? this.Occupation : this.Occupation.Substring(0, 11) + "...");
             ret += String.Format("Birthday   : {0}\n", Birthday);
-            return ret;
+            return ret;*/
+             return this.Occupation.Length <= 11 ? this.Occupation : this.Occupation.Substring(0, 11) + "...";
+
         }
 
         //Default constructor
@@ -139,7 +141,8 @@ namespace DataLoader
 
         // get-only property for lastName
         //  and firstName concatenate
-        public string FullName => LastName + ", " + FirstName;        
+        public string FullName => LastName + ", " + FirstName;
 
+        
     }
 }
