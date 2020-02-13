@@ -111,10 +111,7 @@ namespace ASX_Assign2
                 residenceListBox.Items.Add(String.Format("{0,25} {1}",
                     details.StreetAddr, (details.ForSale ? "*" : "")));
                 //residenceListBox.Items.Add(String.Format("{0} {1}",
-                //    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));
-                //residenceListBox.ColumnWidth = 20;
-                //residenceListBox.Items.Add(details.StreetAddr.PadLeft(40 - details.StreetAddr.Length)
-                //                            + " " + (details.ForSale ? "*" : ""));
+                //    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));                
 
                 //add houses to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
@@ -252,10 +249,10 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2,30}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadLeft(30 - res.Occupation.Length).TrimEnd()) + "\n";
+                                                                res.Occupation.TrimEnd()) + "\n";
 
 
 
@@ -268,10 +265,10 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2,30}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadLeft(30 - res.Occupation.Length).TrimEnd()) + "\n";
+                                                                res.Occupation.TrimEnd()) + "\n";
 
                                 }
                             }
@@ -304,10 +301,10 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2,30}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadLeft(35 - res.Occupation.Length).TrimEnd()) + "\n";
+                                                                res.Occupation.TrimEnd()) + "\n";
 
                                 }
                             }
@@ -319,10 +316,10 @@ namespace ASX_Assign2
                                 outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2,30}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation.PadLeft(35 - res.Occupation.Length).TrimEnd()) + "\n";
+                                                                res.Occupation.TrimEnd()) + "\n";
 
                                 }
                             }
