@@ -39,7 +39,7 @@ namespace DataLoader
         //     formatted way.
         public override string ToString()
         {             
-             return this.Occupation.Length <= 13 ? this.Occupation : this.Occupation.Substring(0, 11) + "...";
+             return this.Occupation.Length < 13 ? this.Occupation : this.Occupation.Substring(0, 11) + "...";
 
         }
 

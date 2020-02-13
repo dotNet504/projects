@@ -96,7 +96,7 @@ namespace ASX_Assign2
             residenceListBox.Items.Add(apartmentVal);
             residenceListBox.Items.Add(hyphen);
 
-            // Add apartment-data to the residenceComboBox --> Abdul
+            // Add apartment-data to the residenceComboBox
             residenceComboBox.Items.Add("");
             residenceComboBox.Items.Add(apartmentVal);
             residenceComboBox.Items.Add(hyphen);
@@ -106,7 +106,7 @@ namespace ASX_Assign2
                 residenceListBox.Items.Add(String.Format("{0} # {1} {2}",
                     details.StreetAddr.PadLeft(38 - details.StreetAddr.Length), details.Unit, (details.ForSale ? "*" : "")));
 
-                //add apartments to the residenceComboBox --> Abdul
+                //add apartments to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
                     details.Unit));
             }
@@ -121,12 +121,7 @@ namespace ASX_Assign2
             if (selPerson != null && selPerson != "")
             {
                 foreach (var item in CommunitiesList)
-                {
-                    /*foreach (var y in item.Residents)
-                    {
-                        var g = y.FirstName;
-                        var k = selPerson.Split(' ')[0];
-                    }*/
+                {                   
                     resident = item.Residents.Where(x => string.Equals(x.FirstName, selPerson.Split(' ')[0], StringComparison.CurrentCultureIgnoreCase)).ToList();
                     if (resident.Count > 0)
                     {
@@ -171,11 +166,7 @@ namespace ASX_Assign2
                     {
                         List<Apartment> lstApt = new List<Apartment>();
                         if (selResidence.Contains("#"))
-                        {
-                            //var m = selResidence.Split('#')[1].Trim();
-                            //var t = selResidence.Split('#')[0];
-                            //var g = selResidence.Split('#')[0].Trim();
-                            //var f = selResidence.Split('#')[0].Split(' ')[0];
+                        {                            
                             if (communityVal == "Dekalb")
                             {
                                 lstApt = dekalbApartments.Where
@@ -210,7 +201,7 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
 
@@ -218,20 +209,20 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + landlord[0].FullName + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
                             else if ((landlord.Count == 0) && (resident.Count > 0) )
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " +  ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation) + "\n";
+                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
 
                                     
 
@@ -241,13 +232,13 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                             + ", owned by " + landlord[0].FullName + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation) + "\n";
+                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
 
                                 }
                             }
@@ -265,7 +256,7 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
 
@@ -273,20 +264,20 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + landlord[0].FullName + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
                             else if ((landlord.Count == 0) && (resident.Count > 0))
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation) + "\n";
+                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
 
                                 }
                             }
@@ -295,13 +286,13 @@ namespace ASX_Assign2
                             {
                                 outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                             + ", owned by " + landlord[0].FullName + ":";
-                                outputRichTextBox.Text += "\n------------------------------------------------------------\n";
+                                outputRichTextBox.Text += "\n-----------------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
                                                                 BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
-                                                                res.Occupation) + "\n";
+                                                                res.Occupation.PadRight(30 - res.Occupation.Length)) + "\n";
 
                                 }
                             }
@@ -367,7 +358,7 @@ namespace ASX_Assign2
                 {
                     //error message
                     nameError = true;
-                    outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                    outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
                          "First-Name space then Last-Name e.g John Doe)";
                 }
             }
@@ -375,7 +366,7 @@ namespace ASX_Assign2
             {
                 //error message
                 nameError = true;
-                outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
                     "First-Name space then Last-Name e.g John Doe)";
             }
 
@@ -386,7 +377,7 @@ namespace ASX_Assign2
             {
                 //error message
                 nameError = true;
-                outputRichTextBox.Text = "ERROR: Please enter valid name for resident (Name should contain" +
+                outputRichTextBox.Text = "ERROR: Please enter a name for this new resident. (Name should contain" +
                     "First-Name space then Last-Name e.g John Doe)";
             }
 
@@ -395,7 +386,7 @@ namespace ASX_Assign2
             {
                 //error message
                 bdayError = true;
-                outputRichTextBox.Text = "ERROR: Choose a valid birthday (You don't live in the future)";
+                outputRichTextBox.Text = "ERROR: Birthdays cannot be defined from future dates.";
             }
 
             //Occupation length isn't empty
@@ -403,8 +394,7 @@ namespace ASX_Assign2
             {
                 //error message
                 occuError = true;
-                outputRichTextBox.Text = "ERROR: Please enter a valid Occupation " +
-                    "(Enter \"none\" if in-between jobs)";
+                outputRichTextBox.Text = "ERROR: Please enter an Occupation for this new resident.";
             }
 
             //Get checked community
@@ -425,7 +415,7 @@ namespace ASX_Assign2
                 {
                     //error message
                     resError = true;
-                    outputRichTextBox.Text = "ERROR: You have chosen an invalid residence choice!";
+                    outputRichTextBox.Text = "ERROR: Please select a residence for this new resident to reside at.";
                 }
                 else if (personExists(fullName, presentCommunity)) //check person already in community
                 {
@@ -589,11 +579,7 @@ namespace ASX_Assign2
                                            "T",newBedrm.ToString(), newBath.ToString(),newSqFt.ToString(),
                                             }; //12
 
-                //string[] aptArray = { "0", "9999", "98", "50" , newStrAddr,
-                //                             presentCommunity, "Illinois", "60505",
-                //                           "T",newBedrm.ToString(), newBath.ToString(),newSqFt.ToString(),
-                //                            }; //12
-
+                
                 List<string> newProperty = aptArray.ToList();
                 if (newFlr > 0)
                 {
@@ -607,6 +593,7 @@ namespace ASX_Assign2
                     newProperty.Add(newApt);
                     addPropertyToList(newProperty.ToArray(), true, presentCommunity);
                 }
+                outputRichTextBox.Text = "Success! A new property at # has been added to "+ presentCommunity +"!";
 
             }
 
@@ -661,7 +648,7 @@ namespace ASX_Assign2
                 _businessLayer.lstDekalbPersons.Add(p);
                 _businessLayer.Communities.FirstOrDefault(x => x.Name == "Dekalb").Residents.Add(p);
 
-                _businessLayer.lstDekalbPersons.Sort(new BusinessLayer.PersonComparer());//sort the people in the _businessLayer.lstDekalbPersons
+                _businessLayer.lstDekalbPersons.Sort(new BusinessLayer.PersonComparer());
                 DisplayCommunityResults(_businessLayer.lstDekalbPersons,
                                         _businessLayer.lstDekalbHouses,
                                         _businessLayer.lstDekalbApartments, community);
@@ -671,7 +658,7 @@ namespace ASX_Assign2
             {
                 _businessLayer.lstSycamorePersons.Add(p);
                 _businessLayer.Communities.FirstOrDefault(x => x.Name == "Sycamore").Residents.Add(p);
-                _businessLayer.lstSycamorePersons.Sort(new BusinessLayer.PersonComparer()); // sort the people in the _businessLayer.lstDekalbPersons
+                _businessLayer.lstSycamorePersons.Sort(new BusinessLayer.PersonComparer()); 
                 DisplayCommunityResults(_businessLayer.lstSycamorePersons,
                                         _businessLayer.lstSycamoreHouses,
                                         _businessLayer.lstSycamoreApartments, community);
@@ -888,7 +875,7 @@ namespace ASX_Assign2
 
             //if the person in CommunitiesList has the same first name with the selected
             //  add it to the List<Person>
-            foreach (var item in CommunitiesList)  //seaech person
+            foreach (var item in CommunitiesList)  //search person
             {
                 if (item.Name == communityName)
                 {
