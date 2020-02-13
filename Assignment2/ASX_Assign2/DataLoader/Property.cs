@@ -70,11 +70,11 @@ namespace DataLoader
 
             if (rightOp != null)
             {
-                if (State.ToLower().CompareTo(rightOp.State.ToLower()) == 0)
+                if (State.CompareTo(rightOp.State) == 0)
                 {
-                    if (City.ToLower().CompareTo(rightOp.City.ToLower()) == 0)
+                    if (City.CompareTo(rightOp.City) == 0)
                     {
-                        if (StreetName.ToLower().CompareTo(rightOp.StreetName.ToLower()) == 0)
+                        if (StreetName.CompareTo(rightOp.StreetName) == 0)
                         {
                             if (AddNumber.CompareTo(rightOp.AddNumber) == 0)
                             {
@@ -82,7 +82,7 @@ namespace DataLoader
                                 {
                                     Apartment rightObject = (Apartment)rightOp;
                                     Apartment thisObject = (Apartment)this;
-                                    return (thisObject.Unit.ToLower().CompareTo(rightObject.Unit.ToLower()));
+                                    return (thisObject.Unit.CompareTo(rightObject.Unit));
                                 }
                                 else
                                 {
