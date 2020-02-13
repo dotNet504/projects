@@ -435,15 +435,15 @@ namespace ASX_Assign2
                     //add resident to the person list
 
                     //
-                    //generate a new ID for the new person
+                    //generate a new ID for the new person (begin)
                     //
                     Random rand = new Random();
                     bool newPersonIDValid = false;
                     List<Person> personSelected = null;
-                    int newPersonID = rand.Next(2000);
+                    int newPersonID = rand.Next(1,2000);
                     while (newPersonIDValid ==false) //make sure the id is unique
                     {
-                        newPersonID = rand.Next(2000);
+                        newPersonID = rand.Next(1,2000);
                         foreach (var item in CommunitiesList)  
                         {
                             if (item.Name == presentCommunity)
@@ -456,14 +456,21 @@ namespace ASX_Assign2
                         {
                             newPersonIDValid = true;
                         }
+                        else
+                        {
+                            personSelected.Clear();
+                        }
                     }
                     //
-                    //a new ID is generatered.
+                    //a new ID is generatered above. (finish)
                     //
 
                     string[] newPerson = { newPersonID.ToString() , newLast, newFirst, newOccu, newBday.Year.ToString(),
                                              newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
-                    MessageBox.Show(newPersonID.ToString());
+                    //string[] newPerson = { "9999", newLast, newFirst, newOccu, newBday.Year.ToString(),
+                    //                         newBday.Month.ToString(),newBday.Day.ToString(),resID.ToString()};
+
+
                     Person p = new Person(newPerson);
                     addPersonToList(p, presentCommunity);
 
@@ -540,10 +547,47 @@ namespace ASX_Assign2
             }
             else //else add property to property
             {
-                string[] aptArray = { "0", "9999", "98", "50" , newStrAddr,
+                //
+                //generate a new ID for the new person (begin)
+                //
+                Random rand = new Random();
+                bool newPropertyIDValid = false;
+                List<Property> PropertySelected = null;
+                int newPropertyID = rand.Next(10000,99999);
+                while (newPropertyIDValid == false) //make sure the id is unique
+                {
+                    newPropertyID = rand.Next(10000, 99999);
+                    foreach (var item in CommunitiesList)
+                    {
+                        if (item.Name == presentCommunity)
+                        {
+                            PropertySelected = item.Props.Where(x => x.Id.Equals(newPropertyID)).ToList();
+                        }
+
+                    }
+                    if (PropertySelected.Count == 0)
+                    {
+                        newPropertyIDValid = true;
+                    }
+                    else
+                    {
+                        PropertySelected.Clear();
+                    }
+                }
+                //
+                //a new ID is generatered above. (finish)
+                //
+
+                string[] aptArray = { newPropertyID.ToString(), "99999", "98", "50" , newStrAddr,
                                               presentCommunity, "Illinois", "60505",
                                            "T",newBedrm.ToString(), newBath.ToString(),newSqFt.ToString(),
                                             }; //12
+
+                //string[] aptArray = { "0", "9999", "98", "50" , newStrAddr,
+                //                             presentCommunity, "Illinois", "60505",
+                //                           "T",newBedrm.ToString(), newBath.ToString(),newSqFt.ToString(),
+                //                            }; //12
+
                 List<string> newProperty = aptArray.ToList();
                 if (newFlr > 0)
                 {
