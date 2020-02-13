@@ -23,7 +23,7 @@ namespace ASX_Assign2
         private List<Apartment> sycamoreApartments;
         private List<Community> CommunitiesList;
         private const string houseVal = "Houses:";
-        private const string hyphen = "---------------------------";
+        private const string hyphen = "-------------";
         private const string apartmentVal = "Apartments:";
 
         public Form1()
@@ -70,8 +70,8 @@ namespace ASX_Assign2
             personListBox.Items.Clear();
             foreach (Person details in personList)
             {
-                personListBox.Items.Add(String.Format("{0} \t{1}  {2}",
-                    details.FirstName, BusinessLayer.GetAge(details.Birthday), details.ToString()));
+                personListBox.Items.Add(String.Format("{0} {1}  {2}",
+                    details.FirstName, BusinessLayer.GetAge(details.Birthday).ToString().PadLeft(14 - details.FirstName.Length), details.ToString()));
             }
             //add house-data to the residenceListBox
             residenceListBox.Items.Clear();
@@ -86,7 +86,7 @@ namespace ASX_Assign2
             {
                 //add houses to the residenceListBox --> Abdul
                 residenceListBox.Items.Add(String.Format("{0} {1}",
-                    details.StreetAddr, (details.ForSale ? "*" : "")));
+                    details.StreetAddr.PadLeft(40 - details.StreetAddr.Length), (details.ForSale ? "*" : "")));
 
                 //add houses to the residenceComboBox --> Abdul
                 residenceComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
@@ -103,11 +103,11 @@ namespace ASX_Assign2
             foreach (Apartment details in apartmentsList)
             {
                 //add apartments to the residenceListBox
-                residenceListBox.Items.Add(String.Format("{0}\t# {1} {2}",
-                    details.StreetAddr, details.Unit, (details.ForSale ? "*" : "")));
+                residenceListBox.Items.Add(String.Format("{0} # {1} {2}",
+                    details.StreetAddr.PadLeft(38 - details.StreetAddr.Length), details.Unit, (details.ForSale ? "*" : "")));
 
                 //add apartments to the residenceComboBox --> Abdul
-                residenceComboBox.Items.Add(String.Format("{0}\t# {1}", details.StreetAddr,
+                residenceComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
                     details.Unit));
             }
             outputRichTextBox.Text = "The residents and properties of " + selButton + " are now listed.";
@@ -172,18 +172,22 @@ namespace ASX_Assign2
                         List<Apartment> lstApt = new List<Apartment>();
                         if (selResidence.Contains("#"))
                         {
+                            //var m = selResidence.Split('#')[1].Trim();
+                            //var t = selResidence.Split('#')[0];
+                            //var g = selResidence.Split('#')[0].Trim();
+                            //var f = selResidence.Split('#')[0].Split(' ')[0];
                             if (communityVal == "Dekalb")
                             {
                                 lstApt = dekalbApartments.Where
                                         (x => ((x.Unit == selResidence.Split('#')[1].Trim() &&
-                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
+                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Trim(),
                                 StringComparison.CurrentCultureIgnoreCase))))).ToList();
                             }
                             else
                             {
                                 lstApt = sycamoreApartments.Where
                                         (x => ((x.Unit == selResidence.Split('#')[1].Trim() &&
-                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Split('\t')[0],
+                                        (string.Equals(x.StreetAddr, selResidence.Split('#')[0].Trim(),
                                 StringComparison.CurrentCultureIgnoreCase))))).ToList();
                             }
 
@@ -191,7 +195,7 @@ namespace ASX_Assign2
                         else
                         {
                             prop = item.Props
-                            .Where(x => x.StreetAddr.ToLower().Equals(selResidence.ToLower())).ToList();
+                            .Where(x => x.StreetAddr.ToLower().Equals(selResidence.ToLower().Trim())).ToList();
                         }
                         if (prop.Count > 0)
                         {
@@ -204,7 +208,7 @@ namespace ASX_Assign2
                             //    .Where(x => (x.Id == prop[0].OwnerID || x.ResidenceIds.Contains(prop[0].Id))).ToList();
                             if ((landlord.Count==0) && (resident.Count == 0) )
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
@@ -212,35 +216,37 @@ namespace ASX_Assign2
 
                             else if ((landlord.Count > 0) && (resident.Count == 0) )
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
                             else if ((landlord.Count == 0) && (resident.Count > 0) )
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " +  ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
-                                                                res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday),
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                                                res.FirstName,
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
+
+                                    
 
                                 }
                             }
                             else
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                             + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
-                                                                res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday),
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                                                res.FirstName,
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }
@@ -257,7 +263,7 @@ namespace ASX_Assign2
                                 .Where(x => (x.ResidenceIds.Contains(lstApt[0].Id))).ToList();
                             if ((landlord.Count == 0) && (resident.Count == 0))
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
@@ -265,21 +271,21 @@ namespace ASX_Assign2
 
                             else if ((landlord.Count > 0) && (resident.Count == 0))
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 outputRichTextBox.Text += "No resident lives in this property.\n";
                             }
                             else if ((landlord.Count == 0) && (resident.Count > 0))
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                         + ", owned by " + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
-                                                                res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday),
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                                                res.FirstName,
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }
@@ -287,14 +293,14 @@ namespace ASX_Assign2
 
                             else
                             {
-                                outputRichTextBox.Text = "Residents living at " + selResidence + ", " + communityVal
+                                outputRichTextBox.Text = "Residents living at " + selResidence.Trim() + ", " + communityVal
                                                             + ", owned by " + landlord[0].FullName + ":";
                                 outputRichTextBox.Text += "\n------------------------------------------------------------\n";
                                 foreach (var res in resident)
                                 {
-                                    outputRichTextBox.Text += String.Format("{0} \t{1}  \t{2}",
-                                                                res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday),
+                                    outputRichTextBox.Text += String.Format("{0} {1}  {2}",
+                                                                res.FirstName,
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }

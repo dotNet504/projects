@@ -125,7 +125,7 @@
             this.residenceLabel.AutoSize = true;
             this.residenceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.875F, System.Drawing.FontStyle.Bold);
             this.residenceLabel.ForeColor = System.Drawing.Color.White;
-            this.residenceLabel.Location = new System.Drawing.Point(1411, 28);
+            this.residenceLabel.Location = new System.Drawing.Point(1486, 28);
             this.residenceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.residenceLabel.Name = "residenceLabel";
             this.residenceLabel.Size = new System.Drawing.Size(420, 37);
@@ -149,38 +149,39 @@
             // 
             // personListBox
             // 
-            this.personListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.personListBox.Font = new System.Drawing.Font("Courier New", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.personListBox.FormattingEnabled = true;
             this.personListBox.IntegralHeight = false;
-            this.personListBox.ItemHeight = 30;
+            this.personListBox.ItemHeight = 27;
             this.personListBox.Location = new System.Drawing.Point(1044, 77);
             this.personListBox.Margin = new System.Windows.Forms.Padding(4);
             this.personListBox.Name = "personListBox";
-            this.personListBox.Size = new System.Drawing.Size(350, 865);
+            this.personListBox.Size = new System.Drawing.Size(435, 865);
             this.personListBox.TabIndex = 9;
             this.personListBox.SelectedIndexChanged += new System.EventHandler(this.personSelectionChanged);
             // 
             // residenceListBox
             // 
+            this.residenceListBox.Font = new System.Drawing.Font("Courier New", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.residenceListBox.FormattingEnabled = true;
             this.residenceListBox.IntegralHeight = false;
-            this.residenceListBox.ItemHeight = 25;
-            this.residenceListBox.Location = new System.Drawing.Point(1420, 77);
+            this.residenceListBox.ItemHeight = 27;
+            this.residenceListBox.Location = new System.Drawing.Point(1499, 77);
             this.residenceListBox.Margin = new System.Windows.Forms.Padding(4);
             this.residenceListBox.Name = "residenceListBox";
-            this.residenceListBox.Size = new System.Drawing.Size(488, 865);
+            this.residenceListBox.Size = new System.Drawing.Size(570, 865);
             this.residenceListBox.TabIndex = 10;
             this.residenceListBox.SelectedIndexChanged += new System.EventHandler(this.residenceSelectionChanged);
             // 
             // outputRichTextBox
             // 
             this.outputRichTextBox.BackColor = System.Drawing.Color.Silver;
-            this.outputRichTextBox.Font = new System.Drawing.Font("Arial", 9.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputRichTextBox.Font = new System.Drawing.Font("Courier New", 8.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputRichTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.outputRichTextBox.Location = new System.Drawing.Point(8, 969);
             this.outputRichTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.outputRichTextBox.Name = "outputRichTextBox";
-            this.outputRichTextBox.Size = new System.Drawing.Size(1900, 231);
+            this.outputRichTextBox.Size = new System.Drawing.Size(2061, 231);
             this.outputRichTextBox.TabIndex = 11;
             this.outputRichTextBox.Text = "";
             // 

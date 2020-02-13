@@ -30,7 +30,6 @@ namespace DataLoader
 
             if (rightOp != null)
                 return FullName.CompareTo(rightOp.FullName);
-                //return FirstName.CompareTo(rightOp.FirstName);
             else
                 throw new ArgumentNullException("[Person]: CompareTo argument is not a Person");
         }
@@ -39,14 +38,8 @@ namespace DataLoader
         // Stringifies object in a well, 
         //     formatted way.
         public override string ToString()
-        { 
-            /*string ret = String.Format("Id         : {0 , -10 }\n", id);
-            ret += String.Format("FirstName  : {0}\n", FirstName);
-            ret += String.Format("LastName   : {0}\n", LastName);
-            ret += String.Format("Occupation : {0}\n", this.Occupation.Length <= 11 ? this.Occupation : this.Occupation.Substring(0, 11) + "...");
-            ret += String.Format("Birthday   : {0}\n", Birthday);
-            return ret;*/
-             return this.Occupation.Length <= 11 ? this.Occupation : this.Occupation.Substring(0, 11) + "...";
+        {             
+             return this.Occupation.Length <= 13 ? this.Occupation : this.Occupation.Substring(0, 11) + "...";
 
         }
 
