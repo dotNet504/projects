@@ -241,7 +241,7 @@ namespace ASX_Assign2
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
                                                                 res.Occupation) + "\n";
 
                                     
@@ -257,7 +257,7 @@ namespace ASX_Assign2
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }
@@ -293,7 +293,7 @@ namespace ASX_Assign2
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }
@@ -308,7 +308,7 @@ namespace ASX_Assign2
                                 {
                                     outputRichTextBox.Text += String.Format("{0} {1}  {2}",
                                                                 res.FullName,
-                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(14 - res.FirstName.Length),
+                                                                BusinessLayer.GetAge(res.Birthday).ToString().PadLeft(30 - res.FullName.Length),
                                                                 res.Occupation) + "\n";
 
                                 }
@@ -923,7 +923,7 @@ namespace ASX_Assign2
             string addressByStreetNum = null; //record the street address of the residenceListBox
             string addressByUnit = null; // record the unit of the residenceListBox if user selects an apartment
             uint apartmentID = 1; // record the id of the selected apartment
-            string[] addressStringArr = residenceListBox.SelectedItem.ToString().Split();
+            string[] addressStringArr = residenceListBox.SelectedItem.ToString().TrimStart().Split();
 
             addressByStreetNum = addressStringArr[0] + " " + addressStringArr[1] + " " + addressStringArr[2];
 
@@ -1002,7 +1002,7 @@ namespace ASX_Assign2
             // if the selected person is not a resident in this property, return message and quit this method
             if (personRemoveResident_lst[0].ResidenceIds.Contains(propRemoveResident_lst[0].Id) == false)
             {
-                outputRichTextBox.Text = "ERROR: " + personRemoveResident_lst[0].FirstName + " doesn't currently reside at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
+                outputRichTextBox.Text = "ERROR: " + personRemoveResident_lst[0].FirstName + " doesn't currently reside at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + ".";
                 return;
             }
 
@@ -1014,7 +1014,7 @@ namespace ASX_Assign2
                 {
                     p_temp.ResidenceIds.Remove(propRemoveResident_lst[0].Id);                    
                 }
-                outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
+                outputRichTextBox.Text = "Success! " + personRemoveResident_lst[0].FirstName + " no longer resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + "!";
             }
         }
 
@@ -1041,7 +1041,7 @@ namespace ASX_Assign2
             // if the selected person is already as resident in this property, return message and quit this method
             if (personAddResident_lst[0].ResidenceIds.Contains(propAddResident_lst[0].Id))
             {
-                outputRichTextBox.Text = "ERROR: " + personAddResident_lst[0].FirstName + " already resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
+                outputRichTextBox.Text = "ERROR: " + personAddResident_lst[0].FirstName + " already resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + ".";
                 return;
             }
 
@@ -1052,7 +1052,7 @@ namespace ASX_Assign2
                 foreach (var p_temp in personAddResident_lst)
                 {
                     p_temp.ResidenceIds.Add(propAddResident_lst[0].Id);
-                    outputRichTextBox.Text = "Success! " + personAddResident_lst[0].FirstName + " now resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
+                    outputRichTextBox.Text = "Success! " + personAddResident_lst[0].FirstName + " now resides at the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + "!";
                 }
 
             }
@@ -1080,14 +1080,14 @@ namespace ASX_Assign2
             // if the person is the owner of the property, return message and quit this method
             if (propBuyProperty_lst[0].OwnerID == personBuyProperty_lst[0].Id)
             {
-                outputRichTextBox.Text = "ERROR: " + personBuyProperty_lst[0].FirstName + " already owns the property found at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ".";
+                outputRichTextBox.Text = "ERROR: " + personBuyProperty_lst[0].FirstName + " already owns the property found at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + ".";
                 return;
             }
 
             // if the property is not for sall, return message and quit this method
             if (propBuyProperty_lst[0].ForSale == false)
             {
-                outputRichTextBox.Text = "ERROR: Could not purchase the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + ", as it is not listed for sale.";
+                outputRichTextBox.Text = "ERROR: Could not purchase the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + ", as it is not listed for sale.";
                 return;
             }
 
@@ -1099,7 +1099,7 @@ namespace ASX_Assign2
                     p_temp.OwnerID = personBuyProperty_lst[0].Id;
                     residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
                 }
-                outputRichTextBox.Text = "Success! " + personBuyProperty_lst[0].FirstName + "has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*') + "!";
+                outputRichTextBox.Text = "Success! " + personBuyProperty_lst[0].FirstName + " has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + "!";
 
             }
         }
@@ -1128,15 +1128,17 @@ namespace ASX_Assign2
                 {
                     if (p_temp.ForSale == true)
                     {
+                        var f = residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim();
+                        var j = residenceListBox.Items[residenceListBox.SelectedIndex];
                         p_temp.ForSale = !p_temp.ForSale;
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
-                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString() + " is not for sale now.";
+                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().Trim() + " is not for sale now.";
                     }
                     else
                     {
                         p_temp.ForSale = !p_temp.ForSale;
                         residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString() + "*";
-                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*') + " is now listed FOR SALE!";
+                        outputRichTextBox.Text = residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + " is now listed FOR SALE!";
                     }
 
                 }
