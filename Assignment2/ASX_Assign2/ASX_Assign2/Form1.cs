@@ -125,9 +125,9 @@ namespace ASX_Assign2
             foreach (Apartment details in apartmentsList)
             {
                 //add apartments to the residenceListBox
-                residenceListBox.Items.Add(String.Format("{0} # {1} {2}",
-                    details.StreetAddr.PadLeft(38 - details.StreetAddr.Length), details.Unit, (details.ForSale ? "*" : "")));
-
+                residenceListBox.Items.Add(String.Format("{0,22} # {1} {2}",
+                   details.StreetAddr, details.Unit, (details.ForSale ? "*" : "")));
+                
                 //add apartments to the residenceComboBox
                 residenceComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
                     details.Unit));
@@ -622,6 +622,14 @@ namespace ASX_Assign2
                     addPropertyToList(newProperty.ToArray(), true, presentCommunity);
                 }
                 outputRichTextBox.Text = "Success! A new property at # has been added to " + presentCommunity + "!";
+                streetAddrTextBox.Clear();
+                sqFtUpDown.Value = 500;
+                bedrmUpDown.Value = 1;
+                bathUpDown.Value = 1;
+                floorsUpDown.Value = 1;
+                garageCheckBox.Checked = false;
+                attachedCheckBox.Checked = false;
+                aptNoTextBox.Clear();
 
             }
 
