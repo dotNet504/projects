@@ -1107,6 +1107,7 @@ namespace ASX_Assign2
                 foreach (var p_temp in propBuyProperty_lst)
                 {
                     p_temp.OwnerID = personBuyProperty_lst[0].Id;
+                    propBuyProperty_lst[0].ForSale = false;
                     residenceListBox.Items[residenceListBox.SelectedIndex] = residenceListBox.SelectedItem.ToString().TrimEnd('*');
                 }
                 outputRichTextBox.Text = "Success! " + personBuyProperty_lst[0].FirstName + " has purchased the property at " + residenceListBox.SelectedItem.ToString().TrimEnd('*').Trim() + "!";
