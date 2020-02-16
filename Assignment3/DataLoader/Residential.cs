@@ -28,7 +28,7 @@ namespace DataLoader
 
         // Constructor, sets base class and adds values to attr
         // @params: String array
-        public Residential(string[] args) : base(args) //modified by Xuezhi, I think this part still has problem
+        public Residential(string[] args) : base(args)
         {
             bedrooms = Convert.ToUInt32(args[9]);
             baths = Convert.ToUInt32(args[10]);

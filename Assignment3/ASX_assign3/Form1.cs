@@ -23,5 +23,17 @@ namespace ASX_assign3
         {
 
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Logic to autosize the output window
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel();
+            flowPanel.AutoSize = true;
+            flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(flowPanel);
+        }
     }
 }

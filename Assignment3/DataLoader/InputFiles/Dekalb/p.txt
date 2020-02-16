@@ -1,4 +1,4 @@
-﻿0	Konatham	Swathi	Student	1993	1	1	60148
+﻿0	DeLeon	Typhon	Turd Farmer	1986	1	27	98213	10378
 1	Skywalker	Lilth	Vault Hunter	1990	4	1	31289
 10	Skywalker	Brick	Vault Hunter	1984	6	16	42865
 11	Skywalker	Maya	Vault Hunter	1991	1	15	56824
