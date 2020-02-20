@@ -51,21 +51,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.attachedCheckBox = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.domainUpDown5 = new System.Windows.Forms.DomainUpDown();
-            this.domainUpDown4 = new System.Windows.Forms.DomainUpDown();
-            this.domainUpDown3 = new System.Windows.Forms.DomainUpDown();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.sqFtUpDown = new System.Windows.Forms.DomainUpDown();
+            this.bathUpDown = new System.Windows.Forms.DomainUpDown();
+            this.bedUpDown = new System.Windows.Forms.DomainUpDown();
+            this.garageCheckBox = new System.Windows.Forms.CheckBox();
+            this.apartmentCheckBox = new System.Windows.Forms.CheckBox();
+            this.houseCheckBox = new System.Windows.Forms.CheckBox();
             this.querySpecResidence = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.button5 = new System.Windows.Forms.Button();
             this.result_ListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.attached = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -303,16 +303,16 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.attached);
+            this.groupBox5.Controls.Add(this.attachedCheckBox);
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.domainUpDown5);
-            this.groupBox5.Controls.Add(this.domainUpDown4);
-            this.groupBox5.Controls.Add(this.domainUpDown3);
-            this.groupBox5.Controls.Add(this.checkBox6);
-            this.groupBox5.Controls.Add(this.checkBox5);
-            this.groupBox5.Controls.Add(this.checkBox4);
+            this.groupBox5.Controls.Add(this.sqFtUpDown);
+            this.groupBox5.Controls.Add(this.bathUpDown);
+            this.groupBox5.Controls.Add(this.bedUpDown);
+            this.groupBox5.Controls.Add(this.garageCheckBox);
+            this.groupBox5.Controls.Add(this.apartmentCheckBox);
+            this.groupBox5.Controls.Add(this.houseCheckBox);
             this.groupBox5.Controls.Add(this.querySpecResidence);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
@@ -322,6 +322,18 @@
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Specific Residence Parameters";
+            // 
+            // attachedCheckBox
+            // 
+            this.attachedCheckBox.AutoSize = true;
+            this.attachedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attachedCheckBox.Location = new System.Drawing.Point(261, 57);
+            this.attachedCheckBox.Name = "attachedCheckBox";
+            this.attachedCheckBox.Size = new System.Drawing.Size(92, 22);
+            this.attachedCheckBox.TabIndex = 13;
+            this.attachedCheckBox.Text = "Attached?";
+            this.attachedCheckBox.UseVisualStyleBackColor = true;
+            this.attachedCheckBox.Visible = false;
             // 
             // label9
             // 
@@ -339,9 +351,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(148, 31);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 18);
+            this.label8.Size = new System.Drawing.Size(38, 18);
             this.label8.TabIndex = 11;
-            this.label8.Text = "label8";
+            this.label8.Text = "Bath";
             // 
             // label7
             // 
@@ -349,69 +361,68 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(105, 31);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 18);
+            this.label7.Size = new System.Drawing.Size(34, 18);
             this.label7.TabIndex = 10;
-            this.label7.Text = "label7";
+            this.label7.Text = "Bed";
             // 
-            // domainUpDown5
+            // sqFtUpDown
             // 
-            this.domainUpDown5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDown5.Location = new System.Drawing.Point(193, 53);
-            this.domainUpDown5.Name = "domainUpDown5";
-            this.domainUpDown5.Size = new System.Drawing.Size(55, 24);
-            this.domainUpDown5.TabIndex = 9;
-            this.domainUpDown5.Text = "domainUpDown5";
+            this.sqFtUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sqFtUpDown.Location = new System.Drawing.Point(193, 53);
+            this.sqFtUpDown.Name = "sqFtUpDown";
+            this.sqFtUpDown.Size = new System.Drawing.Size(55, 24);
+            this.sqFtUpDown.TabIndex = 9;
             // 
-            // domainUpDown4
+            // bathUpDown
             // 
-            this.domainUpDown4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDown4.Location = new System.Drawing.Point(149, 53);
-            this.domainUpDown4.Name = "domainUpDown4";
-            this.domainUpDown4.Size = new System.Drawing.Size(35, 24);
-            this.domainUpDown4.TabIndex = 8;
-            this.domainUpDown4.Text = "domainUpDown4";
+            this.bathUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bathUpDown.Location = new System.Drawing.Point(149, 53);
+            this.bathUpDown.Name = "bathUpDown";
+            this.bathUpDown.Size = new System.Drawing.Size(35, 24);
+            this.bathUpDown.TabIndex = 8;
             // 
-            // domainUpDown3
+            // bedUpDown
             // 
-            this.domainUpDown3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDown3.Location = new System.Drawing.Point(108, 53);
-            this.domainUpDown3.Name = "domainUpDown3";
-            this.domainUpDown3.Size = new System.Drawing.Size(35, 24);
-            this.domainUpDown3.TabIndex = 7;
-            this.domainUpDown3.Text = "domainUpDown3";
+            this.bedUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bedUpDown.Location = new System.Drawing.Point(108, 53);
+            this.bedUpDown.Name = "bedUpDown";
+            this.bedUpDown.Size = new System.Drawing.Size(35, 24);
+            this.bedUpDown.TabIndex = 7;
             // 
-            // checkBox6
+            // garageCheckBox
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox6.Location = new System.Drawing.Point(261, 30);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(76, 22);
-            this.checkBox6.TabIndex = 6;
-            this.checkBox6.Text = "Garage";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.garageCheckBox.AutoSize = true;
+            this.garageCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.garageCheckBox.Location = new System.Drawing.Point(261, 30);
+            this.garageCheckBox.Name = "garageCheckBox";
+            this.garageCheckBox.Size = new System.Drawing.Size(76, 22);
+            this.garageCheckBox.TabIndex = 6;
+            this.garageCheckBox.Text = "Garage";
+            this.garageCheckBox.UseVisualStyleBackColor = true;
+            this.garageCheckBox.CheckedChanged += new System.EventHandler(this.garageCheckBox_CheckedChanged);
             // 
-            // checkBox5
+            // apartmentCheckBox
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.Location = new System.Drawing.Point(6, 53);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(101, 22);
-            this.checkBox5.TabIndex = 5;
-            this.checkBox5.Text = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.apartmentCheckBox.AutoSize = true;
+            this.apartmentCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.apartmentCheckBox.Location = new System.Drawing.Point(6, 53);
+            this.apartmentCheckBox.Name = "apartmentCheckBox";
+            this.apartmentCheckBox.Size = new System.Drawing.Size(94, 22);
+            this.apartmentCheckBox.TabIndex = 5;
+            this.apartmentCheckBox.Text = "Apartment";
+            this.apartmentCheckBox.UseVisualStyleBackColor = true;
+            this.apartmentCheckBox.CheckedChanged += new System.EventHandler(this.apartmentCheckBox_CheckedChanged);
             // 
-            // checkBox4
+            // houseCheckBox
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.Location = new System.Drawing.Point(6, 30);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(101, 22);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.houseCheckBox.AutoSize = true;
+            this.houseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.houseCheckBox.Location = new System.Drawing.Point(6, 30);
+            this.houseCheckBox.Name = "houseCheckBox";
+            this.houseCheckBox.Size = new System.Drawing.Size(71, 22);
+            this.houseCheckBox.TabIndex = 4;
+            this.houseCheckBox.Text = "House";
+            this.houseCheckBox.UseVisualStyleBackColor = true;
             // 
             // querySpecResidence
             // 
@@ -466,17 +477,6 @@
             this.label10.Size = new System.Drawing.Size(115, 18);
             this.label10.TabIndex = 7;
             this.label10.Text = "Query Results";
-            // 
-            // attached
-            // 
-            this.attached.AutoSize = true;
-            this.attached.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.attached.Location = new System.Drawing.Point(261, 57);
-            this.attached.Name = "attached";
-            this.attached.Size = new System.Drawing.Size(92, 22);
-            this.attached.TabIndex = 13;
-            this.attached.Text = "Attached?";
-            this.attached.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -540,18 +540,18 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DomainUpDown domainUpDown5;
-        private System.Windows.Forms.DomainUpDown domainUpDown4;
-        private System.Windows.Forms.DomainUpDown domainUpDown3;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.DomainUpDown sqFtUpDown;
+        private System.Windows.Forms.DomainUpDown bathUpDown;
+        private System.Windows.Forms.DomainUpDown bedUpDown;
+        private System.Windows.Forms.CheckBox garageCheckBox;
+        private System.Windows.Forms.CheckBox apartmentCheckBox;
+        private System.Windows.Forms.CheckBox houseCheckBox;
         private System.Windows.Forms.Button querySpecResidence;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ListBox result_ListBox;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox attached;
+        private System.Windows.Forms.CheckBox attachedCheckBox;
     }
 }
 

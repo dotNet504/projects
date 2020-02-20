@@ -19,11 +19,7 @@ namespace ASX_assign3
             InitializeComponent();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
+ 
         private void Form1_Load(object sender, EventArgs e)
         {
             //Logic to autosize the output window
@@ -39,6 +35,22 @@ namespace ASX_assign3
         private void querySpecResidence_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (apartmentCheckBox.Checked)
+            {
+                garageCheckBox.Visible = false;
+            }
+        }
+
+        private void garageCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (garageCheckBox.Checked)
+            {
+                attachedCheckBox.Visible = true;
+            }
         }
     }
 }
