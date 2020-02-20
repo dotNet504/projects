@@ -35,5 +35,10 @@ namespace ASX_assign3
             flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.Controls.Add(flowPanel);
         }
+
+        private void querySpecResidence_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
