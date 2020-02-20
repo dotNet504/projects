@@ -35,13 +35,28 @@ namespace ASX_assign3
         private void querySpecResidence_Click(object sender, EventArgs e)
         {
 
+            //if(houseCheckBox.Checked)
+            // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
+            //                                  and attached is (attachedCheckBox.Checked)
+
+            //if(houseCheckBox.Checked && apartmentsCheckBox.Checked)
+            //query for houses and  apartments with xBed,xBath,xSqFt
+
+            //if(apartmentsCheckBox.Checked)
+            //query for apartments with xBed,xBath,xSqFt
         }
 
         private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (apartmentCheckBox.Checked)
             {
+                attachedCheckBox.Checked = false;
+                attachedCheckBox.Visible = false;
+                garageCheckBox.Checked = false;
                 garageCheckBox.Visible = false;
+            } else
+            {
+                garageCheckBox.Visible = true;
             }
         }
 
@@ -50,6 +65,10 @@ namespace ASX_assign3
             if (garageCheckBox.Checked)
             {
                 attachedCheckBox.Visible = true;
+            }
+            else
+            {
+                attachedCheckBox.Visible = false;
             }
         }
     }

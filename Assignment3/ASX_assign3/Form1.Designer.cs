@@ -55,9 +55,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.sqFtUpDown = new System.Windows.Forms.DomainUpDown();
-            this.bathUpDown = new System.Windows.Forms.DomainUpDown();
-            this.bedUpDown = new System.Windows.Forms.DomainUpDown();
             this.garageCheckBox = new System.Windows.Forms.CheckBox();
             this.apartmentCheckBox = new System.Windows.Forms.CheckBox();
             this.houseCheckBox = new System.Windows.Forms.CheckBox();
@@ -66,6 +63,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.result_ListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.bedUpDown = new System.Windows.Forms.NumericUpDown();
+            this.bathUpDown = new System.Windows.Forms.NumericUpDown();
+            this.sqFtUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -73,6 +73,9 @@
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bedUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bathUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sqFtUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -303,13 +306,13 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.sqFtUpDown);
+            this.groupBox5.Controls.Add(this.bathUpDown);
+            this.groupBox5.Controls.Add(this.bedUpDown);
             this.groupBox5.Controls.Add(this.attachedCheckBox);
             this.groupBox5.Controls.Add(this.label9);
             this.groupBox5.Controls.Add(this.label8);
             this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.sqFtUpDown);
-            this.groupBox5.Controls.Add(this.bathUpDown);
-            this.groupBox5.Controls.Add(this.bedUpDown);
             this.groupBox5.Controls.Add(this.garageCheckBox);
             this.groupBox5.Controls.Add(this.apartmentCheckBox);
             this.groupBox5.Controls.Add(this.houseCheckBox);
@@ -339,7 +342,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(190, 30);
+            this.label9.Location = new System.Drawing.Point(183, 30);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(74, 18);
             this.label9.TabIndex = 12;
@@ -349,7 +352,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(148, 31);
+            this.label8.Location = new System.Drawing.Point(146, 30);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(38, 18);
             this.label8.TabIndex = 11;
@@ -364,30 +367,6 @@
             this.label7.Size = new System.Drawing.Size(34, 18);
             this.label7.TabIndex = 10;
             this.label7.Text = "Bed";
-            // 
-            // sqFtUpDown
-            // 
-            this.sqFtUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sqFtUpDown.Location = new System.Drawing.Point(193, 53);
-            this.sqFtUpDown.Name = "sqFtUpDown";
-            this.sqFtUpDown.Size = new System.Drawing.Size(55, 24);
-            this.sqFtUpDown.TabIndex = 9;
-            // 
-            // bathUpDown
-            // 
-            this.bathUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bathUpDown.Location = new System.Drawing.Point(149, 53);
-            this.bathUpDown.Name = "bathUpDown";
-            this.bathUpDown.Size = new System.Drawing.Size(35, 24);
-            this.bathUpDown.TabIndex = 8;
-            // 
-            // bedUpDown
-            // 
-            this.bedUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bedUpDown.Location = new System.Drawing.Point(108, 53);
-            this.bedUpDown.Name = "bedUpDown";
-            this.bedUpDown.Size = new System.Drawing.Size(35, 24);
-            this.bedUpDown.TabIndex = 7;
             // 
             // garageCheckBox
             // 
@@ -478,6 +457,75 @@
             this.label10.TabIndex = 7;
             this.label10.Text = "Query Results";
             // 
+            // bedUpDown
+            // 
+            this.bedUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bedUpDown.Location = new System.Drawing.Point(108, 51);
+            this.bedUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.bedUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.bedUpDown.Name = "bedUpDown";
+            this.bedUpDown.Size = new System.Drawing.Size(31, 24);
+            this.bedUpDown.TabIndex = 14;
+            this.bedUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // bathUpDown
+            // 
+            this.bathUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bathUpDown.Location = new System.Drawing.Point(149, 51);
+            this.bathUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.bathUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.bathUpDown.Name = "bathUpDown";
+            this.bathUpDown.Size = new System.Drawing.Size(31, 24);
+            this.bathUpDown.TabIndex = 15;
+            this.bathUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // sqFtUpDown
+            // 
+            this.sqFtUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sqFtUpDown.Location = new System.Drawing.Point(186, 51);
+            this.sqFtUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.sqFtUpDown.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.sqFtUpDown.Name = "sqFtUpDown";
+            this.sqFtUpDown.Size = new System.Drawing.Size(69, 24);
+            this.sqFtUpDown.TabIndex = 16;
+            this.sqFtUpDown.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -507,6 +555,9 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bedUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bathUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sqFtUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -540,9 +591,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DomainUpDown sqFtUpDown;
-        private System.Windows.Forms.DomainUpDown bathUpDown;
-        private System.Windows.Forms.DomainUpDown bedUpDown;
         private System.Windows.Forms.CheckBox garageCheckBox;
         private System.Windows.Forms.CheckBox apartmentCheckBox;
         private System.Windows.Forms.CheckBox houseCheckBox;
@@ -552,6 +600,9 @@
         private System.Windows.Forms.ListBox result_ListBox;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox attachedCheckBox;
+        private System.Windows.Forms.NumericUpDown sqFtUpDown;
+        private System.Windows.Forms.NumericUpDown bathUpDown;
+        private System.Windows.Forms.NumericUpDown bedUpDown;
     }
 }
 
