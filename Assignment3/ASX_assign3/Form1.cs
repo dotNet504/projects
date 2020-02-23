@@ -1,5 +1,4 @@
-﻿
-
+﻿using DataLoader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +13,69 @@ namespace ASX_assign3
 {
     public partial class Form1 : Form
     {
+        //Declaration of variables
+        private BusinessLayer _businessLayer;
+        private List<Person> dekalbPersons;
+        private List<House> dekalbHouses;
+        private List<Apartment> dekalbApartments;
+        private List<Person> sycamorePersons;
+        private List<House> sycamoreHouses;
+        private List<Apartment> sycamoreApartments;
+        private List<Community> CommunitiesList;
+        private List<School> dekalbSchools;
+        private List<School> sycamoreSchools;
+        private List<Business> dekalbBusinesses;
+        private List<Business> sycamoreBusinesses;
+
         public Form1()
         {
             InitializeComponent();
+            _businessLayer = new BusinessLayer();
+            dekalbPersons = new List<Person>();
+            dekalbHouses = new List<House>();
+            dekalbApartments = new List<Apartment>();
+            sycamorePersons = new List<Person>();
+            sycamoreHouses = new List<House>();
+            sycamoreApartments = new List<Apartment>();
+            CommunitiesList = _businessLayer.Communities;
+            dekalbPersons = _businessLayer.lstDekalbPersons;
+            sycamorePersons = _businessLayer.lstSycamorePersons;
+            dekalbSchools = new List<School>();
+            dekalbBusinesses = new List<Business>();
+            sycamoreSchools = new List<School>();
+            sycamoreBusinesses = new List<Business>();
+
+            Load_ForSale_Information();
         }
 
- 
+        private void Load_ForSale_Information()
+        {
+            dekalbHouses = _businessLayer.lstDekalbHouses;
+            dekalbApartments = _businessLayer.lstDekalbApartments;
+            For_Sale_Residence_ComboBox.Items.Clear();
+
+            foreach (House details in dekalbHouses)
+            {
+               // if (details.ForSale)
+               // {
+                    //add houses to the residenceComboBox
+                    For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
+               // }                
+            }
+
+            foreach (Apartment details in dekalbApartments)
+            {
+               //// if (details.ForSale)
+                ////{
+                    //add apartments to the residenceComboBox
+                    For_Sale_Residence_ComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
+                        details.Unit));
+                //}               
+            }
+        }
+
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             //Logic to autosize the output window

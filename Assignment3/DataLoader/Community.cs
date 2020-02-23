@@ -39,7 +39,9 @@ namespace DataLoader
         }
 
         //Consturctor with input arguments
-        public Community(List<Person> persons, List<House> houses, List<Apartment> apartments, string nme = "Dekalb", uint ID = 99999, uint myor = 0)
+        public Community(List<Person> persons, List<House> houses, List<Apartment> apartments, 
+                        List<School> schools, List<Business> business,
+                        string nme = "Dekalb", uint ID = 99999, uint myor = 0)
         {
             id = ID;
             name = nme;
@@ -57,6 +59,15 @@ namespace DataLoader
             foreach (var h in houses)
             {
                 props.Add(h);
+            }
+            foreach (var s in schools)
+            {
+                props.Add(s);
+            }
+            foreach (var b in business)
+            {
+                
+                props.Add(b);
             }
         }
 

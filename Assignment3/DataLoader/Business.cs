@@ -8,29 +8,36 @@ namespace DataLoader
 {
     public class Business : Property
     {
-        public String name;
-        public readonly BusinessType type; //?????????
-        public readonly string yearEstablished;
-        public uint activeRecruitment;
+        private String name;
+        private readonly BusinessType type; //?????????
+        private readonly string yearEstablished;
+        private uint activeRecruitment;
         public enum BusinessType { Grocery, Bank, Repair, FastFood, DepartmentStore };
 
-        public Business(String[] args){
-            name = args[0];
-            yearEstablished = args[1];
-            activeRecruitment = Convert.ToUInt32(args[2]);
+        public Business(String[] args) : base(args)
+        {
+            name = args[10];
+            yearEstablished = args[11];
+            activeRecruitment = Convert.ToUInt32(args[12]);
 
         }
 
         public String Name
         {
-            set { Name = value; }
-            get { return Name; }
+            set { name = value; }
+            get { return name; }
         }
 
-        public String YearEstablished //?????????????
+        public String YearEstablished
         {
-            //set { Name = value; }
-            get { return YearEstablished; }
+           // set { Name = value; }
+            get { return yearEstablished; }
+        }
+
+        public uint ActiveRecruitment
+        {
+            set { activeRecruitment = value; }
+            get { return activeRecruitment; }
         }
     }
 }

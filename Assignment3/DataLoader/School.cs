@@ -6,17 +6,37 @@ using System.Threading.Tasks;
 
 namespace DataLoader
 {
-    public class School
+    public class School : Property
     {
-        public string name;
-        public readonly SchoolType type;
-        public string yearEstablished;
-        public uint enrolled;
+        private string name;
+        private readonly SchoolType type;
+        private string yearEstablished;
+        private uint enrolled;
         public enum SchoolType { Elementary, HighSchool, CommunityCollege, University }
 
-        public School(String[] args)
+        public School(string[] args) : base(args)
         {
+            name = args[9];
+            yearEstablished = args[10];
+            enrolled = Convert.ToUInt32(args[11]);
+        }
 
+        public String Name
+        {
+            set { name = value; }
+            get { return name; }
+        }
+
+        public String YearEstablished
+        {
+            // set { Name = value; }
+            get { return yearEstablished; }
+        }
+
+        public uint Enrolled
+        {
+             set { enrolled = value; }
+            get { return enrolled; }
         }
     }
 }

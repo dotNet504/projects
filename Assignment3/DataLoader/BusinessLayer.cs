@@ -28,6 +28,11 @@ namespace DataLoader
         public List<Apartment> lstDekalbApartments { get; set; }
         public List<House> lstSycamoreHouses { get; set; }
         public List<Apartment> lstSycamoreApartments { get; set; }
+        public List<School> lstDekalbSchools { get; set; }
+        public List<Business> lstDekalbBusiness { get; set; }
+        public List<School> lstSycamoreSchools { get; set; }
+        public List<Business> lstSycamoreBusiness { get; set; }
+
         public BusinessLayer()
         {
             Communities = new List<Community>();
@@ -37,6 +42,10 @@ namespace DataLoader
             lstDekalbApartments = new List<Apartment>();
             lstSycamoreHouses = new List<House>();
             lstSycamoreApartments = new List<Apartment>();
+            lstDekalbSchools = new List<School>();
+            lstSycamoreSchools = new List<School>();
+            lstDekalbBusiness = new List<Business>();
+            lstSycamoreBusiness = new List<Business>();
             LoadDekalbCommunityData();
             LoadSycamoreCommunityData();
         }
@@ -47,10 +56,9 @@ namespace DataLoader
             string[] persons = File.ReadAllLines(@"../../../DataLoader/InputFiles/Dekalb/p.txt");
             string[] houses = File.ReadAllLines(@"../../../DataLoader/InputFiles/Dekalb/r.txt");
             string[] apartments = File.ReadAllLines(@"../../../DataLoader/InputFiles/Dekalb/a.txt");
+            string[] schools = File.ReadAllLines(@"../../../DataLoader/InputFiles/Dekalb/s.txt");
+            string[] business = File.ReadAllLines(@"../../../DataLoader/InputFiles/Dekalb/b.txt");
 
-            //List<Person> lstPersons = new List<Person>();
-            //List<House> lstHouses = new List<House>();
-            //List<Apartment> lstApartments = new List<Apartment>();
 
             //Iterating over each of the input files and type casting them to relevant class types.
             foreach (var item in persons)
@@ -77,7 +85,23 @@ namespace DataLoader
             }
             lstDekalbApartments.Sort(new PropertyComparer());
 
-            Community community = new Community(lstDekalbPersons, lstDekalbHouses, lstDekalbApartments);
+            foreach (var item in schools)
+            {
+                string[] items = item.Split('\t');
+                School s = new School(items);
+                lstDekalbSchools.Add(s);
+            }
+
+            foreach (var item in business)
+            {
+                string[] items = item.Split('\t');
+                Business b = new Business(items);
+                lstDekalbBusiness.Add(b);
+            }
+
+            Community community = new Community(lstDekalbPersons, lstDekalbHouses, 
+                                                lstDekalbApartments, lstDekalbSchools,
+                                                lstDekalbBusiness);
             Communities.Add(community);
         }
         public class PersonComparer : IComparer<Person>
@@ -93,11 +117,9 @@ namespace DataLoader
             string[] persons = File.ReadAllLines(@"../../../DataLoader/InputFiles/Sycamore/p.txt");
             string[] houses = File.ReadAllLines(@"../../../DataLoader/InputFiles/Sycamore/r.txt");
             string[] apartments = File.ReadAllLines(@"../../../DataLoader/InputFiles/Sycamore/a.txt");
-
-            //List<Person> lstPersons = new List<Person>();
-            ////List<House> lstHouses = new List<House>();
-            //List<Apartment> lstApartments = new List<Apartment>();
-
+            string[] schools = File.ReadAllLines(@"../../../DataLoader/InputFiles/Sycamore/s.txt");
+            string[] business = File.ReadAllLines(@"../../../DataLoader/InputFiles/Sycamore/b.txt");
+                        
             //Iterating over each of the input files and type casting them to relevant class types.
             foreach (var item in persons)
             {
@@ -123,7 +145,23 @@ namespace DataLoader
             }
             lstSycamoreApartments.Sort(new PropertyComparer());
 
-            Community community = new Community(lstSycamorePersons, lstSycamoreHouses, lstSycamoreApartments, "Sycamore");
+            foreach (var item in schools)
+            {
+                string[] items = item.Split('\t');
+                School s = new School(items);
+                lstDekalbSchools.Add(s);
+            }
+
+            foreach (var item in business)
+            {
+                string[] items = item.Split('\t');
+                Business b = new Business(items);
+                lstDekalbBusiness.Add(b);
+            }
+
+            Community community = new Community(lstSycamorePersons, lstSycamoreHouses, 
+                                                lstSycamoreApartments, lstSycamoreSchools,
+                                                lstSycamoreBusiness, "Sycamore");
             Communities.Add(community);
         }
         #endregion
