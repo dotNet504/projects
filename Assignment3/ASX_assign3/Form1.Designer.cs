@@ -41,13 +41,11 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.domainUpDown2 = new System.Windows.Forms.DomainUpDown();
+            this.Query3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.For_Sale_Residence_ComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -66,6 +64,8 @@
             this.button5 = new System.Windows.Forms.Button();
             this.result_ListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.Query3_Distance = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -76,6 +76,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bathUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedUpDown)).BeginInit();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Query3_Distance)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -196,18 +198,18 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.numericUpDown1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.domainUpDown1);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox3.Location = new System.Drawing.Point(24, 319);
+            this.groupBox3.Location = new System.Drawing.Point(24, 350);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox3.Size = new System.Drawing.Size(1056, 127);
+            this.groupBox3.Size = new System.Drawing.Size(1056, 151);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "For Sale Residences Within Range of a School";
@@ -215,7 +217,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(380, 31);
+            this.label5.Location = new System.Drawing.Point(380, 45);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 33);
@@ -226,7 +228,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(724, 58);
+            this.button2.Location = new System.Drawing.Point(724, 74);
             this.button2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 52);
@@ -234,19 +236,10 @@
             this.button2.Text = "Query";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // domainUpDown1
-            // 
-            this.domainUpDown1.Location = new System.Drawing.Point(380, 63);
-            this.domainUpDown1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.domainUpDown1.Name = "domainUpDown1";
-            this.domainUpDown1.Size = new System.Drawing.Size(240, 40);
-            this.domainUpDown1.TabIndex = 2;
-            this.domainUpDown1.Text = "domainUpDown1";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 31);
+            this.label3.Location = new System.Drawing.Point(6, 45);
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(99, 33);
@@ -256,7 +249,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 63);
+            this.comboBox1.Location = new System.Drawing.Point(12, 82);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(350, 41);
@@ -264,14 +257,14 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.Query3_Distance);
             this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Controls.Add(this.domainUpDown2);
+            this.groupBox4.Controls.Add(this.Query3);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.For_Sale_Residence_ComboBox);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox4.Location = new System.Drawing.Point(24, 506);
+            this.groupBox4.Location = new System.Drawing.Point(24, 540);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
@@ -291,27 +284,18 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Distance";
             // 
-            // button3
+            // Query3
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button3.Location = new System.Drawing.Point(724, 89);
-            this.button3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(150, 52);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Query";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // domainUpDown2
-            // 
-            this.domainUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDown2.Location = new System.Drawing.Point(380, 94);
-            this.domainUpDown2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.domainUpDown2.Name = "domainUpDown2";
-            this.domainUpDown2.Size = new System.Drawing.Size(240, 40);
-            this.domainUpDown2.TabIndex = 2;
-            this.domainUpDown2.Text = "domainUpDown2";
+            this.Query3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Query3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Query3.Location = new System.Drawing.Point(724, 89);
+            this.Query3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Query3.Name = "Query3";
+            this.Query3.Size = new System.Drawing.Size(150, 52);
+            this.Query3.TabIndex = 3;
+            this.Query3.Text = "Query";
+            this.Query3.UseVisualStyleBackColor = true;
+            this.Query3.Click += new System.EventHandler(this.Query3_Click);
             // 
             // label4
             // 
@@ -349,7 +333,7 @@
             this.groupBox5.Controls.Add(this.querySpecResidence);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox5.Location = new System.Drawing.Point(24, 685);
+            this.groupBox5.Location = new System.Drawing.Point(24, 742);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
@@ -532,11 +516,11 @@
             this.groupBox6.Controls.Add(this.button5);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox6.Location = new System.Drawing.Point(26, 868);
+            this.groupBox6.Location = new System.Drawing.Point(26, 925);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.groupBox6.Size = new System.Drawing.Size(1054, 94);
+            this.groupBox6.Size = new System.Drawing.Size(1054, 107);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "List Of Properties Owned by Out-Of-Towners";
@@ -555,12 +539,13 @@
             // 
             // result_ListBox
             // 
+            this.result_ListBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.result_ListBox.FormattingEnabled = true;
-            this.result_ListBox.ItemHeight = 25;
+            this.result_ListBox.ItemHeight = 27;
             this.result_ListBox.Location = new System.Drawing.Point(1092, 56);
             this.result_ListBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.result_ListBox.Name = "result_ListBox";
-            this.result_ListBox.Size = new System.Drawing.Size(762, 804);
+            this.result_ListBox.Size = new System.Drawing.Size(762, 976);
             this.result_ListBox.TabIndex = 6;
             // 
             // label10
@@ -575,12 +560,36 @@
             this.label10.TabIndex = 7;
             this.label10.Text = "Query Results";
             // 
+            // Query3_Distance
+            // 
+            this.Query3_Distance.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.Query3_Distance.Location = new System.Drawing.Point(391, 94);
+            this.Query3_Distance.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.Query3_Distance.Name = "Query3_Distance";
+            this.Query3_Distance.Size = new System.Drawing.Size(120, 40);
+            this.Query3_Distance.TabIndex = 6;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(386, 87);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 40);
+            this.numericUpDown1.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1906, 965);
+            this.ClientSize = new System.Drawing.Size(1906, 1070);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.result_ListBox);
             this.Controls.Add(this.groupBox6);
@@ -608,6 +617,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bathUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bedUpDown)).EndInit();
             this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Query3_Distance)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -628,13 +639,11 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DomainUpDown domainUpDown1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DomainUpDown domainUpDown2;
+        private System.Windows.Forms.Button Query3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox For_Sale_Residence_ComboBox;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -653,6 +662,8 @@
         private System.Windows.Forms.NumericUpDown sqFtUpDown;
         private System.Windows.Forms.NumericUpDown bathUpDown;
         private System.Windows.Forms.NumericUpDown bedUpDown;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown Query3_Distance;
     }
 }
 

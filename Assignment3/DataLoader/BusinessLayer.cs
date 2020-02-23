@@ -149,14 +149,14 @@ namespace DataLoader
             {
                 string[] items = item.Split('\t');
                 School s = new School(items);
-                lstDekalbSchools.Add(s);
+                lstSycamoreSchools.Add(s);
             }
 
             foreach (var item in business)
             {
                 string[] items = item.Split('\t');
                 Business b = new Business(items);
-                lstDekalbBusiness.Add(b);
+                lstSycamoreBusiness.Add(b);
             }
 
             Community community = new Community(lstSycamorePersons, lstSycamoreHouses, 

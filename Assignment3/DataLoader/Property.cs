@@ -62,7 +62,11 @@ namespace DataLoader
             city = args[5];
             state = args[6];
             zip = args[7];
-            forSale = StringToBool(args[8]);
+            //Added  condition to read boolean value before ':' for new data
+            if(args[8].Contains(":"))
+                forSale = StringToBool(args[8].Split(':')[0]);
+            else
+                forSale = StringToBool(args[8]);
 
             string[] addressStringArr = streetAddr.Split();
             addNumber = Convert.ToUInt32(addressStringArr[0]);
