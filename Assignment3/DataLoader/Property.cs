@@ -28,6 +28,7 @@ namespace DataLoader
         private readonly uint x, y;
         private string streetAddr, city, state, zip;
         private bool forSale;
+        private double salePrice;
 
         // Attributes used to keep track of 
         // addNumber and streetName
@@ -63,8 +64,12 @@ namespace DataLoader
             state = args[6];
             zip = args[7];
             //Added  condition to read boolean value before ':' for new data
-            if(args[8].Contains(":"))
+            if (args[8].Contains(":"))
+            {
                 forSale = StringToBool(args[8].Split(':')[0]);
+                string temp = args[8].Split(':')[1];
+                salePrice = Convert.ToDouble(temp);
+            }
             else
                 forSale = StringToBool(args[8]);
 
@@ -179,6 +184,11 @@ namespace DataLoader
         {
             set { forSale = value; }
             get { return forSale; }
+        }
+        public double SalePrice
+        {
+            set { salePrice = value; }
+            get { return salePrice; }
         }
 
         // Property for addNumber attr

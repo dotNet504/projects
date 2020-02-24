@@ -33,15 +33,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.SalePriceRangeQuery = new System.Windows.Forms.Button();
+            this.checkBox_Scho = new System.Windows.Forms.CheckBox();
+            this.checkBox_Busi = new System.Windows.Forms.CheckBox();
+            this.checkBox_Resi = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.ResidencesRangeQuery = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -86,10 +86,10 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.trackBar2);
             this.groupBox1.Controls.Add(this.trackBar1);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.SalePriceRangeQuery);
+            this.groupBox1.Controls.Add(this.checkBox_Scho);
+            this.groupBox1.Controls.Add(this.checkBox_Busi);
+            this.groupBox1.Controls.Add(this.checkBox_Resi);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox1.Location = new System.Drawing.Point(18, 18);
@@ -137,53 +137,54 @@
             this.trackBar1.Size = new System.Drawing.Size(171, 69);
             this.trackBar1.TabIndex = 4;
             // 
-            // button1
+            // SalePriceRangeQuery
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(552, 37);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 42);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Query";
-            this.button1.UseVisualStyleBackColor = true;
+            this.SalePriceRangeQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalePriceRangeQuery.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SalePriceRangeQuery.Location = new System.Drawing.Point(552, 37);
+            this.SalePriceRangeQuery.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.SalePriceRangeQuery.Name = "SalePriceRangeQuery";
+            this.SalePriceRangeQuery.Size = new System.Drawing.Size(112, 42);
+            this.SalePriceRangeQuery.TabIndex = 3;
+            this.SalePriceRangeQuery.Text = "Query";
+            this.SalePriceRangeQuery.UseVisualStyleBackColor = true;
+            this.SalePriceRangeQuery.Click += new System.EventHandler(this.PropertiesPriceRange);
             // 
-            // checkBox3
+            // checkBox_Scho
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.Location = new System.Drawing.Point(9, 108);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(99, 29);
-            this.checkBox3.TabIndex = 2;
-            this.checkBox3.Text = "School";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox_Scho.AutoSize = true;
+            this.checkBox_Scho.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_Scho.Location = new System.Drawing.Point(9, 108);
+            this.checkBox_Scho.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.checkBox_Scho.Name = "checkBox_Scho";
+            this.checkBox_Scho.Size = new System.Drawing.Size(99, 29);
+            this.checkBox_Scho.TabIndex = 2;
+            this.checkBox_Scho.Text = "School";
+            this.checkBox_Scho.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // checkBox_Busi
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.Location = new System.Drawing.Point(9, 72);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(118, 29);
-            this.checkBox2.TabIndex = 1;
-            this.checkBox2.Text = "Business";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox_Busi.AutoSize = true;
+            this.checkBox_Busi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_Busi.Location = new System.Drawing.Point(9, 72);
+            this.checkBox_Busi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.checkBox_Busi.Name = "checkBox_Busi";
+            this.checkBox_Busi.Size = new System.Drawing.Size(118, 29);
+            this.checkBox_Busi.TabIndex = 1;
+            this.checkBox_Busi.Text = "Business";
+            this.checkBox_Busi.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBox_Resi
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(9, 37);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(129, 29);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Residental";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox_Resi.AutoSize = true;
+            this.checkBox_Resi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_Resi.Location = new System.Drawing.Point(9, 37);
+            this.checkBox_Resi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.checkBox_Resi.Name = "checkBox_Resi";
+            this.checkBox_Resi.Size = new System.Drawing.Size(129, 29);
+            this.checkBox_Resi.TabIndex = 0;
+            this.checkBox_Resi.Text = "Residental";
+            this.checkBox_Resi.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
@@ -200,7 +201,7 @@
             // 
             this.groupBox3.Controls.Add(this.numericUpDown1);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.ResidencesRangeQuery);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.comboBox1);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -217,7 +218,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(290, 70);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(90, 32);
             this.numericUpDown1.TabIndex = 5;
@@ -232,17 +233,18 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Distance";
             // 
-            // button2
+            // ResidencesRangeQuery
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(543, 59);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 42);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Query";
-            this.button2.UseVisualStyleBackColor = true;
+            this.ResidencesRangeQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResidencesRangeQuery.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.ResidencesRangeQuery.Location = new System.Drawing.Point(543, 59);
+            this.ResidencesRangeQuery.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ResidencesRangeQuery.Name = "ResidencesRangeQuery";
+            this.ResidencesRangeQuery.Size = new System.Drawing.Size(112, 42);
+            this.ResidencesRangeQuery.TabIndex = 3;
+            this.ResidencesRangeQuery.Text = "Query";
+            this.ResidencesRangeQuery.UseVisualStyleBackColor = true;
+            this.ResidencesRangeQuery.Click += new System.EventHandler(this.FindSaleResNearSchool);
             // 
             // label3
             // 
@@ -289,7 +291,7 @@
             0,
             0});
             this.Query3_Distance.Location = new System.Drawing.Point(293, 75);
-            this.Query3_Distance.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Query3_Distance.Margin = new System.Windows.Forms.Padding(2);
             this.Query3_Distance.Maximum = new decimal(new int[] {
             500,
             0,
@@ -633,14 +635,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button SalePriceRangeQuery;
+        private System.Windows.Forms.CheckBox checkBox_Scho;
+        private System.Windows.Forms.CheckBox checkBox_Busi;
+        private System.Windows.Forms.CheckBox checkBox_Resi;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button ResidencesRangeQuery;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.GroupBox groupBox4;

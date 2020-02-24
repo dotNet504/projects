@@ -194,5 +194,46 @@ namespace ASX_assign3
             result_ListBox.Items.Add("\n");
             result_ListBox.Items.Add("### END OF OUTPUT ###");
         }
+        #region Xuezhi's code
+
+
+
+        private void PropertiesPriceRange(object sender, EventArgs e)
+        {
+
+            //foreach (Business i in dekalbBusinesses)
+            //{
+            //    MessageBox.Show(i.YearEstablished);
+            //}
+            bool resBox = checkBox_Resi.Checked;
+            bool busBOx = checkBox_Busi.Checked;
+            bool schBox = checkBox_Scho.Checked;
+
+            if (resBox = true)
+            {
+                int eeee = 1;
+                //var theLevel = dekalbHouses.Characters.Where(z => z.UserId == UserID).Max(z => z.LevelID);
+            }
+            trackBar1.Minimum = 0;
+            trackBar1.Maximum = 100;
+            trackBar1.TickFrequency = 20;
+            MessageBox.Show(trackBar1.Value.ToString());
+
+
+
+
+
+        }
+
+        private void FindSaleResNearSchool(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+
+        #endregion
     }
 }
