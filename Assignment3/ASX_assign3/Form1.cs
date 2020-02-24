@@ -391,6 +391,7 @@ namespace ASX_assign3
         {
             IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
             IEnumerable<Property> allProps = Enumerable.Empty<Property>();
+            IEnumerable<Property> allSaleableProps = Enumerable.Empty<Property>();
             //schoolComboBox.SelectedItem = 
 
             var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
@@ -404,15 +405,17 @@ namespace ASX_assign3
             allProps = selectedCommunitySyc.Props.Union(selectedCommunityDek.Props);
 
             var selectSchool = from qqq in allProps where ((qqq is School) &&   (((School) qqq).Name.CompareTo(schoolComboBox.SelectedItem) ==0) ) select qqq;
-            
-            var selecteProps = from qqq in allProps where ((qqq is House) && (selectSchool.First().X- qqq.X<50) select qqq;
+
+
+            allSaleableProps = from qqq in allProps where ((qqq is House) && (qqq.ForSale == true)) select qqq;
+            var selecteProps = from qqq in allSaleableProps where ((qqq is House) && ((selectSchool.First().X- qqq.X)* (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= 2500) )select qqq;
 
 
             result_ListBox.Items.Add(schoolComboBox.SelectedItem);
             result_ListBox.Items.Add(selectSchool.Count().ToString());
-            foreach (var i in selectSchool)
+            foreach (var i in selecteProps)
             {
-                result_ListBox.Items.Add(i.StreetName+" "+((School) i).Name);
+                result_ListBox.Items.Add(i.StreetAddr);
             }
         }
 
