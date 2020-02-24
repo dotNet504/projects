@@ -161,6 +161,7 @@
             this.checkBox_Scho.TabIndex = 2;
             this.checkBox_Scho.Text = "School";
             this.checkBox_Scho.UseVisualStyleBackColor = true;
+            this.checkBox_Scho.Click += new System.EventHandler(this.SelectTypeProperties);
             // 
             // checkBox_Busi
             // 
@@ -173,6 +174,7 @@
             this.checkBox_Busi.TabIndex = 1;
             this.checkBox_Busi.Text = "Business";
             this.checkBox_Busi.UseVisualStyleBackColor = true;
+            this.checkBox_Busi.Click += new System.EventHandler(this.SelectTypeProperties);
             // 
             // checkBox_Resi
             // 
@@ -185,6 +187,7 @@
             this.checkBox_Resi.TabIndex = 0;
             this.checkBox_Resi.Text = "Residental";
             this.checkBox_Resi.UseVisualStyleBackColor = true;
+            this.checkBox_Resi.Click += new System.EventHandler(this.SelectTypeProperties);
             // 
             // groupBox2
             // 

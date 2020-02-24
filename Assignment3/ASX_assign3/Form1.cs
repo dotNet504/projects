@@ -200,20 +200,87 @@ namespace ASX_assign3
 
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
+            double resMax = -9999999;
+            double resMin = 99999999;
 
-            //foreach (Business i in dekalbBusinesses)
-            //{
-            //    MessageBox.Show(i.YearEstablished);
-            //}
+            double busMax = -9999999;
+            double busMin = 99999999;
+
+            double schMax = -9999999;
+            double schMin = 99999999;
+
             bool resBox = checkBox_Resi.Checked;
-            bool busBOx = checkBox_Busi.Checked;
-            bool schBox = checkBox_Scho.Checked;
+            bool schBox = checkBox_Busi.Checked;
+            bool busBox = checkBox_Scho.Checked;
+
+            var test =
+                from res_test in dekalbHouses
+                where (res_test.ForSale == true)
+                select res_test;
 
             if (resBox = true)
             {
-                int eeee = 1;
-                //var theLevel = dekalbHouses.Characters.Where(z => z.UserId == UserID).Max(z => z.LevelID);
+
+                var saleableDekHouse = from propDek in dekalbHouses where (propDek.ForSale == true) select propDek;
+                var saleableDekApartment = from propDek in dekalbApartments where (propDek.ForSale == true) select propDek;
+                var saleableSycHouse = from propSyc in sycamoreHouses where (propSyc.ForSale == true) select propSyc;
+                var saleableSycApartment = from propSyc in sycamoreApartments where (propSyc.ForSale == true) select propSyc;
+
+
+                double dekHouseMax = saleableDekHouse.Max(a => a.SalePrice);
+                double dekHouseMin = saleableDekHouse.Min(a => a.SalePrice);
+                double dekAptMax = saleableDekApartment.Max(a => a.SalePrice);
+                double dekAptMin = saleableDekApartment.Min(a => a.SalePrice);
+
+                double SycHouseMax = saleableSycHouse.Max(a => a.SalePrice);
+                double SycHouseMin = saleableSycHouse.Min(a => a.SalePrice);
+                double SycAptMax = saleableSycApartment.Max(a => a.SalePrice);
+                double SycAptMin = saleableSycApartment.Min(a => a.SalePrice);
+
+                //double dekAptarMax = dekalbApartments.Min(a => a.SalePrice);
+
+                //ouble dekAptarMin = sycamoreApartments.Min(a => a.SalePrice);
+
+                double[] sequence = {dekHouseMax, dekHouseMin, dekAptMax, dekAptMin, SycHouseMax, SycHouseMin, SycAptMax, SycAptMin };
+                resMax = sequence.Max();
+                resMin = sequence.Min();
+
+                MessageBox.Show("heighe:   " + resMax.ToString());
+                MessageBox.Show("lowest:   " + resMin.ToString());
+
+
             }
+
+
+            if (schBox == true)
+            {
+               schMax = dekalbSchools.Max(a => a.SalePrice);
+               schMin = dekalbSchools.Min(a => a.SalePrice);
+            }
+
+            if (busBox == true)
+            {
+                busMax = dekalbBusinesses.Max(a => a.SalePrice);
+                busMin = dekalbBusinesses.Min(a => a.SalePrice);
+            }
+
+            /*
+            if (resBox = true)
+            {
+                int eeee = 1;
+                foreach (Property i in dekalbBusinesses)
+                {
+                    if (i.ForSale==true)
+                    {
+                        MessageBox.Show(i.SalePrice.ToString());
+                    }
+                }
+                //var theLevel = dekalbHouses.Characters.Where(z => z.UserId == UserID).Max(z => z.LevelID);
+            }*/
+
+            var res = dekalbBusinesses.Max(a => a.SalePrice);
+            //MessageBox.Show("heighe:   "+ res.ToString());
+            double max_res = 
             trackBar1.Minimum = 0;
             trackBar1.Maximum = 100;
             trackBar1.TickFrequency = 20;
@@ -229,11 +296,17 @@ namespace ASX_assign3
         {
 
         }
+        private void SelectTypeProperties(object sender, EventArgs e)
+        {
+            MessageBox.Show("fdfdfdsfsd");
+        }
 
 
 
 
 
         #endregion
+
+
     }
 }
