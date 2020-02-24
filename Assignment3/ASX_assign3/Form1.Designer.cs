@@ -105,7 +105,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 88);
+            this.label2.Location = new System.Drawing.Point(520, 75);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(118, 26);
@@ -115,16 +115,17 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(463, 88);
+            this.label1.Location = new System.Drawing.Point(181, 72);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 26);
             this.label1.TabIndex = 6;
             this.label1.Text = "Min Price";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // trackBarMax
             // 
-            this.trackBarMax.Location = new System.Drawing.Point(152, 135);
+            this.trackBarMax.Location = new System.Drawing.Point(505, 134);
             this.trackBarMax.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.trackBarMax.Name = "trackBarMax";
             this.trackBarMax.Size = new System.Drawing.Size(256, 69);
@@ -133,7 +134,7 @@
             // 
             // trackBarMin
             // 
-            this.trackBarMin.Location = new System.Drawing.Point(468, 135);
+            this.trackBarMin.Location = new System.Drawing.Point(162, 134);
             this.trackBarMin.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.trackBarMin.Name = "trackBarMin";
             this.trackBarMin.Size = new System.Drawing.Size(256, 69);

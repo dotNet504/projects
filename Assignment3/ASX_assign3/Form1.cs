@@ -497,14 +497,19 @@ namespace ASX_assign3
         {
             if (trackBarMax.Maximum <= 10)
             {
-                label1.Text = "Max Price";
+                label2.Text = "Max Price";
             }
             else
-                label1.Text = "Max Price: " + trackBarMin.Value.ToString();
+                label2.Text = "Max Price: " + trackBarMax.Value.ToString();
 
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
