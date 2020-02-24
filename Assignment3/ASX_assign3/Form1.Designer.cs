@@ -31,8 +31,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackBarMax = new System.Windows.Forms.TrackBar();
+            this.trackBarMin = new System.Windows.Forms.TrackBar();
             this.SalePriceRangeQuery = new System.Windows.Forms.Button();
             this.checkBox_Scho = new System.Windows.Forms.CheckBox();
             this.checkBox_Busi = new System.Windows.Forms.CheckBox();
@@ -67,8 +67,8 @@
             this.result_ListBox = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMin)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox4.SuspendLayout();
@@ -84,8 +84,8 @@
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.trackBar2);
-            this.groupBox1.Controls.Add(this.trackBar1);
+            this.groupBox1.Controls.Add(this.trackBarMax);
+            this.groupBox1.Controls.Add(this.trackBarMin);
             this.groupBox1.Controls.Add(this.SalePriceRangeQuery);
             this.groupBox1.Controls.Add(this.checkBox_Scho);
             this.groupBox1.Controls.Add(this.checkBox_Busi);
@@ -121,21 +121,23 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Min Price";
             // 
-            // trackBar2
+            // trackBarMax
             // 
-            this.trackBar2.Location = new System.Drawing.Point(190, 150);
-            this.trackBar2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(171, 69);
-            this.trackBar2.TabIndex = 5;
+            this.trackBarMax.Location = new System.Drawing.Point(190, 150);
+            this.trackBarMax.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBarMax.Name = "trackBarMax";
+            this.trackBarMax.Size = new System.Drawing.Size(171, 69);
+            this.trackBarMax.TabIndex = 5;
+            this.trackBarMax.Scroll += new System.EventHandler(this.scrollMaxPrice);
             // 
-            // trackBar1
+            // trackBarMin
             // 
-            this.trackBar1.Location = new System.Drawing.Point(190, 65);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(171, 69);
-            this.trackBar1.TabIndex = 4;
+            this.trackBarMin.Location = new System.Drawing.Point(190, 65);
+            this.trackBarMin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBarMin.Name = "trackBarMin";
+            this.trackBarMin.Size = new System.Drawing.Size(171, 69);
+            this.trackBarMin.TabIndex = 4;
+            this.trackBarMin.Scroll += new System.EventHandler(this.scrollMinPrice);
             // 
             // SalePriceRangeQuery
             // 
@@ -612,8 +614,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMin)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -636,8 +638,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar trackBarMax;
+        private System.Windows.Forms.TrackBar trackBarMin;
         private System.Windows.Forms.Button SalePriceRangeQuery;
         private System.Windows.Forms.CheckBox checkBox_Scho;
         private System.Windows.Forms.CheckBox checkBox_Busi;

@@ -44,8 +44,10 @@ namespace ASX_assign3
             dekalbPersons = _businessLayer.lstDekalbPersons;
             sycamorePersons = _businessLayer.lstSycamorePersons;
             dekalbSchools = new List<School>();
+            dekalbSchools = _businessLayer.lstDekalbSchools; 
             dekalbBusinesses = _businessLayer.lstDekalbBusiness;
             sycamoreSchools = new List<School>();
+            sycamoreSchools = _businessLayer.lstSycamoreSchools;
             sycamoreBusinesses = _businessLayer.lstSycamoreBusiness;
 
             Load_ForSale_Information();
@@ -200,25 +202,66 @@ namespace ASX_assign3
 
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
-            double resMax = -9999999;
-            double resMin = 99999999;
+            MessageBox.Show(trackBarMax.Value.ToString());
+            MessageBox.Show(trackBarMin.Value.ToString());
 
-            double busMax = -9999999;
-            double busMin = 99999999;
 
-            double schMax = -9999999;
-            double schMin = 99999999;
 
+
+
+         
+
+
+
+
+        }
+
+        private void FindSaleResNearSchool(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+
+
+
+        
+
+
+        private void SelectTypeProperties(object sender, EventArgs e)
+        {
             bool resBox = checkBox_Resi.Checked;
-            bool schBox = checkBox_Busi.Checked;
-            bool busBox = checkBox_Scho.Checked;
+            bool schBox = checkBox_Scho.Checked; 
+            bool busBox = checkBox_Busi.Checked;
 
-            var test =
-                from res_test in dekalbHouses
-                where (res_test.ForSale == true)
-                select res_test;
+            double resMax = -9999999999;
+            double resMin = +999999999;
 
-            if (resBox = true)
+            double busMax = -9999999999;
+            double busMin = +999999999;
+
+            double schMax = -9999999999;
+            double schMin = +999999999;
+
+            double? maxPrice ;
+            double? minPrice ;
+
+            if((checkBox_Resi.Checked ==false) && (checkBox_Scho.Checked ==false) && (checkBox_Busi.Checked==false))
+            {
+                maxPrice = null;
+                minPrice = null;
+                trackBarMin.Minimum = 0;
+                trackBarMin.Maximum = 10;
+                trackBarMax.Minimum = 0;
+                trackBarMax.Maximum = 10;
+                return;
+
+            }
+
+
+            if (checkBox_Resi.Checked)
             {
 
                 var saleableDekHouse = from propDek in dekalbHouses where (propDek.ForSale == true) select propDek;
@@ -232,81 +275,84 @@ namespace ASX_assign3
                 double dekAptMax = saleableDekApartment.Max(a => a.SalePrice);
                 double dekAptMin = saleableDekApartment.Min(a => a.SalePrice);
 
-                double SycHouseMax = saleableSycHouse.Max(a => a.SalePrice);
-                double SycHouseMin = saleableSycHouse.Min(a => a.SalePrice);
-                double SycAptMax = saleableSycApartment.Max(a => a.SalePrice);
-                double SycAptMin = saleableSycApartment.Min(a => a.SalePrice);
+                double sycHouseMax = saleableSycHouse.Max(a => a.SalePrice);
+                double sycHouseMin = saleableSycHouse.Min(a => a.SalePrice);
+                double sycAptMax = saleableSycApartment.Max(a => a.SalePrice);
+                double sycAptMin = saleableSycApartment.Min(a => a.SalePrice);
 
-                //double dekAptarMax = dekalbApartments.Min(a => a.SalePrice);
+                double[] sequence_prop = { dekHouseMax, dekHouseMin, dekAptMax, dekAptMin, sycHouseMax, sycHouseMin, sycAptMax, sycAptMin };
+                resMax = sequence_prop.Max();
+                schMin = sequence_prop.Min();
+            }
+            if (checkBox_Scho.Checked)
+            {
 
-                //ouble dekAptarMin = sycamoreApartments.Min(a => a.SalePrice);
+                var saleableDekSchool = from schoolDek in dekalbSchools where (schoolDek.ForSale == true) select schoolDek;
+                var saleableSycSchool = from schoolSyc in sycamoreSchools where (schoolSyc.ForSale == true) select schoolSyc;
 
-                double[] sequence = {dekHouseMax, dekHouseMin, dekAptMax, dekAptMin, SycHouseMax, SycHouseMin, SycAptMax, SycAptMin };
-                resMax = sequence.Max();
-                resMin = sequence.Min();
+                double dekSchMax = saleableDekSchool.Max(a => a.SalePrice);
+                double dekSchMin = saleableDekSchool.Min(a => a.SalePrice);
+                double sycSchMax = saleableSycSchool.Max(a => a.SalePrice);
+                double sycSchMin = saleableSycSchool.Min(a => a.SalePrice);
 
-                MessageBox.Show("heighe:   " + resMax.ToString());
-                MessageBox.Show("lowest:   " + resMin.ToString());
-
+                double[] sequenceSchool = { dekSchMax, dekSchMin, sycSchMax, sycSchMin };
+                schMax = sequenceSchool.Max();
+                resMin = sequenceSchool.Min();
 
             }
 
-
-            if (schBox == true)
+            if (checkBox_Busi.Checked)
             {
-               schMax = dekalbSchools.Max(a => a.SalePrice);
-               schMin = dekalbSchools.Min(a => a.SalePrice);
+                var saleableDekBusiness = from businessDek in dekalbBusinesses where (businessDek.ForSale == true) select businessDek;
+                var saleableBusiness = from businessSyc in sycamoreBusinesses where (businessSyc.ForSale == true) select businessSyc;
+
+                busMax = saleableDekBusiness.Max(a => a.SalePrice);
+                busMin = saleableDekBusiness.Min(a => a.SalePrice);
             }
 
-            if (busBox == true)
-            {
-                busMax = dekalbBusinesses.Max(a => a.SalePrice);
-                busMin = dekalbBusinesses.Min(a => a.SalePrice);
-            }
+            double?[] maxList = { resMax, schMax, busMax };
+            double?[] minList = { resMin, schMin, busMin };
 
-            /*
-            if (resBox = true)
-            {
-                int eeee = 1;
-                foreach (Property i in dekalbBusinesses)
-                {
-                    if (i.ForSale==true)
-                    {
-                        MessageBox.Show(i.SalePrice.ToString());
-                    }
-                }
-                //var theLevel = dekalbHouses.Characters.Where(z => z.UserId == UserID).Max(z => z.LevelID);
-            }*/
-
-            var res = dekalbBusinesses.Max(a => a.SalePrice);
-            //MessageBox.Show("heighe:   "+ res.ToString());
-            double max_res = 
-            trackBar1.Minimum = 0;
-            trackBar1.Maximum = 100;
-            trackBar1.TickFrequency = 20;
-            MessageBox.Show(trackBar1.Value.ToString());
+            maxPrice = maxList.Max();
+            minPrice = minList.Min();
 
 
+            trackBarMin.Minimum = (int) minPrice;
+            trackBarMin.Maximum = (int) maxPrice;
 
+            label1.Text = "Min Price: " + trackBarMin.Value.ToString();
 
+            trackBarMax.Minimum = (int) minPrice;
+            trackBarMax.Maximum = (int) maxPrice;
+            label2.Text = "Max Price: " + trackBarMax.Value.ToString();
 
+            trackBarMin.TickFrequency = (int )(minPrice - maxPrice) / 10;
+            trackBarMax.TickFrequency = (int)(minPrice - maxPrice)  / 10;
+
+            MessageBox.Show("heighe:   " + maxPrice.ToString());
+            MessageBox.Show("lowest:   " + minPrice.ToString());
         }
-
-        private void FindSaleResNearSchool(object sender, EventArgs e)
-        {
-
-        }
-        private void SelectTypeProperties(object sender, EventArgs e)
-        {
-            MessageBox.Show("fdfdfdsfsd");
-        }
-
-
-
-
-
         #endregion
 
+        private void scrollMinPrice(object sender, EventArgs e)
+        {
+            if (trackBarMin.Maximum<=10)
+            {
+                label1.Text = "Min Price";
+            }
+            else
+                label1.Text = "Min Price: " + trackBarMin.Value.ToString();
+        }
 
+        private void scrollMaxPrice(object sender, EventArgs e)
+        {
+            if (trackBarMax.Maximum <= 10)
+            {
+                label1.Text = "Max Price";
+            }
+            else
+                label1.Text = "Max Price: " + trackBarMin.Value.ToString();
+
+        }
     }
 }
