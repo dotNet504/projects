@@ -43,7 +43,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.ResidencesRangeQuery = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.schoolComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Query3_Distance = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -121,7 +121,6 @@
             this.label1.Size = new System.Drawing.Size(112, 26);
             this.label1.TabIndex = 6;
             this.label1.Text = "Min Price";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // trackBarMax
             // 
@@ -210,7 +209,7 @@
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.ResidencesRangeQuery);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Controls.Add(this.schoolComboBox);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox3.Location = new System.Drawing.Point(18, 280);
@@ -224,16 +223,22 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(290, 69);
+            this.numericUpDown1.Location = new System.Drawing.Point(514, 64);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(90, 32);
             this.numericUpDown1.TabIndex = 5;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(285, 35);
+            this.label5.Location = new System.Drawing.Point(520, 30);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 26);
@@ -244,7 +249,7 @@
             // 
             this.ResidencesRangeQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResidencesRangeQuery.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ResidencesRangeQuery.Location = new System.Drawing.Point(543, 58);
+            this.ResidencesRangeQuery.Location = new System.Drawing.Point(649, 58);
             this.ResidencesRangeQuery.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ResidencesRangeQuery.Name = "ResidencesRangeQuery";
             this.ResidencesRangeQuery.Size = new System.Drawing.Size(112, 42);
@@ -263,14 +268,14 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "School";
             // 
-            // comboBox1
+            // schoolComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(9, 66);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(264, 34);
-            this.comboBox1.TabIndex = 0;
+            this.schoolComboBox.FormattingEnabled = true;
+            this.schoolComboBox.Location = new System.Drawing.Point(9, 66);
+            this.schoolComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.schoolComboBox.Name = "schoolComboBox";
+            this.schoolComboBox.Size = new System.Drawing.Size(499, 34);
+            this.schoolComboBox.TabIndex = 0;
             // 
             // groupBox4
             // 
@@ -656,7 +661,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button ResidencesRangeQuery;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox schoolComboBox;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button Query3;

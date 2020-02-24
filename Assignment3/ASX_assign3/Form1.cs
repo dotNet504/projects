@@ -50,7 +50,18 @@ namespace ASX_assign3
             sycamoreSchools = _businessLayer.lstSycamoreSchools;
             sycamoreBusinesses = _businessLayer.lstSycamoreBusiness;
 
+            trackBarMin.Minimum = 65000;
+            trackBarMin.Maximum = 310000;
+            trackBarMax.Minimum = 65000;
+            trackBarMax.Maximum = 310000;
+            trackBarMin.Value = 65000;
+            trackBarMax.Value = 310000;
+            trackBarMin.TickFrequency = (int)(310000 - 65000) / 15;
+            trackBarMax.TickFrequency = (int)(310000 - 65000) / 15;
+
+            Load_School_Information();
             Load_ForSale_Information();
+
         }
 
         private void Load_ForSale_Information()
@@ -284,7 +295,22 @@ namespace ASX_assign3
         }
         #region Xuezhi's code
 
+        private void Load_School_Information()
+        {
+            schoolComboBox.Items.Clear();
+            foreach (School details in dekalbSchools)
+            {
+                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
 
+            }
+
+            foreach (School details in sycamoreSchools)
+            {
+
+                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
+
+            }
+        }
 
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
@@ -363,7 +389,31 @@ namespace ASX_assign3
 
         private void FindSaleResNearSchool(object sender, EventArgs e)
         {
+            IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
+            IEnumerable<Property> allProps = Enumerable.Empty<Property>();
+            //schoolComboBox.SelectedItem = 
 
+            var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunityDek = selectedCommunityNameDek.First();
+            var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            var selectedCommunitySyc = selectedCommunityNameSyc.First();
+
+
+
+
+            allProps = selectedCommunitySyc.Props.Union(selectedCommunityDek.Props);
+
+            var selectSchool = from qqq in allProps where ((qqq is School) &&   (((School) qqq).Name.CompareTo(schoolComboBox.SelectedItem) ==0) ) select qqq;
+            
+            var selecteProps = from qqq in allProps where ((qqq is House) && (selectSchool.First().X- qqq.X<50) select qqq;
+
+
+            result_ListBox.Items.Add(schoolComboBox.SelectedItem);
+            result_ListBox.Items.Add(selectSchool.Count().ToString());
+            foreach (var i in selectSchool)
+            {
+                result_ListBox.Items.Add(i.StreetName+" "+((School) i).Name);
+            }
         }
 
 
@@ -509,7 +559,7 @@ namespace ASX_assign3
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
         }
