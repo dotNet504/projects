@@ -288,14 +288,73 @@ namespace ASX_assign3
 
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
-            MessageBox.Show(trackBarMax.Value.ToString());
-            MessageBox.Show(trackBarMin.Value.ToString());
+            IEnumerable<Property> resiDekSelected = Enumerable.Empty<Property>();
+            IEnumerable<Property> busiDekSelected = Enumerable.Empty<Property>();
+            IEnumerable<Property> schoDekSelected = Enumerable.Empty<Property>();
+            IEnumerable<Property> resiSycSelected = Enumerable.Empty<Property>();
+            IEnumerable<Property> busiSycSelected = Enumerable.Empty<Property>();
+            IEnumerable<Property> schoSycSelected = Enumerable.Empty<Property>();
+
+            IEnumerable<Property> allSyc = Enumerable.Empty<Property>();
+            // FOR dekalb
+            IEnumerable<Property> allDek = Enumerable.Empty<Property>();
+            List<Property> selectedProps_1 = new List<Property>();
+            SortedSet<Property> selectedProps = new SortedSet<Property>();
+            var selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunity = selectedCommunityName.First();
+            var selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
+            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
+
+            if (checkBox_Resi.Checked)
+            {
+                resiDekSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
+            }
+            if (checkBox_Busi.Checked)
+            {
+                busiDekSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
+            }
+            if (checkBox_Scho.Checked)
+            {
+                schoDekSelected = from qqq in selectProp where ((qqq is School)) select qqq;
+            }
+
+            allDek = resiDekSelected.Union(busiDekSelected).Union(schoDekSelected);
+            allDek.OrderBy(a => a.SalePrice);
+
+            foreach (var i in allDek)
+            {
+                result_ListBox.Items.Add(i.StreetAddr + i.SalePrice.ToString());
+            }
+            result_ListBox.Items.Add(allDek.Count().ToString());
+
+
+            selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            selectedCommunity = selectedCommunityName.First();
+            selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
+            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
+
+            if (checkBox_Resi.Checked)
+            {
+                resiSycSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
+            }
+            if (checkBox_Busi.Checked)
+            {
+                busiSycSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
+            }
+            if (checkBox_Scho.Checked)
+            {
+                schoSycSelected = from qqq in selectProp where ((qqq is School)) select qqq;
+            }
+            allSyc = resiSycSelected.Union(busiSycSelected).Union(schoSycSelected);
+
+            foreach (var i in allSyc)
+            {
+                result_ListBox.Items.Add(i.StreetAddr + i.SalePrice.ToString());
+            }
+            result_ListBox.Items.Add(allSyc.Count().ToString());
 
 
 
-
-
-         
 
 
 
@@ -319,7 +378,7 @@ namespace ASX_assign3
         private void SelectTypeProperties(object sender, EventArgs e)
         {
             bool resBox = checkBox_Resi.Checked;
-            bool schBox = checkBox_Scho.Checked; 
+            bool schBox = checkBox_Scho.Checked;
             bool busBox = checkBox_Busi.Checked;
 
             double resMax = -9999999999;
@@ -331,23 +390,30 @@ namespace ASX_assign3
             double schMax = -9999999999;
             double schMin = +999999999;
 
-            double? maxPrice ;
-            double? minPrice ;
+            double? maxPrice;
+            double? minPrice;
 
-            if((checkBox_Resi.Checked ==false) && (checkBox_Scho.Checked ==false) && (checkBox_Busi.Checked==false))
+            if ((checkBox_Resi.Checked == false) && (checkBox_Scho.Checked == false) && (checkBox_Busi.Checked == false))
             {
                 maxPrice = null;
                 minPrice = null;
                 trackBarMin.Minimum = 0;
                 trackBarMin.Maximum = 10;
+                trackBarMin.Value = 0;
+                trackBarMin.TickFrequency = 1;
+
                 trackBarMax.Minimum = 0;
                 trackBarMax.Maximum = 10;
+                trackBarMax.Value = 0;
+                trackBarMax.TickFrequency = 1;
+                label1.Text = "Min Price";
+                label2.Text = "Max Price";
                 return;
 
             }
 
 
-            if (checkBox_Resi.Checked)
+            if (true)//(checkBox_Resi.Checked)
             {
 
                 var saleableDekHouse = from propDek in dekalbHouses where (propDek.ForSale == true) select propDek;
@@ -370,7 +436,7 @@ namespace ASX_assign3
                 resMax = sequence_prop.Max();
                 schMin = sequence_prop.Min();
             }
-            if (checkBox_Scho.Checked)
+            if (true)//(checkBox_Scho.Checked)
             {
 
                 var saleableDekSchool = from schoolDek in dekalbSchools where (schoolDek.ForSale == true) select schoolDek;
@@ -387,7 +453,7 @@ namespace ASX_assign3
 
             }
 
-            if (checkBox_Busi.Checked)
+            if (true)//(checkBox_Busi.Checked)
             {
                 var saleableDekBusiness = from businessDek in dekalbBusinesses where (businessDek.ForSale == true) select businessDek;
                 var saleableBusiness = from businessSyc in sycamoreBusinesses where (businessSyc.ForSale == true) select businessSyc;
@@ -403,20 +469,17 @@ namespace ASX_assign3
             minPrice = minList.Min();
 
 
-            trackBarMin.Minimum = (int) minPrice;
-            trackBarMin.Maximum = (int) maxPrice;
+            trackBarMin.Minimum = (int)minPrice;
+            trackBarMin.Maximum = (int)maxPrice;
 
             label1.Text = "Min Price: " + trackBarMin.Value.ToString();
 
-            trackBarMax.Minimum = (int) minPrice;
-            trackBarMax.Maximum = (int) maxPrice;
+            trackBarMax.Minimum = (int)minPrice;
+            trackBarMax.Maximum = (int)maxPrice;
             label2.Text = "Max Price: " + trackBarMax.Value.ToString();
 
-            trackBarMin.TickFrequency = (int )(minPrice - maxPrice) / 10;
-            trackBarMax.TickFrequency = (int)(minPrice - maxPrice)  / 10;
-
-            MessageBox.Show("heighe:   " + maxPrice.ToString());
-            MessageBox.Show("lowest:   " + minPrice.ToString());
+            trackBarMin.TickFrequency = (int)(minPrice - maxPrice) / 15;
+            trackBarMax.TickFrequency = (int)(minPrice - maxPrice) / 15;
         }
         #endregion
 
@@ -438,6 +501,11 @@ namespace ASX_assign3
             }
             else
                 label1.Text = "Max Price: " + trackBarMin.Value.ToString();
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
     }
