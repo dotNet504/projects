@@ -115,18 +115,97 @@ namespace ASX_assign3
             this.Controls.Add(flowPanel);
         }
 
+
+        #region A's Code
         private void querySpecResidence_Click(object sender, EventArgs e)
         {
+            bool garage = (bool) (garageCheckBox.Checked);
+            bool attached = (bool) (attachedCheckBox.Checked);
 
-            //if(houseCheckBox.Checked)
             // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
             //                                  and attached is (attachedCheckBox.Checked)
+            if (houseCheckBox.Checked && !apartmentCheckBox.Checked)
+            {
+                var houseQ = from i in CommunitiesList
+                             from j in i.Props
+                             where ( j.GetType().Equals(typeof(House)) ) && (j.ForSale.Equals(true))
+                             select j;
 
-            //if(houseCheckBox.Checked && apartmentsCheckBox.Checked)
+                var houseList = houseQ.OfType<House>();
+
+                var retList = from k in houseList
+                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                               (k.Sqft >= sqFtUpDown.Value)  && (k.Garage.Equals(garage)) 
+                               && ( k.AttachedGarage.GetValueOrDefault(false).Equals(attached) ) 
+                               orderby k.City // and price
+                              select k;
+                                
+                foreach (House ent in retList.ToList())
+                {
+                    MessageBox.Show(ent.ToString() + "\n City: " + ent.City + "\n Floors: "+ ent.Floors.ToString()+
+                                        "\n Bedroom: " + ent.Bedrooms.ToString() + "\n Bath: " + ent.Baths.ToString() +
+                                        "\n SqFt: "+ ent.Sqft.ToString() + "\n Attached: " + ent.AttachedGarage);
+                }
+             //   return;
+            }
+
+
             //query for houses and  apartments with xBed,xBath,xSqFt
+            else if(houseCheckBox.Checked && apartmentCheckBox.Checked)
+            {
+                var qResult = from i in CommunitiesList
+                             from j in i.Props
+                             where (j.GetType().Equals(typeof(House)) || j.GetType().Equals(typeof(Apartment))) && (j.ForSale.Equals(true))
+                             select j;
 
-            //if(apartmentsCheckBox.Checked)
+                var houseList = qResult.OfType<House>();
+                var apartmentList = qResult.OfType<Apartment>();
+
+                var retHouseList = from k in houseList
+                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                               (k.Sqft >= sqFtUpDown.Value) 
+                              orderby k.City //by price
+                              select k;
+
+                foreach (House ent in retHouseList.ToList())
+                {
+                    MessageBox.Show(ent.ToString() + "City: " + ent.City + "\nFloors: " + ent.Floors.ToString() +
+                                        "\nBedroom: " + ent.Bedrooms.ToString() + "\nBath: " + ent.Baths.ToString() +
+                                        "\nSqFt: " + ent.Sqft.ToString() + "\nAttached: " + ent.AttachedGarage);
+                }
+
+                var retApartList = from l in apartmentList
+                                   select l;
+
+                foreach (Apartment a in retApartList.ToList())
+                {
+                    MessageBox.Show(a.ToString() + "City: " + a.City);
+                }
+            }
+
             //query for apartments with xBed,xBath,xSqFt
+            else if (apartmentCheckBox.Checked)
+            {
+                var qResult = from i in CommunitiesList
+                              from j in i.Props
+                              where ( j.GetType().Equals(typeof(Apartment))) //&& (j.ForSale.Equals(true))
+                              select j;
+
+                var apartmentList = qResult.OfType<Apartment>();
+
+                var retList = from k in apartmentList
+                                   where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                                    (k.Sqft >= sqFtUpDown.Value)
+                                   orderby k.City //change to price
+                                   select k;
+
+                foreach (Apartment a in retList.ToList())
+                {
+                    MessageBox.Show(a.ToString() + "City: " + a.City);
+                }
+
+            }
+
         }
 
         private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -154,6 +233,8 @@ namespace ASX_assign3
                 attachedCheckBox.Visible = false;
             }
         }
+
+        #endregion
 
         private void Query3_Click(object sender, EventArgs e)
         {
