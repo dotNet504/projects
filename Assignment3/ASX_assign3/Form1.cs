@@ -163,7 +163,7 @@ namespace ASX_assign3
 
                 var retHouseList = from k in houseList
                               where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                               (k.Sqft >= sqFtUpDown.Value) 
+                                    (k.Sqft >= sqFtUpDown.Value) 
                               orderby k.City //by price
                               select k;
 
@@ -175,11 +175,15 @@ namespace ASX_assign3
                 }
 
                 var retApartList = from l in apartmentList
+                                   where (l.Bedrooms >= bedUpDown.Value) && (l.Baths >= bathUpDown.Value) &&
+                                         (l.Sqft >= sqFtUpDown.Value)
+                                   orderby l.City //by price
                                    select l;
 
                 foreach (Apartment a in retApartList.ToList())
                 {
-                    MessageBox.Show(a.ToString() + "City: " + a.City);
+                    MessageBox.Show(a.ToString() + "City: " + a.City +"\nBedroom: " + a.Bedrooms.ToString() + 
+                                        "\nBath: " + a.Baths.ToString() + "\nSqFt: " + a.Sqft.ToString());
                 }
             }
 
@@ -201,7 +205,8 @@ namespace ASX_assign3
 
                 foreach (Apartment a in retList.ToList())
                 {
-                    MessageBox.Show(a.ToString() + "City: " + a.City);
+                    MessageBox.Show(a.ToString() + "City: " + a.City + "\nBedroom: " + a.Bedrooms.ToString() +
+                                        "\nBath: " + a.Baths.ToString() + "\nSqFt: " + a.Sqft.ToString());
                 }
 
             }
