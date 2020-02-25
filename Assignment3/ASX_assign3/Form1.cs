@@ -85,6 +85,7 @@ namespace ASX_assign3
             For_Sale_Residence_ComboBox.Items.Add("Dekalb:");
             For_Sale_Residence_ComboBox.Items.Add("------------");
             populateForSaleResidences(dekalbHouses, dekalbApartments);
+            For_Sale_Residence_ComboBox.Items.Add("\n");
             For_Sale_Residence_ComboBox.Items.Add("Sycamore:");
             For_Sale_Residence_ComboBox.Items.Add("------------");
             populateForSaleResidences(sycamoreHouses, sycamoreApartments);
@@ -107,7 +108,7 @@ namespace ASX_assign3
 
             IEnumerable<Apartment> forSaleApts = Enumerable.Empty<Apartment>();
             forSaleApts = from a in lstApartments where a.ForSale select a;
-            foreach (Apartment details in lstApartments)
+            foreach (Apartment details in forSaleApts.ToList())
             {
                 // add apartments to the residenceComboBox
                 For_Sale_Residence_ComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
@@ -265,8 +266,7 @@ namespace ASX_assign3
         private void Query3_Click(object sender, EventArgs e)
         {
             result_ListBox.Items.Clear();
-            //Get the selected residence data
-            string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
+            
             //variable declarations
             IEnumerable<Apartment> apartmentData = Enumerable.Empty<Apartment>();
             IEnumerable<House> housesData = Enumerable.Empty<House>();
@@ -279,6 +279,8 @@ namespace ASX_assign3
                 result_ListBox.Items.Add("Please select a residence.");
                 return;
             }
+            //Get the selected residence data
+            string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
 
             result_ListBox.Items.Add("Hiring Businesses within "+Query3_Distance.Value +
                                     " units of distance ");
