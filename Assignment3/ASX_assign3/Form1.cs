@@ -42,6 +42,9 @@ namespace ASX_assign3
 
         //Constant Variables declaration
         private const string hyphen = "-----------------------------------------------------------------";
+        private const string dekalbVal = "Dekalb:";
+        private const string shortHyphen = "-------------";
+        private const string sycamoreVal = "Sycamore:";
 
         public Form1()
         {
@@ -82,13 +85,13 @@ namespace ASX_assign3
         private void Load_ForSale_Information()
         {            
             For_Sale_Residence_ComboBox.Items.Clear();
-            For_Sale_Residence_ComboBox.Items.Add("Dekalb:");
-            For_Sale_Residence_ComboBox.Items.Add("------------");
+            For_Sale_Residence_ComboBox.Items.Add(dekalbVal);
+            For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
             populateForSaleResidences(dekalbHouses, dekalbApartments);
             For_Sale_Residence_ComboBox.Items.Add("\n");
-            For_Sale_Residence_ComboBox.Items.Add("Sycamore:");
-            For_Sale_Residence_ComboBox.Items.Add("------------");
-            populateForSaleResidences(sycamoreHouses, sycamoreApartments);
+            For_Sale_Residence_ComboBox.Items.Add(sycamoreVal);
+            For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
+            populateForSaleResidences(sycamoreHouses, sycamoreApartments);  
             
         }
         #endregion
@@ -279,10 +282,14 @@ namespace ASX_assign3
                 result_ListBox.Items.Add("Please select a residence.");
                 return;
             }
+            
             //Get the selected residence data
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
-
-            result_ListBox.Items.Add("Hiring Businesses within "+Query3_Distance.Value +
+            
+            //Validate selected data
+            if (selResidence != null && selResidence != "" && selResidence != shortHyphen &&
+                selResidence != sycamoreVal && selResidence != dekalbVal){
+                    result_ListBox.Items.Add("Hiring Businesses within "+Query3_Distance.Value +
                                     " units of distance ");
             result_ListBox.Items.Add("\tfrom "+ selResidence + ".");            
             result_ListBox.Items.Add(hyphen);
@@ -385,6 +392,13 @@ namespace ASX_assign3
             
 
             result_ListBox.Items.Add("### END OF OUTPUT ###");
+                
+                }
+                else{
+                    result_ListBox.Items.Add("Please select a valid residence!");
+                }
+
+            
         }
         #endregion
         #endregion
