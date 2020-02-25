@@ -60,7 +60,7 @@ namespace ASX_assign3
             dekalbPersons = _businessLayer.lstDekalbPersons;
             sycamorePersons = _businessLayer.lstSycamorePersons;
             dekalbSchools = new List<School>();
-            dekalbSchools = _businessLayer.lstDekalbSchools; 
+            dekalbSchools = _businessLayer.lstDekalbSchools;
             dekalbBusinesses = _businessLayer.lstDekalbBusiness;
             sycamoreSchools = new List<School>();
             sycamoreSchools = _businessLayer.lstSycamoreSchools;
@@ -83,7 +83,7 @@ namespace ASX_assign3
         #region - Load_ForSale_Information
         //This method invokes other methods to load For Sale Houses and Apartments information
         private void Load_ForSale_Information()
-        {            
+        {
             For_Sale_Residence_ComboBox.Items.Clear();
             For_Sale_Residence_ComboBox.Items.Add(dekalbVal);
             For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
@@ -91,13 +91,13 @@ namespace ASX_assign3
             For_Sale_Residence_ComboBox.Items.Add("\n");
             For_Sale_Residence_ComboBox.Items.Add(sycamoreVal);
             For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
-            populateForSaleResidences(sycamoreHouses, sycamoreApartments);  
-            
+            populateForSaleResidences(sycamoreHouses, sycamoreApartments);
+
         }
         #endregion
 
         #region - populateForSaleResidences
-         //This method populates the data for For-Sale Houses and Apartments information in combobox.
+        //This method populates the data for For-Sale Houses and Apartments information in combobox.
         private void populateForSaleResidences(List<House> lstHouses, List<Apartment> lstApartments)
         {
             IEnumerable<House> forSaleHouses = Enumerable.Empty<House>();
@@ -140,8 +140,8 @@ namespace ASX_assign3
         #region A's Code
         private void querySpecResidence_Click(object sender, EventArgs e)
         {
-            bool garage = (bool) (garageCheckBox.Checked);
-            bool attached = (bool) (attachedCheckBox.Checked);
+            bool garage = (bool)(garageCheckBox.Checked);
+            bool attached = (bool)(attachedCheckBox.Checked);
 
             // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
             //                                  and attached is (attachedCheckBox.Checked)
@@ -149,44 +149,44 @@ namespace ASX_assign3
             {
                 var houseQ = from i in CommunitiesList
                              from j in i.Props
-                             where ( j.GetType().Equals(typeof(House)) ) && (j.ForSale.Equals(true))
+                             where (j.GetType().Equals(typeof(House))) && (j.ForSale.Equals(true))
                              select j;
 
                 var houseList = houseQ.OfType<House>();
 
                 var retList = from k in houseList
                               where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                               (k.Sqft >= sqFtUpDown.Value)  && (k.Garage.Equals(garage)) 
-                               && ( k.AttachedGarage.GetValueOrDefault(false).Equals(attached) ) 
-                               orderby k.City // and price
+                               (k.Sqft >= sqFtUpDown.Value) && (k.Garage.Equals(garage))
+                               && (k.AttachedGarage.GetValueOrDefault(false).Equals(attached))
+                              orderby k.City // and price
                               select k;
-                                
+
                 foreach (House ent in retList.ToList())
                 {
-                    MessageBox.Show(ent.ToString() + "\n City: " + ent.City + "\n Floors: "+ ent.Floors.ToString()+
+                    MessageBox.Show(ent.ToString() + "\n City: " + ent.City + "\n Floors: " + ent.Floors.ToString() +
                                         "\n Bedroom: " + ent.Bedrooms.ToString() + "\n Bath: " + ent.Baths.ToString() +
-                                        "\n SqFt: "+ ent.Sqft.ToString() + "\n Attached: " + ent.AttachedGarage);
+                                        "\n SqFt: " + ent.Sqft.ToString() + "\n Attached: " + ent.AttachedGarage);
                 }
-             //   return;
+                //   return;
             }
 
 
             //query for houses and  apartments with xBed,xBath,xSqFt
-            else if(houseCheckBox.Checked && apartmentCheckBox.Checked)
+            else if (houseCheckBox.Checked && apartmentCheckBox.Checked)
             {
                 var qResult = from i in CommunitiesList
-                             from j in i.Props
-                             where (j.GetType().Equals(typeof(House)) || j.GetType().Equals(typeof(Apartment))) && (j.ForSale.Equals(true))
-                             select j;
+                              from j in i.Props
+                              where (j.GetType().Equals(typeof(House)) || j.GetType().Equals(typeof(Apartment))) && (j.ForSale.Equals(true))
+                              select j;
 
                 var houseList = qResult.OfType<House>();
                 var apartmentList = qResult.OfType<Apartment>();
 
                 var retHouseList = from k in houseList
-                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                                    (k.Sqft >= sqFtUpDown.Value) 
-                              orderby k.City //by price
-                              select k;
+                                   where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                                         (k.Sqft >= sqFtUpDown.Value)
+                                   orderby k.City //by price
+                                   select k;
 
                 foreach (House ent in retHouseList.ToList())
                 {
@@ -203,7 +203,7 @@ namespace ASX_assign3
 
                 foreach (Apartment a in retApartList.ToList())
                 {
-                    MessageBox.Show(a.ToString() + "City: " + a.City +"\nBedroom: " + a.Bedrooms.ToString() + 
+                    MessageBox.Show(a.ToString() + "City: " + a.City + "\nBedroom: " + a.Bedrooms.ToString() +
                                         "\nBath: " + a.Baths.ToString() + "\nSqFt: " + a.Sqft.ToString());
                 }
             }
@@ -213,16 +213,16 @@ namespace ASX_assign3
             {
                 var qResult = from i in CommunitiesList
                               from j in i.Props
-                              where ( j.GetType().Equals(typeof(Apartment))) //&& (j.ForSale.Equals(true))
+                              where (j.GetType().Equals(typeof(Apartment))) //&& (j.ForSale.Equals(true))
                               select j;
 
                 var apartmentList = qResult.OfType<Apartment>();
 
                 var retList = from k in apartmentList
-                                   where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                                    (k.Sqft >= sqFtUpDown.Value)
-                                   orderby k.City //change to price
-                                   select k;
+                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                               (k.Sqft >= sqFtUpDown.Value)
+                              orderby k.City //change to price
+                              select k;
 
                 foreach (Apartment a in retList.ToList())
                 {
@@ -242,7 +242,8 @@ namespace ASX_assign3
                 attachedCheckBox.Visible = false;
                 garageCheckBox.Checked = false;
                 garageCheckBox.Visible = false;
-            } else
+            }
+            else
             {
                 garageCheckBox.Visible = true;
             }
@@ -269,7 +270,7 @@ namespace ASX_assign3
         private void Query3_Click(object sender, EventArgs e)
         {
             result_ListBox.Items.Clear();
-            
+
             //variable declarations
             IEnumerable<Apartment> apartmentData = Enumerable.Empty<Apartment>();
             IEnumerable<House> housesData = Enumerable.Empty<House>();
@@ -282,123 +283,129 @@ namespace ASX_assign3
                 result_ListBox.Items.Add("Please select a residence.");
                 return;
             }
-            
+
             //Get the selected residence data
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
-            
+
             //Validate selected data
             if (selResidence != null && selResidence != "" && selResidence != shortHyphen &&
-                selResidence != sycamoreVal && selResidence != dekalbVal){
-                    result_ListBox.Items.Add("Hiring Businesses within "+Query3_Distance.Value +
-                                    " units of distance ");
-            result_ListBox.Items.Add("\tfrom "+ selResidence + ".");            
-            result_ListBox.Items.Add(hyphen);
-
-            if (selResidence.Contains("#"))
+                selResidence != sycamoreVal && selResidence != dekalbVal && selResidence != "\n")
             {
-                //Query apartments in Dekalb and Sycamore
-                apartmentData = from dekApt in dekalbApartments
-                                where
-                                (dekApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
-                                dekApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
-                                select dekApt;
-                if (!apartmentData.Any())
+                result_ListBox.Items.Add("Hiring Businesses within " + Query3_Distance.Value +
+                                " units of distance ");
+                result_ListBox.Items.Add("\tfrom " + selResidence + ".");
+                result_ListBox.Items.Add(hyphen);
+
+                if (selResidence.Contains("#"))
                 {
-                    apartmentData = from sycApt in sycamoreApartments
+                    //Query apartments in Dekalb and Sycamore
+                    apartmentData = from dekApt in dekalbApartments
                                     where
-                                    (sycApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
-                                    sycApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
-                                    select sycApt;
-                }
-
-                xVal = apartmentData.First().X;
-                yVal = apartmentData.First().Y;
-            }
-            else
-            {
-                 //Query houses in Dekalb and Sycamore
-                housesData = from dekHse in dekalbHouses
-                             where
-                             (dekHse.StreetAddr.Equals(selResidence))
-                             select dekHse;
-                if (!housesData.Any())
-                {
-                    housesData = from sycHse in sycamoreHouses
-                                 where
-                                 (sycHse.StreetAddr.Equals(selResidence))
-                                 select sycHse;
-                }
-                xVal = housesData.First().X;
-                yVal = housesData.First().Y;
-            }
-            
-            //Query Business in Dekalb and Sycamore within chosen distance range
-            var businessQuery = from biz in dekalbBusinesses where 
-                                ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) + 
-                                ((yVal - biz.Y) * (yVal - biz.Y))) <= (double) Query3_Distance.Value)
-                                && biz.ActiveRecruitment > 0) orderby biz.YearEstablished ascending
-                                select biz;
-
-            if(!businessQuery.Any()){
-                businessQuery = from biz in sycamoreBusinesses where 
-                                ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) + 
-                                ((yVal - biz.Y) * (yVal - biz.Y))) <= (double) Query3_Distance.Value)
-                                && biz.ActiveRecruitment > 0) orderby biz.YearEstablished ascending
-                                select biz;
-            }
-            if(businessQuery.Any())
-            {
-                //Frame the output with the retrieved query results
-                foreach (var item in businessQuery)
-                {
-                    uint distanceVal = (uint)Math.Sqrt(((xVal - item.X) * (xVal - item.X)) +
-                                    ((yVal - item.Y) * (yVal - item.Y)));
-                    result_ListBox.Items.Add(item.StreetAddr + " " +
-                                             item.City + ", " +
-                                             item.State + " " +
-                                             item.Zip);
-
-                    //Query the property Owner name from Person Data
-                    personData = from dekPer in dekalbPersons
-                                 where
-                                 (dekPer.Id == item.OwnerID)
-                                 select dekPer;
-                    if (!personData.Any())
+                                    (dekApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                                    dekApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
+                                    select dekApt;
+                    if (!apartmentData.Any())
                     {
-                        personData = from sycPer in sycamorePersons
-                                     where
-                                     (sycPer.Id == item.OwnerID)
-                                     select sycPer;
+                        apartmentData = from sycApt in sycamoreApartments
+                                        where
+                                        (sycApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                                        sycApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
+                                        select sycApt;
                     }
 
-                    result_ListBox.Items.Add("Owner: " +
-                                            personData.First().FullName
-                                            + " | " + distanceVal
-                                            + " units away, with " + item.ActiveRecruitment
-                                            + " open positions");
-                    result_ListBox.Items.Add(item.Name + ", a "
-                                             + " type of business, established in "
-                                             + item.YearEstablished);
+                    xVal = apartmentData.First().X;
+                    yVal = apartmentData.First().Y;
+                }
+                else
+                {
+                    //Query houses in Dekalb and Sycamore
+                    housesData = from dekHse in dekalbHouses
+                                 where
+                                 (dekHse.StreetAddr.Equals(selResidence))
+                                 select dekHse;
+                    if (!housesData.Any())
+                    {
+                        housesData = from sycHse in sycamoreHouses
+                                     where
+                                     (sycHse.StreetAddr.Equals(selResidence))
+                                     select sycHse;
+                    }
+                    xVal = housesData.First().X;
+                    yVal = housesData.First().Y;
+                }
+
+                //Query Business in Dekalb and Sycamore within chosen distance range
+                var businessQuery = from biz in dekalbBusinesses
+                                    where
+                                    ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) +
+                                    ((yVal - biz.Y) * (yVal - biz.Y))) <= (double)Query3_Distance.Value)
+                                    && biz.ActiveRecruitment > 0)
+                                    orderby biz.YearEstablished ascending
+                                    select biz;
+
+                if (!businessQuery.Any())
+                {
+                    businessQuery = from biz in sycamoreBusinesses
+                                    where
+                                    ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) +
+                                    ((yVal - biz.Y) * (yVal - biz.Y))) <= (double)Query3_Distance.Value)
+                                    && biz.ActiveRecruitment > 0)
+                                    orderby biz.YearEstablished ascending
+                                    select biz;
+                }
+                if (businessQuery.Any())
+                {
+                    //Frame the output with the retrieved query results
+                    foreach (var item in businessQuery)
+                    {
+                        uint distanceVal = (uint)Math.Sqrt(((xVal - item.X) * (xVal - item.X)) +
+                                        ((yVal - item.Y) * (yVal - item.Y)));
+                        result_ListBox.Items.Add(item.StreetAddr + " " +
+                                                 item.City + ", " +
+                                                 item.State + " " +
+                                                 item.Zip);
+
+                        //Query the property Owner name from Person Data
+                        personData = from dekPer in dekalbPersons
+                                     where
+                                     (dekPer.Id == item.OwnerID)
+                                     select dekPer;
+                        if (!personData.Any())
+                        {
+                            personData = from sycPer in sycamorePersons
+                                         where
+                                         (sycPer.Id == item.OwnerID)
+                                         select sycPer;
+                        }
+
+                        result_ListBox.Items.Add("Owner: " +
+                                                personData.First().FullName
+                                                + " | " + distanceVal
+                                                + " units away, with " + item.ActiveRecruitment
+                                                + " open positions");
+                        result_ListBox.Items.Add(item.Name + ", a "
+                                                 + " type of business, established in "
+                                                 + item.YearEstablished);
+                        result_ListBox.Items.Add("\n");
+                        result_ListBox.Items.Add("\n");
+                    }
+                }
+                else
+                {
+                    result_ListBox.Items.Add("Your query yielded no matches!");
                     result_ListBox.Items.Add("\n");
                     result_ListBox.Items.Add("\n");
                 }
+
+                result_ListBox.Items.Add("### END OF OUTPUT ###");
+
             }
             else
             {
-                result_ListBox.Items.Add("Your query yielded no matches!");
-                result_ListBox.Items.Add("\n");
-                result_ListBox.Items.Add("\n");
+                result_ListBox.Items.Add("Please select a valid residence!");
             }
-            
 
-            result_ListBox.Items.Add("### END OF OUTPUT ###");
-                
-                }
-                else{
-                    result_ListBox.Items.Add("Please select a valid residence!");
-                }
 
-            
         }
         #endregion
         #endregion
@@ -509,11 +516,11 @@ namespace ASX_assign3
 
             allProps = selectedCommunitySyc.Props.Union(selectedCommunityDek.Props);
 
-            var selectSchool = from qqq in allProps where ((qqq is School) &&   (((School) qqq).Name.CompareTo(schoolComboBox.SelectedItem) ==0) ) select qqq;
+            var selectSchool = from qqq in allProps where ((qqq is School) && (((School)qqq).Name.CompareTo(schoolComboBox.SelectedItem) == 0)) select qqq;
 
 
             allSaleableProps = from qqq in allProps where ((qqq is House) && (qqq.ForSale == true)) select qqq;
-            var selecteProps = from qqq in allSaleableProps where ((qqq is House) && ((selectSchool.First().X- qqq.X)* (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= 2500) )select qqq;
+            var selecteProps = from qqq in allSaleableProps where ((qqq is House) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= 2500)) select qqq;
 
 
             result_ListBox.Items.Add(schoolComboBox.SelectedItem);
@@ -524,7 +531,7 @@ namespace ASX_assign3
             }
         }
 
-        
+
 
 
         private void SelectTypeProperties(object sender, EventArgs e)
@@ -637,7 +644,7 @@ namespace ASX_assign3
 
         private void scrollMinPrice(object sender, EventArgs e)
         {
-            if (trackBarMin.Maximum<=10)
+            if (trackBarMin.Maximum <= 10)
             {
                 label1.Text = "Min Price";
             }
