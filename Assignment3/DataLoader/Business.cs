@@ -16,7 +16,8 @@ namespace DataLoader
 
         public Business(String[] args) : base(args)
         {
-            name = args[10];
+            name = args[9];
+            //type = ((BusinessType) args[10]).ToString();
             yearEstablished = args[11];
             activeRecruitment = Convert.ToUInt32(args[12]);
 
@@ -28,9 +29,13 @@ namespace DataLoader
             get { return name; }
         }
 
+        //public String Type
+        //{
+        //    get { return type; }
+        //}
+
         public String YearEstablished
         {
-           // set { Name = value; }
             get { return yearEstablished; }
         }
 

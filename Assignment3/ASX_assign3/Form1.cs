@@ -13,6 +13,7 @@ namespace ASX_assign3
 {
     public partial class Form1 : Form
     {
+        #region - Swathi's Code
         //Declaration of variables
         private BusinessLayer _businessLayer;
         private List<Person> dekalbPersons;
@@ -64,6 +65,7 @@ namespace ASX_assign3
 
         }
 
+        #region - Load_ForSale_Information
         private void Load_ForSale_Information()
         {            
             For_Sale_Residence_ComboBox.Items.Clear();
@@ -89,31 +91,32 @@ namespace ASX_assign3
 
             
         }
+        #endregion
 
+        #region - populateForSaleResidences
         private void populateForSaleResidences(List<House> lstHouses, List<Apartment> lstApartments)
         {
-            foreach (House details in lstHouses)
+            IEnumerable<House> forSaleHouses = Enumerable.Empty<House>();
+            forSaleHouses = from h in lstHouses where h.ForSale select h;
+            foreach (House details in forSaleHouses.ToList())
             {
-                if (details.ForSale)
-                {
-                    //add houses to the residenceComboBox
-                    For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
-                }
+                //add houses to the residenceComboBox
+                For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
             }
 
+            IEnumerable<Apartment> forSaleApts = Enumerable.Empty<Apartment>();
+            forSaleApts = from a in lstApartments where a.ForSale select a;
             foreach (Apartment details in lstApartments)
             {
-                if (details.ForSale)
-                {
-                    // add apartments to the residenceComboBox
-                    For_Sale_Residence_ComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
-                    details.Unit));
-                }
+                // add apartments to the residenceComboBox
+                For_Sale_Residence_ComboBox.Items.Add(String.Format("{0} # {1}", details.StreetAddr,
+                details.Unit));
             }
         }
+        #endregion
 
 
-
+        #region - Form1_Load
         private void Form1_Load(object sender, EventArgs e)
         {
             //Logic to autosize the output window
@@ -125,6 +128,8 @@ namespace ASX_assign3
             flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             this.Controls.Add(flowPanel);
         }
+        #endregion
+        #endregion
 
 
         #region A's Code
@@ -252,11 +257,13 @@ namespace ASX_assign3
 
         #endregion
 
+        #region - Swathi's Code
+        #region - Query3_Click
         private void Query3_Click(object sender, EventArgs e)
         {
             result_ListBox.Items.Clear();
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
-            House housesData;
+            House housesData = null;
 
 
             if (For_Sale_Residence_ComboBox.SelectedIndex == -1)
@@ -278,21 +285,47 @@ namespace ASX_assign3
             {
                 housesData = dekalbHouses.FirstOrDefault(x => 
                              x.StreetAddr.Equals(selResidence));
-                result_ListBox.Items.Add(housesData.X);
-                result_ListBox.Items.Add(housesData.Y);
             }
+            
+            var businessQuery = from biz in dekalbBusinesses where 
+                                ((Math.Sqrt(((housesData.X - biz.X) * (housesData.X - biz.X)) + 
+                                ((housesData.Y - biz.Y) * (housesData.Y - biz.Y))) <= (double) Query3_Distance.Value)
+                                && biz.ActiveRecruitment > 0) select biz;
+           
+            foreach (var item in businessQuery)
+            {
+                uint distanceVal = (uint) Math.Sqrt(((housesData.X - item.X) * (housesData.X - item.X)) +
+                                ((housesData.Y - item.Y) * (housesData.Y - item.Y)));
+                result_ListBox.Items.Add(item.StreetAddr + " " +
+                                         item.City + ", " +
+                                         item.State + " " +
+                                         item.Zip);
 
-
-
-            List<Business> businessQuery = new List<Business>();
-            businessQuery = dekalbBusinesses.Where(x => 
-                            x.StreetAddr.Equals(selResidence)).ToList();
-
-            result_ListBox.Items.Add(businessQuery);
+                Person dekalbPer = dekalbPersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
+               
+                Person sycamorePer = sycamorePersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
+                
+                result_ListBox.Items.Add("Owner: " +
+                                        (dekalbPer != null ? dekalbPer.FullName : sycamorePer.FullName)
+                                        + " | " + distanceVal
+                                        + " units away, with " + item.ActiveRecruitment
+                                        + " open positions");
+                result_ListBox.Items.Add(item.Name + ", a "
+                                         + " type of business, established in "
+                                         + item.YearEstablished);
+                result_ListBox.Items.Add("\n");
+                //result_ListBox.Items.Add(item.X);
+                //result_ListBox.Items.Add(item.Y);
+                //result_ListBox.Items.Add(Math.Sqrt(((housesData.X - item.X) * (housesData.X - item.X)) +
+                //                ((housesData.Y - item.Y) * (housesData.Y - item.Y))));
+            }
 
             result_ListBox.Items.Add("\n");
             result_ListBox.Items.Add("### END OF OUTPUT ###");
         }
+        #endregion
+        #endregion
+
         #region Xuezhi's code
 
         private void Load_School_Information()
@@ -314,6 +347,7 @@ namespace ASX_assign3
 
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
+            result_ListBox.Items.Clear();
             IEnumerable<Property> resiDekSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> busiDekSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> schoDekSelected = Enumerable.Empty<Property>();
@@ -378,17 +412,11 @@ namespace ASX_assign3
                 result_ListBox.Items.Add(i.StreetAddr + i.SalePrice.ToString());
             }
             result_ListBox.Items.Add(allSyc.Count().ToString());
-
-
-
-
-
-
-
         }
 
         private void FindSaleResNearSchool(object sender, EventArgs e)
         {
+            result_ListBox.Items.Clear();
             IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
             IEnumerable<Property> allProps = Enumerable.Empty<Property>();
             IEnumerable<Property> allSaleableProps = Enumerable.Empty<Property>();
@@ -418,12 +446,6 @@ namespace ASX_assign3
                 result_ListBox.Items.Add(i.StreetAddr);
             }
         }
-
-
-
-
-
-
 
         
 
