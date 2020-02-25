@@ -1,4 +1,16 @@
-﻿using DataLoader;
+/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 3					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form1
+ *  Purpose   : Windows application that displays the property details of Dekalb & Sycamore Communities. *
+ *********************************************************************************************************/
+
+using DataLoader;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,34 +78,18 @@ namespace ASX_assign3
         }
 
         #region - Load_ForSale_Information
+        //This method invokes other methods to load For Sale Houses and Apartments information
         private void Load_ForSale_Information()
         {            
             For_Sale_Residence_ComboBox.Items.Clear();
-
-            //foreach (Business businessData in dekalbBusinesses)
-            //{
-            //    if (businessData.ForSale)
-            //    {
-            //        For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", businessData.StreetAddr));
-            //    }
-            //}
-
-            //foreach (Business businessData in sycamoreBusinesses)
-            //{
-            //    if (businessData.ForSale)
-            //    {
-            //        For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", businessData.StreetAddr));
-            //    }
-            //}
-
             populateForSaleResidences(dekalbHouses, dekalbApartments);
             populateForSaleResidences(sycamoreHouses, sycamoreApartments);
-
             
         }
         #endregion
 
         #region - populateForSaleResidences
+         //This method populates the data for For-Sale Houses and Apartments information in combobox.
         private void populateForSaleResidences(List<House> lstHouses, List<Apartment> lstApartments)
         {
             IEnumerable<House> forSaleHouses = Enumerable.Empty<House>();
@@ -259,15 +255,20 @@ namespace ASX_assign3
 
         #region - Swathi's Code
         #region - Query3_Click
+        //This method is invoked on click of Query-3 button.
+        //It retieves the Businesses within the range of a Property.
         private void Query3_Click(object sender, EventArgs e)
         {
             result_ListBox.Items.Clear();
+            //Get the selected residence data
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
+            //variable declarations
             IEnumerable<Apartment> apartmentData = Enumerable.Empty<Apartment>();
             IEnumerable<House> housesData = Enumerable.Empty<House>();
             IEnumerable<Person> personData = Enumerable.Empty<Person>();
             uint xVal, yVal;
 
+            //Display message if no residence is selected.
             if (For_Sale_Residence_ComboBox.SelectedIndex == -1)
             {
                 result_ListBox.Items.Add("Please select a residence.");
@@ -301,6 +302,7 @@ namespace ASX_assign3
             }
             else
             {
+                 //Query houses in Dekalb and Sycamore
                 housesData = from dekHse in dekalbHouses
                              where
                              (dekHse.StreetAddr.Equals(selResidence))
@@ -316,14 +318,23 @@ namespace ASX_assign3
                 yVal = housesData.First().Y;
             }
             
+            //Query Business in Dekalb and Sycamore within chosen distance range
             var businessQuery = from biz in dekalbBusinesses where 
                                 ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) + 
                                 ((yVal - biz.Y) * (yVal - biz.Y))) <= (double) Query3_Distance.Value)
                                 && biz.ActiveRecruitment > 0) orderby biz.YearEstablished ascending
                                 select biz;
 
+            if(!businessQuery.Any()){
+                businessQuery = from biz in sycamoreBusinesses where 
+                                ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) + 
+                                ((yVal - biz.Y) * (yVal - biz.Y))) <= (double) Query3_Distance.Value)
+                                && biz.ActiveRecruitment > 0) orderby biz.YearEstablished ascending
+                                select biz;
+            }
             if(businessQuery.Any())
             {
+                //Frame the output with the retrieved query results
                 foreach (var item in businessQuery)
                 {
                     uint distanceVal = (uint)Math.Sqrt(((xVal - item.X) * (xVal - item.X)) +
@@ -333,6 +344,7 @@ namespace ASX_assign3
                                              item.State + " " +
                                              item.Zip);
 
+                    //Query the property Owner name from Person Data
                     personData = from dekPer in dekalbPersons
                                  where
                                  (dekPer.Id == item.OwnerID)
