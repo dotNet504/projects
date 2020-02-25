@@ -592,7 +592,7 @@
             this.result_ListBox.Location = new System.Drawing.Point(1092, 56);
             this.result_ListBox.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.result_ListBox.Name = "result_ListBox";
-            this.result_ListBox.Size = new System.Drawing.Size(1062, 976);
+            this.result_ListBox.Size = new System.Drawing.Size(979, 976);
             this.result_ListBox.TabIndex = 6;
             // 
             // label10

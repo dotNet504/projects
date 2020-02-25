@@ -29,7 +29,7 @@ namespace ASX_assign3
         private List<Business> sycamoreBusinesses;
 
         //Constant Variables declaration
-        private const string hyphen = "-------------------------------------------";
+        private const string hyphen = "-----------------------------------------------------------------";
 
         public Form1()
         {
@@ -263,8 +263,12 @@ namespace ASX_assign3
         {
             result_ListBox.Items.Clear();
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
-            House housesData = null;
-
+            //House housesData = null;
+            //Apartment apartmentData = null;
+            IEnumerable<Apartment> apartmentData = Enumerable.Empty<Apartment>();
+            IEnumerable<House> housesData = Enumerable.Empty<House>();
+            IEnumerable<Person> personData = Enumerable.Empty<Person>();
+            uint xVal, yVal;
 
             if (For_Sale_Residence_ComboBox.SelectedIndex == -1)
             {
@@ -279,48 +283,105 @@ namespace ASX_assign3
 
             if (selResidence.Contains("#"))
             {
+                result_ListBox.Items.Add(selResidence.Split('#')[0].Trim());
+                result_ListBox.Items.Add(selResidence.Split('#')[1].Trim());
 
+                apartmentData = from dekApt in dekalbApartments
+                                where
+                                (dekApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                                dekApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
+                                select dekApt;
+                if (!apartmentData.Any())
+                {
+                    apartmentData = from sycApt in sycamoreApartments
+                                    where
+                                    (sycApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                                    sycApt.Unit.Equals(selResidence.Split('#')[1].Trim()))
+                                    select sycApt;
+                }
+
+                xVal = apartmentData.First().X;
+                yVal = apartmentData.First().Y;
+
+                //apartmentData = dekalbApartments.FirstOrDefault(x =>
+                //            x.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                //            x.Unit.Equals(selResidence.Split('#')[1].Trim()));
+                //apartmentData = sycamoreApartments.FirstOrDefault(x =>
+                //                x.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
+                //                x.Unit.Equals(selResidence.Split('#')[1].Trim()));
             }
             else
             {
-                housesData = dekalbHouses.FirstOrDefault(x => 
-                             x.StreetAddr.Equals(selResidence));
+                housesData = from dekHse in dekalbHouses
+                             where
+                             (dekHse.StreetAddr.Equals(selResidence))
+                             select dekHse;
+                if (!housesData.Any())
+                {
+                    housesData = from sycHse in sycamoreHouses
+                                 where
+                                 (sycHse.StreetAddr.Equals(selResidence))
+                                 select sycHse;
+                }
+                xVal = housesData.First().X;
+                yVal = housesData.First().Y;
+                //housesData = dekalbHouses.FirstOrDefault(x => 
+                //             x.StreetAddr.Equals(selResidence));
             }
             
             var businessQuery = from biz in dekalbBusinesses where 
-                                ((Math.Sqrt(((housesData.X - biz.X) * (housesData.X - biz.X)) + 
-                                ((housesData.Y - biz.Y) * (housesData.Y - biz.Y))) <= (double) Query3_Distance.Value)
-                                && biz.ActiveRecruitment > 0) select biz;
-           
-            foreach (var item in businessQuery)
+                                ((Math.Sqrt(((xVal - biz.X) * (xVal - biz.X)) + 
+                                ((yVal - biz.Y) * (yVal - biz.Y))) <= (double) Query3_Distance.Value)
+                                && biz.ActiveRecruitment > 0) orderby biz.YearEstablished ascending
+                                select biz;
+
+            if(businessQuery.Any())
             {
-                uint distanceVal = (uint) Math.Sqrt(((housesData.X - item.X) * (housesData.X - item.X)) +
-                                ((housesData.Y - item.Y) * (housesData.Y - item.Y)));
-                result_ListBox.Items.Add(item.StreetAddr + " " +
-                                         item.City + ", " +
-                                         item.State + " " +
-                                         item.Zip);
+                foreach (var item in businessQuery)
+                {
+                    uint distanceVal = (uint)Math.Sqrt(((xVal - item.X) * (xVal - item.X)) +
+                                    ((yVal - item.Y) * (yVal - item.Y)));
+                    result_ListBox.Items.Add(item.StreetAddr + " " +
+                                             item.City + ", " +
+                                             item.State + " " +
+                                             item.Zip);
 
-                Person dekalbPer = dekalbPersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
-               
-                Person sycamorePer = sycamorePersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
-                
-                result_ListBox.Items.Add("Owner: " +
-                                        (dekalbPer != null ? dekalbPer.FullName : sycamorePer.FullName)
-                                        + " | " + distanceVal
-                                        + " units away, with " + item.ActiveRecruitment
-                                        + " open positions");
-                result_ListBox.Items.Add(item.Name + ", a "
-                                         + " type of business, established in "
-                                         + item.YearEstablished);
-                result_ListBox.Items.Add("\n");
-                //result_ListBox.Items.Add(item.X);
-                //result_ListBox.Items.Add(item.Y);
-                //result_ListBox.Items.Add(Math.Sqrt(((housesData.X - item.X) * (housesData.X - item.X)) +
-                //                ((housesData.Y - item.Y) * (housesData.Y - item.Y))));
+                    personData = from dekPer in dekalbPersons
+                                 where
+                                 (dekPer.Id == item.OwnerID)
+                                 select dekPer;
+                    if (!personData.Any())
+                    {
+                        personData = from sycPer in sycamorePersons
+                                     where
+                                     (sycPer.Id == item.OwnerID)
+                                     select sycPer;
+                    }
+
+                    //Person dekalbPer = dekalbPersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
+
+                    //Person sycamorePer = sycamorePersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
+
+                    result_ListBox.Items.Add("Owner: " +
+                                            personData.First().FullName
+                                            + " | " + distanceVal
+                                            + " units away, with " + item.ActiveRecruitment
+                                            + " open positions");
+                    result_ListBox.Items.Add(item.Name + ", a "
+                                             + " type of business, established in "
+                                             + item.YearEstablished);
+                    result_ListBox.Items.Add("\n");
+                    result_ListBox.Items.Add("\n");
+                }
             }
+            else
+            {
+                result_ListBox.Items.Add("No results returned for the input query.");
+                result_ListBox.Items.Add("\n");
+                result_ListBox.Items.Add("\n");
+            }
+            
 
-            result_ListBox.Items.Add("\n");
             result_ListBox.Items.Add("### END OF OUTPUT ###");
         }
         #endregion

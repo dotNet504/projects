@@ -90,7 +90,7 @@ namespace DataLoader
             Property rightOp = alpha as Property;
 
             if (rightOp != null)
-            {
+            {                
                 if (State.ToLower().CompareTo(rightOp.State.ToLower()) == 0)
                 {
                     if (City.ToLower().CompareTo(rightOp.City.ToLower()) == 0)
