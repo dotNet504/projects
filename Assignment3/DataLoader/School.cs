@@ -29,13 +29,12 @@ namespace DataLoader
 
         public String YearEstablished
         {
-            // set { Name = value; }
             get { return yearEstablished; }
         }
 
         public uint Enrolled
         {
-             set { enrolled = value; }
+            set { enrolled = value; }
             get { return enrolled; }
         }
     }

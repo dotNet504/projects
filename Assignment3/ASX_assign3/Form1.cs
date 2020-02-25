@@ -263,8 +263,6 @@ namespace ASX_assign3
         {
             result_ListBox.Items.Clear();
             string selResidence = For_Sale_Residence_ComboBox.SelectedItem.ToString();
-            //House housesData = null;
-            //Apartment apartmentData = null;
             IEnumerable<Apartment> apartmentData = Enumerable.Empty<Apartment>();
             IEnumerable<House> housesData = Enumerable.Empty<House>();
             IEnumerable<Person> personData = Enumerable.Empty<Person>();
@@ -283,9 +281,7 @@ namespace ASX_assign3
 
             if (selResidence.Contains("#"))
             {
-                result_ListBox.Items.Add(selResidence.Split('#')[0].Trim());
-                result_ListBox.Items.Add(selResidence.Split('#')[1].Trim());
-
+                //Query apartments in Dekalb and Sycamore
                 apartmentData = from dekApt in dekalbApartments
                                 where
                                 (dekApt.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
@@ -302,13 +298,6 @@ namespace ASX_assign3
 
                 xVal = apartmentData.First().X;
                 yVal = apartmentData.First().Y;
-
-                //apartmentData = dekalbApartments.FirstOrDefault(x =>
-                //            x.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
-                //            x.Unit.Equals(selResidence.Split('#')[1].Trim()));
-                //apartmentData = sycamoreApartments.FirstOrDefault(x =>
-                //                x.StreetAddr.Equals(selResidence.Split('#')[0].Trim()) &&
-                //                x.Unit.Equals(selResidence.Split('#')[1].Trim()));
             }
             else
             {
@@ -325,8 +314,6 @@ namespace ASX_assign3
                 }
                 xVal = housesData.First().X;
                 yVal = housesData.First().Y;
-                //housesData = dekalbHouses.FirstOrDefault(x => 
-                //             x.StreetAddr.Equals(selResidence));
             }
             
             var businessQuery = from biz in dekalbBusinesses where 
@@ -357,10 +344,6 @@ namespace ASX_assign3
                                      (sycPer.Id == item.OwnerID)
                                      select sycPer;
                     }
-
-                    //Person dekalbPer = dekalbPersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
-
-                    //Person sycamorePer = sycamorePersons.FirstOrDefault(dekPer => dekPer.Id == item.OwnerID);
 
                     result_ListBox.Items.Add("Owner: " +
                                             personData.First().FullName
