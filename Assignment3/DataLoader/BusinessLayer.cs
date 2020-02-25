@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  *                                                                                                       *
-*  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 3					 Spring 2020         *                                          
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 3					 Spring 2020     *                                          
  *																										 *
  *  Programmer's: Swathi Reddy Konatham (Z1864290),
  *                Abdulsalam Olaoye (Z1836477),
