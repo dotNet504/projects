@@ -82,7 +82,11 @@ namespace ASX_assign3
         private void Load_ForSale_Information()
         {            
             For_Sale_Residence_ComboBox.Items.Clear();
+            For_Sale_Residence_ComboBox.Items.Add("Dekalb:");
+            For_Sale_Residence_ComboBox.Items.Add("------------");
             populateForSaleResidences(dekalbHouses, dekalbApartments);
+            For_Sale_Residence_ComboBox.Items.Add("Sycamore:");
+            For_Sale_Residence_ComboBox.Items.Add("------------");
             populateForSaleResidences(sycamoreHouses, sycamoreApartments);
             
         }
@@ -99,6 +103,7 @@ namespace ASX_assign3
                 //add houses to the residenceComboBox
                 For_Sale_Residence_ComboBox.Items.Add(String.Format("{0}", details.StreetAddr));
             }
+            For_Sale_Residence_ComboBox.Items.Add("\n");
 
             IEnumerable<Apartment> forSaleApts = Enumerable.Empty<Apartment>();
             forSaleApts = from a in lstApartments where a.ForSale select a;
@@ -371,7 +376,7 @@ namespace ASX_assign3
             }
             else
             {
-                result_ListBox.Items.Add("No results returned for the input query.");
+                result_ListBox.Items.Add("Your query yielded no matches!");
                 result_ListBox.Items.Add("\n");
                 result_ListBox.Items.Add("\n");
             }
