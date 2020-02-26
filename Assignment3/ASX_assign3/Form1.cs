@@ -74,6 +74,9 @@ namespace ASX_assign3
             trackBarMax.Value = 310000;
             trackBarMin.TickFrequency = (int)(310000 - 65000) / 15;
             trackBarMax.TickFrequency = (int)(310000 - 65000) / 15;
+            label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
+            label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+
 
             Load_School_Information();
             Load_ForSale_Information();
@@ -602,266 +605,368 @@ namespace ASX_assign3
         #endregion
 
         #region Xuezhi's code
-
-        private void Load_School_Information()
+        
+        //Print House info for properties within the price range
+        private void PrintHouseInfo(IEnumerable<Person> allPeople, Property i)
         {
-            schoolComboBox.Items.Clear();
-            foreach (School details in dekalbSchools)
+            House tempHouse = (House)i;
+            result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            //string ownerFirstName = ownerInfo.First().FirstName;
+            //string ownerLastName = ownerInfo.First().LastName;
+            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft");
+            string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
+            if (tempHouse.Garage == true)
             {
-                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
-
+                if (tempHouse.AttachedGarage == true)
+                {
+                    result_ListBox.Items.Add(" with a attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                    result_ListBox.Items.Add("");
+                }
+                else
+                {
+                    result_ListBox.Items.Add(" with a detached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                    result_ListBox.Items.Add("");
+                }
             }
-
-            foreach (School details in sycamoreSchools)
+            else
             {
-
-                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
-
+                result_ListBox.Items.Add(" with no grage: " + tempHouse.Floors.ToString() + " "+ floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                result_ListBox.Items.Add("");
             }
         }
 
+        //Print Aptartment info for properties within the price range
+        private void PrintApartmentInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            Apartment tempApt = (Apartment)i;
+            result_ListBox.Items.Add(i.StreetAddr + " Apt. "+ tempApt.Unit+" "+ i.City + ", " + i.State + " " + i.Zip);
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft");
+            result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
+            result_ListBox.Items.Add("");
+        }
+
+        //Print Business info for properties within the price range
+        private void PrintBusinessInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            Business tempBus = (Business)i;
+            result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      "+ String.Format("{0:$0,0}", tempBus.SalePrice));
+            result_ListBox.Items.Add(tempBus.Name+", a " + tempBus.Type.ToString() +"type of bussiness, established in " + tempBus.YearEstablished);
+            result_ListBox.Items.Add("");
+        }
+
+        //Print School info for properties within the price range
+        private void PrintSchoolInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            School tepSch = (School)i;
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip+" | "+ "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName);
+            result_ListBox.Items.Add(tepSch.Name + ", establoshed in " + tepSch.YearEstablished);
+            result_ListBox.Items.Add(tepSch.Enrolled.ToString() + " students enrolled       " + String.Format("{0:$0,0}", tepSch.SalePrice));
+            result_ListBox.Items.Add("");
+        }
+        
+        // Load school infor to the combobox for Queary 2(For sale Residences within Range of a School)
+        private void Load_School_Information()
+        {
+            schoolComboBox.Items.Clear();
+
+            //load school in Dek
+            foreach (School details in dekalbSchools)
+            {
+                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
+            }
+
+            //load school in Syc
+            foreach (School details in sycamoreSchools)
+            {
+                schoolComboBox.Items.Add(String.Format("{0}", details.Name));
+            }
+        }
+        //Queary button 1: (For sale properties within a price range)
         private void PropertiesPriceRange(object sender, EventArgs e)
         {
-            result_ListBox.Items.Clear();
+
+            IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
             IEnumerable<Property> resiDekSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> busiDekSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> schoDekSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> resiSycSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> busiSycSelected = Enumerable.Empty<Property>();
             IEnumerable<Property> schoSycSelected = Enumerable.Empty<Property>();
-
-            IEnumerable<Property> allSyc = Enumerable.Empty<Property>();
-            // FOR dekalb
+            
             IEnumerable<Property> allDek = Enumerable.Empty<Property>();
-            List<Property> selectedProps_1 = new List<Property>();
-            SortedSet<Property> selectedProps = new SortedSet<Property>();
-            var selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
-            var selectedCommunity = selectedCommunityName.First();
-            var selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
-            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
+            IEnumerable<Property> allSyc = Enumerable.Empty<Property>();
 
-            if (checkBox_Resi.Checked)
-            {
-                resiDekSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
-            }
-            if (checkBox_Busi.Checked)
-            {
-                busiDekSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
-            }
-            if (checkBox_Scho.Checked)
-            {
-                schoDekSelected = from qqq in selectProp where ((qqq is School)) select qqq;
-            }
-
-            allDek = resiDekSelected.Union(busiDekSelected).Union(schoDekSelected);
-            allDek.OrderBy(a => a.SalePrice);
-
-            foreach (var i in allDek)
-            {
-                result_ListBox.Items.Add(i.StreetAddr + i.SalePrice.ToString());
-            }
-            result_ListBox.Items.Add(allDek.Count().ToString());
-
-
-            selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
-            selectedCommunity = selectedCommunityName.First();
-            selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
-            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
-
-            if (checkBox_Resi.Checked)
-            {
-                resiSycSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
-            }
-            if (checkBox_Busi.Checked)
-            {
-                busiSycSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
-            }
-            if (checkBox_Scho.Checked)
-            {
-                schoSycSelected = from qqq in selectProp where ((qqq is School)) select qqq;
-            }
-            allSyc = resiSycSelected.Union(busiSycSelected).Union(schoSycSelected);
-
-            foreach (var i in allSyc)
-            {
-                result_ListBox.Items.Add(i.StreetAddr + i.SalePrice.ToString());
-            }
-            result_ListBox.Items.Add(allSyc.Count().ToString());
-        }
-
-        private void FindSaleResNearSchool(object sender, EventArgs e)
-        {
-            result_ListBox.Items.Clear();
-            IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
-            IEnumerable<Property> allProps = Enumerable.Empty<Property>();
-            IEnumerable<Property> allSaleableProps = Enumerable.Empty<Property>();
-            //schoolComboBox.SelectedItem = 
-
+            //select Dek and Syc people to the allPople
             var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
             var selectedCommunityDek = selectedCommunityNameDek.First();
             var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
             var selectedCommunitySyc = selectedCommunityNameSyc.First();
+            allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
 
 
+            // Select all saleable properties in dekalb          
+            var selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunity = selectedCommunityName.First();
+            var selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
+            // Select all saleable properties in dekalb within a price range    
+            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
 
-
-            allProps = selectedCommunitySyc.Props.Union(selectedCommunityDek.Props);
-
-            var selectSchool = from qqq in allProps where ((qqq is School) && (((School)qqq).Name.CompareTo(schoolComboBox.SelectedItem) == 0)) select qqq;
-
-
-            allSaleableProps = from qqq in allProps where ((qqq is House) && (qqq.ForSale == true)) select qqq;
-            var selecteProps = from qqq in allSaleableProps where ((qqq is House) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= 2500)) select qqq;
-
-
-            result_ListBox.Items.Add(schoolComboBox.SelectedItem);
-            result_ListBox.Items.Add(selectSchool.Count().ToString());
-            foreach (var i in selecteProps)
+            if (checkBox_Resi.Checked)
             {
-                result_ListBox.Items.Add(i.StreetAddr);
+                // Select all saleable House or Aptartment in dekalb within a price range   
+                resiDekSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
             }
-        }
-
-
-
-
-        private void SelectTypeProperties(object sender, EventArgs e)
-        {
-            bool resBox = checkBox_Resi.Checked;
-            bool schBox = checkBox_Scho.Checked;
-            bool busBox = checkBox_Busi.Checked;
-
-            double resMax = -9999999999;
-            double resMin = +999999999;
-
-            double busMax = -9999999999;
-            double busMin = +999999999;
-
-            double schMax = -9999999999;
-            double schMin = +999999999;
-
-            double? maxPrice;
-            double? minPrice;
-
-            if ((checkBox_Resi.Checked == false) && (checkBox_Scho.Checked == false) && (checkBox_Busi.Checked == false))
+            if (checkBox_Busi.Checked)
             {
-                maxPrice = null;
-                minPrice = null;
-                trackBarMin.Minimum = 0;
-                trackBarMin.Maximum = 10;
-                trackBarMin.Value = 0;
-                trackBarMin.TickFrequency = 1;
+                // Select all saleable business in dekalb within a price range 
+                busiDekSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
+            }
+            if (checkBox_Scho.Checked)
+            {
+                // Select all saleable school in dekalb within a price range 
+                schoDekSelected = from qqq in selectProp where ((qqq is School)) select qqq;
+            }
 
-                trackBarMax.Minimum = 0;
-                trackBarMax.Maximum = 10;
-                trackBarMax.Value = 0;
-                trackBarMax.TickFrequency = 1;
-                label1.Text = "Min Price";
-                label2.Text = "Max Price";
+            //Union all the selected properties
+            allDek = resiDekSelected.Union(busiDekSelected).Union(schoDekSelected);
+            allDek = allDek.OrderBy(a => a.SalePrice);
+
+            // Select all saleable properties in Sycamore
+            selectedCommunityName = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            selectedCommunity = selectedCommunityName.First();
+            selectProp = from qqq in selectedCommunity.Props where (qqq.ForSale == true) select qqq;
+            // Select all saleable properties in Sycamore within a price range    
+            selectProp = from qqq in selectProp where ((qqq.SalePrice >= trackBarMin.Value) && (qqq.SalePrice <= trackBarMax.Value)) select qqq;
+
+
+            if (checkBox_Resi.Checked)
+            {
+                // Select all saleable House or Aptartment in Syc within a price range
+                resiSycSelected = from qqq in selectProp where ((qqq is House) || (qqq is Apartment)) select qqq;
+            }
+            if (checkBox_Busi.Checked)
+            {
+                // Select all saleable business in Syc within a price range
+                busiSycSelected = from qqq in selectProp where ((qqq is Business)) select qqq;
+            }
+            if (checkBox_Scho.Checked)
+            {
+                // Select all saleable school in Syc within a price range
+                schoSycSelected = from qqq in selectProp where ((qqq is School)) select qqq;
+            }
+
+            //Union all the selected properties
+            allSyc = resiSycSelected.Union(busiSycSelected).Union(schoSycSelected);
+            allSyc = allSyc.OrderBy(a => a.SalePrice);
+
+            //Output selected properties to listbox
+            result_ListBox.Items.Clear();
+            result_ListBox.Items.Add("Properties for sale within the ["+ String.Format("{0:$0,0}", trackBarMin.Value) +", "+ String.Format("{0:$0,0}", trackBarMax.Value)+ "] price range.");
+            result_ListBox.Items.Add("----------------------------------------------------------------");
+
+
+            //no property is selected
+            if ( (allDek.Count() == 0) && (allSyc.Count() == 0) )
+            {
+                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("Your query yielded no mathes");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("End of Output");
                 return;
 
             }
 
-
-            if (true)//(checkBox_Resi.Checked)
+            //output all selected properties in Dek
+            if (allDek.Count() > 0)
             {
-
-                var saleableDekHouse = from propDek in dekalbHouses where (propDek.ForSale == true) select propDek;
-                var saleableDekApartment = from propDek in dekalbApartments where (propDek.ForSale == true) select propDek;
-                var saleableSycHouse = from propSyc in sycamoreHouses where (propSyc.ForSale == true) select propSyc;
-                var saleableSycApartment = from propSyc in sycamoreApartments where (propSyc.ForSale == true) select propSyc;
-
-
-                double dekHouseMax = saleableDekHouse.Max(a => a.SalePrice);
-                double dekHouseMin = saleableDekHouse.Min(a => a.SalePrice);
-                double dekAptMax = saleableDekApartment.Max(a => a.SalePrice);
-                double dekAptMin = saleableDekApartment.Min(a => a.SalePrice);
-
-                double sycHouseMax = saleableSycHouse.Max(a => a.SalePrice);
-                double sycHouseMin = saleableSycHouse.Min(a => a.SalePrice);
-                double sycAptMax = saleableSycApartment.Max(a => a.SalePrice);
-                double sycAptMin = saleableSycApartment.Min(a => a.SalePrice);
-
-                double[] sequence_prop = { dekHouseMax, dekHouseMin, dekAptMax, dekAptMin, sycHouseMax, sycHouseMin, sycAptMax, sycAptMin };
-                resMax = sequence_prop.Max();
-                schMin = sequence_prop.Min();
-            }
-            if (true)//(checkBox_Scho.Checked)
-            {
-
-                var saleableDekSchool = from schoolDek in dekalbSchools where (schoolDek.ForSale == true) select schoolDek;
-                var saleableSycSchool = from schoolSyc in sycamoreSchools where (schoolSyc.ForSale == true) select schoolSyc;
-
-                double dekSchMax = saleableDekSchool.Max(a => a.SalePrice);
-                double dekSchMin = saleableDekSchool.Min(a => a.SalePrice);
-                double sycSchMax = saleableSycSchool.Max(a => a.SalePrice);
-                double sycSchMin = saleableSycSchool.Min(a => a.SalePrice);
-
-                double[] sequenceSchool = { dekSchMax, dekSchMin, sycSchMax, sycSchMin };
-                schMax = sequenceSchool.Max();
-                resMin = sequenceSchool.Min();
-
+                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("");
+                foreach (var i in allDek)
+                {
+                    if (i is House)
+                    {
+                        PrintHouseInfo(allPeople, i);
+                    }
+                    if (i is Apartment)
+                    {
+                        PrintApartmentInfo(allPeople, i);
+                    }
+                    if (i is Business)
+                    {
+                        PrintBusinessInfo(allPeople, i);
+                    }
+                    if (i is School)
+                    {
+                        PrintSchoolInfo(allPeople, i);
+                    }
+                }
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("");
             }
 
-            if (true)//(checkBox_Busi.Checked)
+            //output no selected properties in Dekalb
+            else
             {
-                var saleableDekBusiness = from businessDek in dekalbBusinesses where (businessDek.ForSale == true) select businessDek;
-                var saleableBusiness = from businessSyc in sycamoreBusinesses where (businessSyc.ForSale == true) select businessSyc;
-
-                busMax = saleableDekBusiness.Max(a => a.SalePrice);
-                busMin = saleableDekBusiness.Min(a => a.SalePrice);
+                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("Your query yielded no mathes in DeKalb area");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("");
             }
 
-            double?[] maxList = { resMax, schMax, busMax };
-            double?[] minList = { resMin, schMin, busMin };
-
-            maxPrice = maxList.Max();
-            minPrice = minList.Min();
-
-
-            trackBarMin.Minimum = (int)minPrice;
-            trackBarMin.Maximum = (int)maxPrice;
-
-            label1.Text = "Min Price: " + trackBarMin.Value.ToString();
-
-            trackBarMax.Minimum = (int)minPrice;
-            trackBarMax.Maximum = (int)maxPrice;
-            label2.Text = "Max Price: " + trackBarMax.Value.ToString();
-
-            trackBarMin.TickFrequency = (int)(minPrice - maxPrice) / 15;
-            trackBarMax.TickFrequency = (int)(minPrice - maxPrice) / 15;
+            //output all selected properties in Sycamore
+            if (allSyc.Count() > 0)
+            {
+                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("");
+                foreach (var i in allSyc)
+                {
+                    if (i is House)
+                    {
+                        PrintHouseInfo(allPeople, i);
+                    }
+                    if (i is Apartment)
+                    {
+                        PrintApartmentInfo(allPeople, i);
+                    }
+                    if (i is Business)
+                    {
+                        PrintBusinessInfo(allPeople, i);
+                    }
+                    if (i is School)
+                    {
+                        PrintSchoolInfo(allPeople, i);
+                    }
+                }
+            }
+            //output no selected properties in Sycamore
+            else
+            {
+                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("Your query yielded no mathes in Sycamore area");
+                result_ListBox.Items.Add("");
+                result_ListBox.Items.Add("");
+            }
+            result_ListBox.Items.Add("End of Output");
         }
-        #endregion
 
+        //Queary button 2: (For sale residneces within ranges of a school)
+        private void FindSaleResNearSchool(object sender, EventArgs e)
+        {
+
+            IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
+            IEnumerable<Property> allProps = Enumerable.Empty<Property>();
+            IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
+            IEnumerable<Property> allSaleableProps = Enumerable.Empty<Property>();
+
+            //select all properties in Dekalb and Sycamore
+            var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunityDek = selectedCommunityNameDek.First();
+            var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            var selectedCommunitySyc = selectedCommunityNameSyc.First();
+            allProps = selectedCommunitySyc.Props.Union(selectedCommunityDek.Props);
+            //select all people in Dekalb and Sycamore
+            allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
+
+            //select the school in the comobox
+            var selectSchool = from qqq in allProps where ((qqq is School) && (((School)qqq).Name.CompareTo(schoolComboBox.SelectedItem) == 0)) select qqq;
+
+            //select the saleable house and Apartment with range of the selected school
+            allSaleableProps = from qqq in allProps where (  ((qqq is House) || (qqq is Apartment)) && (qqq.ForSale == true)) select qqq;
+            var selecteProps = from qqq in allSaleableProps where (((qqq is House) || (qqq is Apartment)) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= numericUpDown1.Value* numericUpDown1.Value)) orderby qqq.SalePrice ascending select qqq;
+
+
+            //output the selected House and Apartment
+            result_ListBox.Items.Clear();
+            result_ListBox.Items.Add("Residences for sale within " + numericUpDown1.Value.ToString() + " units of distance");
+            result_ListBox.Items.Add("       from " + schoolComboBox.Text);
+            result_ListBox.Items.Add("----------------------------------------------------------------");
+
+          
+            foreach (var i in selecteProps)
+            {
+                //output house info
+                if (i is House)
+                {
+                    House tempHouse = (House)i;
+                    result_ListBox.Items.Add(i.StreetAddr+ " "+i.City+", "+i.State+" "+i.Zip + " "+(int)Math.Sqrt( (selectSchool.First().X - i.X) * (selectSchool.First().X - i.X) + (selectSchool.First().Y - i.Y) * (selectSchool.First().Y - i.Y)) + "units away");
+                    var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+                    //string ownerFirstName = ownerInfo.First().FirstName;
+                    //string ownerLastName = ownerInfo.First().LastName;
+                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft" );
+                    if (tempHouse.Garage == true)
+                    {
+                        if (tempHouse.AttachedGarage == true)
+                        {
+                            result_ListBox.Items.Add(" with a attached garage: " + tempHouse.Floors.ToString()+ " floors.     " + String.Format("{0:$0,0}",tempHouse.SalePrice));
+                            result_ListBox.Items.Add("");
+                        }
+                        else
+                        {
+                            result_ListBox.Items.Add(" with a detached garage: " + tempHouse.Floors.ToString()+ " floors.     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                            result_ListBox.Items.Add("");
+                        }
+                        
+                    }
+                    else
+                    {
+                        result_ListBox.Items.Add(" with no grage: "+ tempHouse.Floors.ToString() + " floors.     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                        result_ListBox.Items.Add("");
+                    }
+                }
+                //output apartment info
+                if (i is Apartment)
+                {
+                    Apartment tempApt = (Apartment)i;
+                    result_ListBox.Items.Add(i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip);
+                    var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft");
+                    result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
+                    result_ListBox.Items.Add("");
+                }
+
+            }
+        }
+        // scroll trackBarMin
         private void scrollMinPrice(object sender, EventArgs e)
         {
-            if (trackBarMin.Maximum <= 10)
-            {
-                label1.Text = "Min Price";
-            }
-            else
-                label1.Text = "Min Price: " + trackBarMin.Value.ToString();
-        }
 
+            label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
+            //if max value is smaller than min value
+            if (trackBarMin.Value > trackBarMax.Value)
+            {
+                trackBarMax.Value = trackBarMin.Value;
+                label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+            }
+        }
+        // scroll trackBarMax
         private void scrollMaxPrice(object sender, EventArgs e)
         {
-            if (trackBarMax.Maximum <= 10)
+            label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+            //if max value is smaller than min value
+            if (trackBarMin.Value > trackBarMax.Value)
             {
-                label2.Text = "Max Price";
+                trackBarMin.Value = trackBarMax.Value;
+                label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
             }
-            else
-                label2.Text = "Max Price: " + trackBarMax.Value.ToString();
-
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
 
-        }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
 
-        }
+        #endregion
+
+
+
+
     }
 }
