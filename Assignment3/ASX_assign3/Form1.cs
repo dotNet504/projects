@@ -140,35 +140,93 @@ namespace ASX_assign3
         #region A's Code
         private void querySpecResidence_Click(object sender, EventArgs e)
         {
-            bool garage = (bool)(garageCheckBox.Checked);
-            bool attached = (bool)(attachedCheckBox.Checked);
+                       // check if user didn't check any of the options
+            if (!apartmentCheckBox.Checked && !houseCheckBox.Checked)
+            {
+                MessageBox.Show("You didn't check any valid option");
+                return;
+            }
+
+
+            bool garage = (bool) (garageCheckBox.Checked);
+            bool attached = (bool) (attachedCheckBox.Checked);
+
+            var persn = from k in CommunitiesList
+                        from l in k.Residents
+                        select l;
+            var personQ = persn.OfType<Person>();
 
             // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
             //                                  and attached is (attachedCheckBox.Checked)
             if (houseCheckBox.Checked && !apartmentCheckBox.Checked)
             {
-                var houseQ = from i in CommunitiesList
-                             from j in i.Props
-                             where (j.GetType().Equals(typeof(House))) && (j.ForSale.Equals(true))
-                             select j;
+                var finResult = from houses in (from i in CommunitiesList
+                                                from k in i.Props.OfType<House>()
+                                                where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                                                    (k.Sqft >= sqFtUpDown.Value) && k.Garage.Equals(garage) && k.AttachedGarage.GetValueOrDefault(false).Equals(attached) &&
+                                                    k.ForSale.Equals(true)
+                                                select new
+                                                {
+                                                     k.OwnerID,
+                                                     k.StreetAddr,
+                                                     k.City,
+                                                     k.State,
+                                                     k.Zip,
+                                                     k.Bedrooms,
+                                                     k.Baths,
+                                                     k.Sqft,
+                                                     k.Garage,
+                                                     k.SalePrice,
+                                                     k.AttachedGarage,
+                                                })
+                         
+                                join person in (from p in CommunitiesList
+                                                from z in p.Residents.OfType<Person>()
+                                                select new { z.Id, z.FullName })
+                                                on houses.OwnerID equals person.Id
 
-                var houseList = houseQ.OfType<House>();
+                                select new
+                                {
+                                    houses.OwnerID,
+                                    houses.StreetAddr,
+                                    houses.City,
+                                    houses.State,
+                                    houses.Zip,
+                                    houses.Bedrooms,
+                                    houses.Baths,
+                                    houses.Sqft,
+                                    houses.Garage,
+                                    houses.SalePrice,
+                                    personName = person.FullName,
+                                 
+                                };
 
-                var retList = from k in houseList
-                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                               (k.Sqft >= sqFtUpDown.Value) && (k.Garage.Equals(garage))
-                               && (k.AttachedGarage.GetValueOrDefault(false).Equals(attached))
-                              orderby k.City // and price
-                              select k;
 
-                foreach (House ent in retList.ToList())
+
+                result_ListBox.Items.Clear();
+                if(finResult.Count() == 0)
                 {
-                    MessageBox.Show(ent.ToString() + "\n City: " + ent.City + "\n Floors: " + ent.Floors.ToString() +
-                                        "\n Bedroom: " + ent.Bedrooms.ToString() + "\n Bath: " + ent.Baths.ToString() +
-                                        "\n SqFt: " + ent.Sqft.ToString() + "\n Attached: " + ent.AttachedGarage);
+                    result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
+                    return;
                 }
-                //   return;
+                foreach (var ent in finResult.ToList())
+                {
+                    result_ListBox.Items.Add(ent.StreetAddr + " " + ent.City + ", " + ent.State + " " + ent.Zip);
+                    result_ListBox.Items.Add("Owner: " + ent.personName + " | " + ent.Bedrooms + " beds, " +
+                                                ent.Baths + " baths, " + ent.Sqft + " SqFt.");
+                    string str = string.Format("{0: $0,000}", ent.SalePrice);
+                    result_ListBox.Items.Add("Garage: " + ent.Garage + " "+ str);
+                    result_ListBox.Items.Add("\n\n");
+                }
+                return;
             }
+
+
+
+
+
+
+
 
 
             //query for houses and  apartments with xBed,xBath,xSqFt
@@ -188,10 +246,11 @@ namespace ASX_assign3
                                    orderby k.City //by price
                                    select k;
 
+                result_ListBox.Items.Clear();
                 foreach (House ent in retHouseList.ToList())
                 {
-                    MessageBox.Show(ent.ToString() + "City: " + ent.City + "\nFloors: " + ent.Floors.ToString() +
-                                        "\nBedroom: " + ent.Bedrooms.ToString() + "\nBath: " + ent.Baths.ToString() +
+                    result_ListBox.Items.Add(ent.ToString() + "City: " + ent.City + "\tFloors: " + ent.Floors.ToString() +
+                                        "\tBedroom: " + ent.Bedrooms.ToString() + "\tBath: " + ent.Baths.ToString() +
                                         "\nSqFt: " + ent.Sqft.ToString() + "\nAttached: " + ent.AttachedGarage);
                 }
 
@@ -201,38 +260,170 @@ namespace ASX_assign3
                                    orderby l.City //by price
                                    select l;
 
+                result_ListBox.Items.Clear();
+                if (retApartList.Count() == 0)
+                {
+                    result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
+                    return;
+                }
                 foreach (Apartment a in retApartList.ToList())
                 {
-                    MessageBox.Show(a.ToString() + "City: " + a.City + "\nBedroom: " + a.Bedrooms.ToString() +
-                                        "\nBath: " + a.Baths.ToString() + "\nSqFt: " + a.Sqft.ToString());
+                    result_ListBox.Items.Add(a.ToString() + "City: " + a.City +"\tBedroom: " + a.Bedrooms.ToString() + 
+                                        "\nBath: " + a.Baths.ToString() + "\tSqFt: " + a.Sqft.ToString());
                 }
+
+
+                //var finResult = from houses in (from i in CommunitiesList
+                //                                from k in i.Props.OfType<House>()
+                //                                where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
+                //                                    (k.Sqft >= sqFtUpDown.Value) && (k.Garage.Equals(garage)) &&
+                //                                    (k.AttachedGarage.GetValueOrDefault(false).Equals(attached)) && //apply if
+                //                                    k.ForSale.Equals(true)
+                //                                select new
+                //                                {
+                //                                    k.OwnerID,
+                //                                    k.StreetAddr,
+                //                                    k.City,
+                //                                    k.State,
+                //                                    k.Zip,
+                //                                    k.Bedrooms,
+                //                                    k.Baths,
+                //                                    k.Sqft,
+                //                                    k.Garage,
+                //                                    k.AttachedGarage,
+                //                                })
+                //                from apartments in (from a in CommunitiesList
+                //                                    from b in a.Props.OfType<Apartment>()
+                //                                    where (b.Bedrooms >= bedUpDown.Value) && (b.Baths >= bathUpDown.Value) &&
+                //                                    (b.Sqft >= sqFtUpDown.Value) && b.ForSale.Equals(true)
+                //                                    select new
+                //                                    {
+                //                                        b.OwnerID,
+                //                                        b.StreetAddr,
+                //                                        b.City,
+                //                                        b.State,
+                //                                        b.Zip,
+                //                                        b.Bedrooms,
+                //                                        b.Baths,
+                //                                        b.Sqft,
+                //                                        b.Unit
+                //                                    })
+                //                join person in (from p in CommunitiesList
+                //                                from z in p.Residents.OfType<Person>()
+                //                                select new { z.Id, z.FullName })
+                //                on houses.OwnerID equals person.Id
+
+                //                join person2 in (from p in CommunitiesList
+                //                                 from z in p.Residents.OfType<Person>()
+                //                                 select new { z.Id, z.FullName })
+                //                on apartments.OwnerID equals person2.Id
+
+                //                select new
+                //                {
+                //                    apartments.StreetAddr,
+                //                    apartments.City,
+                //                    apartments.State,
+                //                    apartments.Zip,
+                //                    apartments.Bedrooms,
+                //                    apartments.Baths,
+                //                    apartments.Sqft,
+                //                    person.FullName,
+                //                    apartments.Unit
+                //                };
+
+
+                //result_ListBox.Items.Clear();
+                //if (finResult.Count() == 0)
+                //{
+                //    result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
+                //    return;
+                //}
+                //foreach (var ent in finResult)
+                //{
+
+                //    result_ListBox.Items.Add(ent.StreetAddr + " Apt.# " + ent.Unit + " " + ent.City + ", " + ent.State + " " + ent.Zip);
+                //    result_ListBox.Items.Add("Owner: " + ent.FullName + " | " + ent.Bedrooms + " beds, " +
+                //                                ent.Baths + " baths, " + ent.Sqft + " SqFt.");
+                //    result_ListBox.Items.Add("\n\n");
+                //}
+
+
+
+
+
+
+
+
+
+
             }
+
+
+
 
             //query for apartments with xBed,xBath,xSqFt
             else if (apartmentCheckBox.Checked)
-            {
-                var qResult = from i in CommunitiesList
-                              from j in i.Props
-                              where (j.GetType().Equals(typeof(Apartment))) //&& (j.ForSale.Equals(true))
-                              select j;
+            { 
+                var finResult =  from apartments in ( from a in CommunitiesList
+                                        from b in a.Props.OfType<Apartment>()
+                                        where (b.Bedrooms >= bedUpDown.Value) && (b.Baths >= bathUpDown.Value) &&
+                                        (b.Sqft >= sqFtUpDown.Value) &&   b.ForSale.Equals(true)
+                                        orderby b.SalePrice
+                                        select new
+                                        {
+                                            b.OwnerID,
+                                            b.StreetAddr,
+                                            b.City,
+                                            b.State,
+                                            b.Zip,
+                                            b.Bedrooms,
+                                            b.Baths,
+                                            b.Sqft,
+                                            b.Unit,
+                                            b.SalePrice
+                                        })
+                    join person in (from p in CommunitiesList
+                                    from z in p.Residents.OfType<Person>()
+                                    select new { z.Id, z.FullName })
+                                    on apartments.OwnerID equals person.Id
 
-                var apartmentList = qResult.OfType<Apartment>();
+                                  
 
-                var retList = from k in apartmentList
-                              where (k.Bedrooms >= bedUpDown.Value) && (k.Baths >= bathUpDown.Value) &&
-                               (k.Sqft >= sqFtUpDown.Value)
-                              orderby k.City //change to price
-                              select k;
+                    select new
+                    {
+                        apartments.StreetAddr,
+                        apartments.City,
+                        apartments.State,
+                        apartments.Zip,
+                        apartments.Bedrooms,
+                        apartments.Baths,
+                        apartments.Sqft,
+                        person.FullName,
+                        apartments.Unit,
+                        apartments.SalePrice
+                    };
 
-                foreach (Apartment a in retList.ToList())
+
+                result_ListBox.Items.Clear();
+                if (finResult.Count() == 0)
                 {
-                    MessageBox.Show(a.ToString() + "City: " + a.City + "\nBedroom: " + a.Bedrooms.ToString() +
-                                        "\nBath: " + a.Baths.ToString() + "\nSqFt: " + a.Sqft.ToString());
+                    result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
+                    return;
+                }
+                foreach (var ent in finResult)
+                {
+
+                    result_ListBox.Items.Add(ent.StreetAddr + " Apt.# " + ent.Unit + " " + ent.City + ", " + ent.State + " " + ent.Zip);
+                    result_ListBox.Items.Add("Owner: " + ent.FullName + " | " + ent.Bedrooms + " beds, " +
+                                                ent.Baths + " baths, " + ent.Sqft + " SqFt." );
+                    string str = string.Format("{0: $0,000}", ent.SalePrice);
+                    result_ListBox.Items.Add(str);
+                    result_ListBox.Items.Add("\n\n");
                 }
 
             }
-
-        }
+ 
+        }//End of Event to query 4
 
         private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
         {
