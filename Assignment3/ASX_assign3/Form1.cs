@@ -675,12 +675,18 @@ namespace ASX_assign3
             schoolComboBox.Items.Clear();
 
             //load school in Dek
+            schoolComboBox.Items.Add("DeKalb:");
+            schoolComboBox.Items.Add("------");
             foreach (School details in dekalbSchools)
             {
                 schoolComboBox.Items.Add(String.Format("{0}", details.Name));
             }
+            schoolComboBox.Items.Add("");
+
 
             //load school in Syc
+            schoolComboBox.Items.Add("Sycamore:");
+            schoolComboBox.Items.Add("------");
             foreach (School details in sycamoreSchools)
             {
                 schoolComboBox.Items.Add(String.Format("{0}", details.Name));
@@ -860,13 +866,20 @@ namespace ASX_assign3
         }
 
         //Queary button 2: (For sale residneces within ranges of a school)
-        private void FindSaleResNearSchool(object sender, EventArgs e)
+        private void FindSaleResNearSchool(object sender, EventArgs e)            
         {
 
             IEnumerable<Property> SelectedProp = Enumerable.Empty<Property>();
             IEnumerable<Property> allProps = Enumerable.Empty<Property>();
             IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
             IEnumerable<Property> allSaleableProps = Enumerable.Empty<Property>();
+            if ((schoolComboBox.SelectedIndex == -1) || (schoolComboBox.SelectedItem == "DeKalb:") || (schoolComboBox.SelectedItem == "Sycamore:")  || (schoolComboBox.SelectedItem == "------") || (schoolComboBox.SelectedItem == ""))
+            {
+                result_ListBox.Items.Clear();
+                result_ListBox.Items.Add("Please select a school.");
+
+                return;
+            }
 
             //select all properties in Dekalb and Sycamore
             var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
