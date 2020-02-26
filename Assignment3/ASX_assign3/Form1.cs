@@ -575,7 +575,7 @@ namespace ASX_assign3
                                                 + " units away, with " + item.ActiveRecruitment
                                                 + " open positions");
                         result_ListBox.Items.Add(item.Name + ", a "
-                                                 + " type of business, established in "
+                                                 + item.Type + " type of business, established in "
                                                  + item.YearEstablished);
                         result_ListBox.Items.Add("\n");
                         result_ListBox.Items.Add("\n");

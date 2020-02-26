@@ -33,7 +33,7 @@ namespace DataLoader
         public Business(String[] args) : base(args)
         {
             name = args[9];
-            //type = ((BusinessType) args[10]).ToString();
+            type = ((BusinessType)Convert.ToUInt32(args[10]));
             yearEstablished = args[11];
             activeRecruitment = Convert.ToUInt32(args[12]);
 
@@ -46,10 +46,11 @@ namespace DataLoader
             get { return name; }
         }
 
-        //public String Type
-        //{
-        //    get { return type; }
-        //}
+        //getter and setter for Type
+        public BusinessType Type
+        {
+            get { return type; }
+        }
 
         //Getter for YearEstablished readonly property
         public String YearEstablished
