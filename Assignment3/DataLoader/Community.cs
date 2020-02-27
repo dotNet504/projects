@@ -66,7 +66,6 @@ namespace DataLoader
             }
             foreach (var b in business)
             {
-                
                 props.Add(b);
             }
         }
@@ -148,6 +147,19 @@ namespace DataLoader
 
         //Calculating the population using count of residents
         public int Population => residents.Count;
+
+        ////Out-of-towner
+        public bool OutOfTowner(uint ownerId)
+        {
+            foreach(var v in this.residents)
+            {
+                if(v.Id == ownerId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     //Method to compare the Properties sorted set
