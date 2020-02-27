@@ -171,20 +171,22 @@ namespace ASX_assign3
             }
 
             string hHeader = string.Format("Houses with at least " + bedUpDown.Value + bed + bathUpDown.Value + " " + bath +
-                                        sqFtUpDown.Value + " sq footage");
+                                        sqFtUpDown.Value + " sq. footage");
 
             string aHeader = string.Format("Apartments with at least " + bedUpDown.Value + bed + bathUpDown.Value + " " + bath +
-                               sqFtUpDown.Value + " sq footage");
+                               sqFtUpDown.Value + " sq. footage");
+
+            string gHeader = string.Format("Houses and Apartments with at least " + bedUpDown.Value + bed + bathUpDown.Value + " " + bath +
+                            sqFtUpDown.Value + " sq.");
 
             var finResult = from i in CommunitiesList
                             from j in i.Props.OfType<Residential>()
                             where (j.Bedrooms >= bedUpDown.Value) && (j.Baths >= bathUpDown.Value) &&
                                   (j.Sqft >= sqFtUpDown.Value) && j.ForSale.Equals(true)
-                                  orderby j.SalePrice
+                            orderby j.SalePrice
                             select new
                             {
-                                Home = (j is House ? j : null),
-                                Apt = (j is Apartment ? j : null),
+                                Home = j,
                                 FullName = string.Join("", (from z in i.Residents.OfType<Person>()
                                                             where z.Id == j.OwnerID
                                                             select z.FullName).ToArray()),
@@ -200,14 +202,6 @@ namespace ASX_assign3
                                 Attached = string.Join("", (from z in i.Props.OfType<House>()
                                                             where z.Id == j.Id && z.AttachedGarage.GetValueOrDefault(false).Equals(attached)
                                                             select z.AttachedGarage).ToArray())
-
-
-                                 ///Find a way to track which houses have detached? during BOTH query
-
-                                //checkGarage = (!(j is House) ? null : (from z in i.Props.OfType<House>()
-                                //                                     where z.Id == j.Id && z.Garage.Equals(garage) &&
-                                //                                     z.AttachedGarage.GetValueOrDefault(false).Equals(attached)
-                                //                                     select z).ToList())
 
                             };
 
@@ -242,14 +236,20 @@ namespace ASX_assign3
 
                     if (h.Home != null && h.Garage.Length != 0 && garageChecked.Equals(bool.Parse(h.Garage)))
                     {
-
-
                         result_ListBox.Items.Add(h.Home.StreetAddr + " " + h.Home.City + ", " + h.Home.State
                                                                                           + " " + h.Home.Zip);
                         result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
                             h.Home.Baths + " baths, " + h.Home.Sqft + " sqfT. ");
+                        string strZ = string.Format("with a  detached Garage : " + +(h.Home as House).Floors + " floor.");
+                        if(!((h.Home as House).Garage))
+                        {
+                            strZ = "with no garage : " + (h.Home as House).Floors + " floor.";
+                        } else if ( ((h.Home as House).Garage) && (h.Home as House).AttachedGarage.GetValueOrDefault(false).Equals(true))
+                        {
+                            strZ = "with an attached garage : " + (h.Home as House).Floors + " floor.";
+                        }
                         string str = string.Format("{0: $0,000}", h.Home.SalePrice);
-                        result_ListBox.Items.Add(" " + str + " Garage: " + h.Garage);
+                        result_ListBox.Items.Add(strZ + "\t" + str);
                         result_ListBox.Items.Add("\n\n");
 
                         resultCounter++;
@@ -262,6 +262,8 @@ namespace ASX_assign3
                     result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
                 }
 
+                result_ListBox.Items.Add("\n\n\n\n");
+                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
                 return;
 
   
@@ -272,39 +274,56 @@ namespace ASX_assign3
             //query for houses and  apartments with xBed,xBath,xSqFt
             else if (houseCheckBox.Checked && apartmentCheckBox.Checked)
             {
+                int resultCounter = 0;
+                result_ListBox.Items.Add(gHeader);
+                result_ListBox.Items.Add("footage");
+                result_ListBox.Items.Add(hyphen);
 
- 
-                if (finResult.Count() == 0)
+
+                foreach (var h in finResult)
+                {
+                    if (h.Home is Apartment)
+                    {
+                        string str = string.Format("{0: $0,000}", h.Home.SalePrice);
+                        result_ListBox.Items.Add(h.Home.StreetAddr + " Apt.# " + h.Unit + " " + h.Home.City + ", " + h.Home.State + " " + h.Home.Zip);
+                        result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
+                                                    h.Home.Baths + " baths, " + h.Home.Sqft + " sq.ft.\t" + str);
+                        result_ListBox.Items.Add("\n\n");
+                        resultCounter++;
+
+                    } else if (h.Home is House)
+                    {
+                        result_ListBox.Items.Add(h.Home.StreetAddr + " " + h.Home.City + ", " + h.Home.State
+                                                                  + " " + h.Home.Zip);
+                        result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
+                            h.Home.Baths + " baths, " + h.Home.Sqft + " sq.ft.");
+                        string strZ = string.Format("with a  detached Garage : " + +(h.Home as House).Floors + " floor.");
+                        if (!((h.Home as House).Garage))
+                        {
+                            strZ = "with no garage : " + (h.Home as House).Floors + " floor.";
+                        }
+                        else if (((h.Home as House).Garage) && (h.Home as House).AttachedGarage.GetValueOrDefault(false).Equals(true))
+                        {
+                            strZ = "with an attached garage : " + (h.Home as House).Floors + " floor.";
+                        }
+                        string str = string.Format("{0: $0,000}", h.Home.SalePrice);
+                        result_ListBox.Items.Add(strZ + "\t\t" + str);
+                        result_ListBox.Items.Add("\n\n");
+
+                        resultCounter++;
+                    }
+
+                }
+
+                if (resultCounter== 0)
                 {
                     result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
-                    return;
-                }
   
-                //foreach(var ent in qResult)
-                //{
-                //    if (ent.anyUnit.Length == 0)
-                //    {
-                //        result_ListBox.Items.Add(ent.anyHome.StreetAddr + " " + ent.anyHome.City + ", " + ent.anyHome.State + " " + ent.anyHome.Zip);
-                //        result_ListBox.Items.Add(" | " + ent.anyHome.Bedrooms + " beds, " + ent.anyHome.Baths + " baths, " + ent.anyHome.Sqft + " SqFt.");
-                //        string str = string.Format("{0: $0,000}", ent.anyHome.SalePrice);
-                //    //    result_ListBox.Items.Add("Garage: " + ent.anyHome.Garage + "  Attached?: " + ent.anyApt.Attached + "  " + str);
-                //        result_ListBox.Items.Add("\n\n");
-                //    }
-                //    else
-                //    {
-                //        result_ListBox.Items.Add("\n\n");
-                //        result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
-                //        result_ListBox.Items.Add("\n\n");
-                //    }
-                //}
+                }
 
-
-
-                //return;
-
-
-
-
+                result_ListBox.Items.Add("\n\n\n\n");
+                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
+                return;
             }
 
             //query for apartments with xBed,xBath,xSqFt
@@ -316,12 +335,12 @@ namespace ASX_assign3
             int resultCounter = 0;
                 foreach (var ent in finResult)
                 {
-                    if (ent.Unit.Length > 0 && ent.Apt != null)
+                    if ( ent.Home is Apartment)
                     {
-                        string str = string.Format("{0: $0,000}", ent.Apt.SalePrice);
-                        result_ListBox.Items.Add(ent.Apt.StreetAddr + " Apt.# " + ent.Unit + " " + ent.Apt.City + ", " + ent.Apt.State + " " + ent.Apt.Zip);
-                        result_ListBox.Items.Add("Owner: " + ent.FullName + " | " + ent.Apt.Bedrooms + " beds, " +
-                                                    ent.Apt.Baths + " baths, " + ent.Apt.Sqft + " SqFt.\t" + str);
+                        string str = string.Format("{0: $0,000}", ent.Home.SalePrice);
+                        result_ListBox.Items.Add(ent.Home.StreetAddr + " Apt.# " + ent.Unit + " " + ent.Home.City + ", " + ent.Home.State + " " + ent.Home.Zip);
+                        result_ListBox.Items.Add("Owner: " + ent.FullName + " | " + ent.Home.Bedrooms + " beds, " +
+                                                    ent.Home.Baths + " baths, " + ent.Home.Sqft + " SqFt.\t" + str);
                         result_ListBox.Items.Add("\n\n");
                         resultCounter++;
                     }
@@ -331,6 +350,9 @@ namespace ASX_assign3
                 {
                     result_ListBox.Items.Add("Your query didn't generate any result, Please reselect!");
                 }
+
+                result_ListBox.Items.Add("\n\n\n\n");
+                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
                 return;
 
             }
