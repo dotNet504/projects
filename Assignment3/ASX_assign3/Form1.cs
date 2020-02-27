@@ -911,7 +911,7 @@ namespace ASX_assign3
                 if (i is House)
                 {
                     House tempHouse = (House)i;
-                    result_ListBox.Items.Add(i.StreetAddr+ " "+i.City+", "+i.State+" "+i.Zip + " "+(int)Math.Sqrt( (selectSchool.First().X - i.X) * (selectSchool.First().X - i.X) + (selectSchool.First().Y - i.Y) * (selectSchool.First().Y - i.Y)) + "units away");
+                    result_ListBox.Items.Add(i.StreetAddr+ " "+i.City+", "+i.State+" "+i.Zip + " "+(int)Math.Sqrt( (selectSchool.First().X - i.X) * (selectSchool.First().X - i.X) + (selectSchool.First().Y - i.Y) * (selectSchool.First().Y - i.Y)) + " units away");
                     var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
                     //string ownerFirstName = ownerInfo.First().FirstName;
                     //string ownerLastName = ownerInfo.First().LastName;
@@ -976,10 +976,10 @@ namespace ASX_assign3
 
 
 
+
+
+
         #endregion
-
-
-
-
+        
     }
 }
