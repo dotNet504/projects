@@ -722,7 +722,7 @@ namespace ASX_assign3
 
             //Output selected properties to listbox
             result_ListBox.Items.Clear();
-            result_ListBox.Items.Add("Properties for sale within the ["+ String.Format("{0:$0,0}", trackBarMin.Value) +", "+ String.Format("{0:$0,0}", trackBarMax.Value)+ "] price range.");
+            result_ListBox.Items.Add("Properties for sale within the [ "+ String.Format("{0:$0,0}", trackBarMin.Value) +", "+ String.Format("{0:$0,0}", trackBarMax.Value)+ " ] price range.");
             result_ListBox.Items.Add("----------------------------------------------------------------");
 
 
@@ -812,7 +812,7 @@ namespace ASX_assign3
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("");
             }
-            result_ListBox.Items.Add("End of Output");
+            result_ListBox.Items.Add("### End of Output ####");
         }
 
         //Queary button 2: (For sale residneces within ranges of a school)
@@ -865,7 +865,7 @@ namespace ASX_assign3
                     var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
                     //string ownerFirstName = ownerInfo.First().FirstName;
                     //string ownerLastName = ownerInfo.First().LastName;
-                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft" );
+                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft." );
                     if (tempHouse.Garage == true)
                     {
                         if (tempHouse.AttachedGarage == true)
