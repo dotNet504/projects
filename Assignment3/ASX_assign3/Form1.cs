@@ -208,8 +208,8 @@ namespace ASX_assign3
 
 
 
-                            // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
-                            //                                  and attached is (attachedCheckBox.Checked)
+            // query for houses with xBed,xBath,xSqFt, where garage is (garageCheckBox.Checked)
+            //                                  and attached is (attachedCheckBox.Checked)
             if (houseCheckBox.Checked && !apartmentCheckBox.Checked)
             {
  
@@ -239,8 +239,8 @@ namespace ASX_assign3
                         result_ListBox.Items.Add(h.Home.StreetAddr + " " + h.Home.City + ", " + h.Home.State
                                                                                           + " " + h.Home.Zip);
                         result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
-                            h.Home.Baths + " baths, " + h.Home.Sqft + " sqfT. ");
-                        string strZ = string.Format("with a  detached Garage : " + +(h.Home as House).Floors + " floor.");
+                            h.Home.Baths + " baths, " + h.Home.Sqft + " sq.ft. ");
+                        string strZ = string.Format("with a  detached garage : " + +(h.Home as House).Floors + " floor.");
                         if(!((h.Home as House).Garage))
                         {
                             strZ = "with no garage : " + (h.Home as House).Floors + " floor.";
@@ -263,7 +263,7 @@ namespace ASX_assign3
                 }
 
                 result_ListBox.Items.Add("\n\n\n\n");
-                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
+                result_ListBox.Items.Add("### END OF OUTPUT ###");
                 return;
 
   
@@ -322,7 +322,7 @@ namespace ASX_assign3
                 }
 
                 result_ListBox.Items.Add("\n\n\n\n");
-                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
+                result_ListBox.Items.Add("### END OF OUTPUT ###");
                 return;
             }
 
@@ -340,7 +340,7 @@ namespace ASX_assign3
                         string str = string.Format("{0: $0,000}", ent.Home.SalePrice);
                         result_ListBox.Items.Add(ent.Home.StreetAddr + " Apt.# " + ent.Unit + " " + ent.Home.City + ", " + ent.Home.State + " " + ent.Home.Zip);
                         result_ListBox.Items.Add("Owner: " + ent.FullName + " | " + ent.Home.Bedrooms + " beds, " +
-                                                    ent.Home.Baths + " baths, " + ent.Home.Sqft + " SqFt.\t" + str);
+                                                    ent.Home.Baths + " baths, " + ent.Home.Sqft + " sq.ft.\t" + str);
                         result_ListBox.Items.Add("\n\n");
                         resultCounter++;
                     }
@@ -352,7 +352,7 @@ namespace ASX_assign3
                 }
 
                 result_ListBox.Items.Add("\n\n\n\n");
-                result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
+                result_ListBox.Items.Add("### END OF OUTPUT ###");
                 return;
 
             }
@@ -390,12 +390,12 @@ namespace ASX_assign3
             {
 
                 result_ListBox.Items.Add(p.k.StreetAddr + " " + p.k.City + " , " + p.k.State + " " + p.k.Zip);
-                result_ListBox.Items.Add("Owner: " + p.FullName + "\t | \t$" + p.j.SalePrice);
+                result_ListBox.Items.Add("Owner: " + p.FullName + " | \t$" + string.Format("{0:#,0}",p.j.SalePrice));
                 result_ListBox.Items.Add(p.j.Name + ", a " + p.j.Type + " type of business, established in " + p.j.YearEstablished);
                 result_ListBox.Items.Add("\n\n");
             }
             result_ListBox.Items.Add("\n\n\n\n");
-            result_ListBox.Items.Add("\t\t\t ###END OF OUTPUT###");
+            result_ListBox.Items.Add("### END OF OUTPUT ###");
             return;
         }
 
@@ -586,13 +586,13 @@ namespace ASX_assign3
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
             //string ownerFirstName = ownerInfo.First().FirstName;
             //string ownerLastName = ownerInfo.First().LastName;
-            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft");
+            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.");
             string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
             if (tempHouse.Garage == true)
             {
                 if (tempHouse.AttachedGarage == true)
                 {
-                    result_ListBox.Items.Add(" with a attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                    result_ListBox.Items.Add(" with an attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
                     result_ListBox.Items.Add("");
                 }
                 else
@@ -603,7 +603,7 @@ namespace ASX_assign3
             }
             else
             {
-                result_ListBox.Items.Add(" with no grage: " + tempHouse.Floors.ToString() + " "+ floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                result_ListBox.Items.Add(" with no garage: " + tempHouse.Floors.ToString() + " "+ floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
                 result_ListBox.Items.Add("");
             }
         }
@@ -614,7 +614,7 @@ namespace ASX_assign3
             Apartment tempApt = (Apartment)i;
             result_ListBox.Items.Add(i.StreetAddr + " Apt. "+ tempApt.Unit+" "+ i.City + ", " + i.State + " " + i.Zip);
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft");
+            result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.");
             result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
             result_ListBox.Items.Add("");
         }
@@ -626,7 +626,7 @@ namespace ASX_assign3
             result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
             result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      "+ String.Format("{0:$0,0}", tempBus.SalePrice));
-            result_ListBox.Items.Add(tempBus.Name+", a " + tempBus.Type.ToString() +"type of bussiness, established in " + tempBus.YearEstablished);
+            result_ListBox.Items.Add(tempBus.Name+", a " + tempBus.Type.ToString() +" type of business, established in " + tempBus.YearEstablished);
             result_ListBox.Items.Add("");
         }
 
@@ -755,9 +755,9 @@ namespace ASX_assign3
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("     #### Sycamore   ####");
                 result_ListBox.Items.Add("");
-                result_ListBox.Items.Add("Your query yielded no mathes");
+                result_ListBox.Items.Add("Your query yielded no matches!");
                 result_ListBox.Items.Add("");
-                result_ListBox.Items.Add("End of Output");
+                result_ListBox.Items.Add("### END OF OUTPUT ###");
                 return;
 
             }
@@ -795,7 +795,7 @@ namespace ASX_assign3
             {
                 result_ListBox.Items.Add("     #### DeKalb   ####");
                 result_ListBox.Items.Add("");
-                result_ListBox.Items.Add("Your query yielded no mathes in DeKalb area");
+                result_ListBox.Items.Add("Your query yielded no matches in DeKalb area!");
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("");
             }
@@ -830,11 +830,11 @@ namespace ASX_assign3
             {
                 result_ListBox.Items.Add("     #### Sycamore   ####");
                 result_ListBox.Items.Add("");
-                result_ListBox.Items.Add("Your query yielded no mathes in Sycamore area");
+                result_ListBox.Items.Add("Your query yielded no matches in Sycamore area!");
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("");
             }
-            result_ListBox.Items.Add("### End of Output ####");
+            result_ListBox.Items.Add("### END OF OUTPUT ####");
         }
 
         //Queary button 2: (For sale residneces within ranges of a school)
@@ -873,7 +873,7 @@ namespace ASX_assign3
             //output the selected House and Apartment
             result_ListBox.Items.Clear();
             result_ListBox.Items.Add("Residences for sale within " + numericUpDown1.Value.ToString() + " units of distance");
-            result_ListBox.Items.Add("       from " + schoolComboBox.Text);
+            result_ListBox.Items.Add("       from " + schoolComboBox.Text +".");
             result_ListBox.Items.Add("----------------------------------------------------------------");
 
           
@@ -883,7 +883,7 @@ namespace ASX_assign3
                 if (i is House)
                 {
                     House tempHouse = (House)i;
-                    result_ListBox.Items.Add(i.StreetAddr+ " "+i.City+", "+i.State+" "+i.Zip + " "+(int)Math.Sqrt( (selectSchool.First().X - i.X) * (selectSchool.First().X - i.X) + (selectSchool.First().Y - i.Y) * (selectSchool.First().Y - i.Y)) + " units away");
+                    result_ListBox.Items.Add(i.StreetAddr+ " "+i.City+", "+i.State+" "+i.Zip + " \t"+(int)Math.Sqrt( (selectSchool.First().X - i.X) * (selectSchool.First().X - i.X) + (selectSchool.First().Y - i.Y) * (selectSchool.First().Y - i.Y)) + " units away");
                     var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
                     //string ownerFirstName = ownerInfo.First().FirstName;
                     //string ownerLastName = ownerInfo.First().LastName;
@@ -892,7 +892,7 @@ namespace ASX_assign3
                     {
                         if (tempHouse.AttachedGarage == true)
                         {
-                            result_ListBox.Items.Add(" with a attached garage: " + tempHouse.Floors.ToString()+ " floors.     " + String.Format("{0:$0,0}",tempHouse.SalePrice));
+                            result_ListBox.Items.Add(" with an attached garage: " + tempHouse.Floors.ToString()+ " floors.     " + String.Format("{0:$0,0}",tempHouse.SalePrice));
                             result_ListBox.Items.Add("");
                         }
                         else
@@ -914,7 +914,7 @@ namespace ASX_assign3
                     Apartment tempApt = (Apartment)i;
                     result_ListBox.Items.Add(i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip);
                     var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft");
+                    result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.");
                     result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
                     result_ListBox.Items.Add("");
                 }
