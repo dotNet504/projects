@@ -924,14 +924,7 @@ namespace ASX_assign3
         }
 
 
-
-
-
-
-
         #endregion
 
-        #endregion
-        
     }
 }
