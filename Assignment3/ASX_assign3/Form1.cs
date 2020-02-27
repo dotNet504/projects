@@ -650,6 +650,8 @@ namespace ASX_assign3
             //load school in Dek
             schoolComboBox.Items.Add("DeKalb:");
             schoolComboBox.Items.Add("------");
+    
+            dekalbSchools.Sort(new PropertyComparer());
             foreach (School details in dekalbSchools)
             {
                 schoolComboBox.Items.Add(String.Format("{0}", details.Name));
@@ -660,6 +662,7 @@ namespace ASX_assign3
             //load school in Syc
             schoolComboBox.Items.Add("Sycamore:");
             schoolComboBox.Items.Add("------");
+            sycamoreSchools.Sort(new PropertyComparer());
             foreach (School details in sycamoreSchools)
             {
                 schoolComboBox.Items.Add(String.Format("{0}", details.Name));
@@ -713,6 +716,7 @@ namespace ASX_assign3
 
             //Union all the selected properties
             allDek = resiDekSelected.Union(busiDekSelected).Union(schoDekSelected);
+            allDek = allDek.OrderBy(a => a, new PropertyComparer());
             allDek = allDek.OrderBy(a => a.SalePrice);
 
             // Select all saleable properties in Sycamore
@@ -741,6 +745,7 @@ namespace ASX_assign3
 
             //Union all the selected properties
             allSyc = resiSycSelected.Union(busiSycSelected).Union(schoSycSelected);
+            allSyc = allSyc.OrderBy(a => a, new PropertyComparer());
             allSyc = allSyc.OrderBy(a => a.SalePrice);
 
             //Output selected properties to listbox
@@ -868,7 +873,9 @@ namespace ASX_assign3
 
             //select the saleable house and Apartment with range of the selected school
             allSaleableProps = from qqq in allProps where (  ((qqq is House) || (qqq is Apartment)) && (qqq.ForSale == true)) select qqq;
+
             var selecteProps = from qqq in allSaleableProps where (((qqq is House) || (qqq is Apartment)) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= numericUpDown1.Value* numericUpDown1.Value)) orderby qqq.SalePrice descending select qqq;
+
 
 
             //output the selected House and Apartment

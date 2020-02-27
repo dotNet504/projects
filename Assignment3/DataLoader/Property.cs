@@ -107,7 +107,8 @@ namespace DataLoader
                                 }
                                 else
                                 {
-                                    throw new ArgumentNullException("Error:the address of house has been inputted");
+                                    return 0; //becasue we have more typies of property now, if the addresses are the same, then the ranking of two properties are the same
+                                    //throw new ArgumentNullException("Error:the address of house has been inputted");
                                 }
                             }
                             else
