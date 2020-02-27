@@ -66,16 +66,16 @@ namespace ASX_assign3
             sycamoreSchools = _businessLayer.lstSycamoreSchools;
             sycamoreBusinesses = _businessLayer.lstSycamoreBusiness;
 
-            trackBarMin.Minimum = 65000;
-            trackBarMin.Maximum = 310000;
-            trackBarMax.Minimum = 65000;
-            trackBarMax.Maximum = 310000;
+            trackBarMin.Minimum = 0;
+            trackBarMin.Maximum = 350000;
+            trackBarMax.Minimum = 0;
+            trackBarMax.Maximum = 350000;
             trackBarMin.Value = 65000;
             trackBarMax.Value = 310000;
-            trackBarMin.TickFrequency = (int)(310000 - 65000) / 15;
-            trackBarMax.TickFrequency = (int)(310000 - 65000) / 15;
-            label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
-            label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+            trackBarMin.TickFrequency = (int)(350000 - 0) / 15;
+            trackBarMax.TickFrequency = (int)(350000 - 0) / 15;
+            label1.Text = "Min Price: " + String.Format("{0:$#,0}", trackBarMin.Value);
+            label2.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
 
 
             Load_School_Information();
@@ -744,7 +744,7 @@ namespace ASX_assign3
 
             //Output selected properties to listbox
             result_ListBox.Items.Clear();
-            result_ListBox.Items.Add("Properties for sale within the [ "+ String.Format("{0:$0,0}", trackBarMin.Value) +", "+ String.Format("{0:$0,0}", trackBarMax.Value)+ " ] price range.");
+            result_ListBox.Items.Add("Properties for sale within the [ "+ String.Format("{0:$#,0}", trackBarMin.Value) +", "+ String.Format("{0:$#,0}", trackBarMax.Value)+ " ] price range.");
             result_ListBox.Items.Add("----------------------------------------------------------------");
 
 
@@ -925,23 +925,23 @@ namespace ASX_assign3
         private void scrollMinPrice(object sender, EventArgs e)
         {
 
-            label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
+            label1.Text = "Min Price: " + String.Format("{0:$#,0}", trackBarMin.Value);
             //if max value is smaller than min value
             if (trackBarMin.Value > trackBarMax.Value)
             {
                 trackBarMax.Value = trackBarMin.Value;
-                label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+                label2.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
             }
         }
         // scroll trackBarMax
         private void scrollMaxPrice(object sender, EventArgs e)
         {
-            label2.Text = "Max Price: " + String.Format("{0:$0,0}", trackBarMax.Value);
+            label2.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
             //if max value is smaller than min value
             if (trackBarMin.Value > trackBarMax.Value)
             {
                 trackBarMin.Value = trackBarMax.Value;
-                label1.Text = "Min Price: " + String.Format("{0:$0,0}", trackBarMin.Value);
+                label1.Text = "Min Price: " + String.Format("{0:$#,0}", trackBarMin.Value);
             }
         }
 

@@ -27,7 +27,7 @@ namespace DataLoader
         private uint activeRecruitment;
         
         //enumerator declaration
-        public enum BusinessType { Grocery, Bank, Repair, FastFood, DepartmentStore };
+        public enum BusinessType { Grocery, Bank, Repair, FastFood, Department_Store };
 
         //Constructor with arguments
         public Business(String[] args) : base(args)
