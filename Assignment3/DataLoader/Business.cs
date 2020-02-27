@@ -22,7 +22,7 @@ namespace DataLoader
     {
         //variables declaration
         private String name;
-        private readonly BusinessType type; //?????????
+        private readonly BusinessType type;
         private readonly string yearEstablished;
         private uint activeRecruitment;
         

@@ -33,7 +33,6 @@ namespace DataLoader
             name = args[9];
             yearEstablished = args[10];
             enrolled = Convert.ToUInt32(args[11]);
-            //type = 
         }
 
         //getter and setter for Name
@@ -41,6 +40,12 @@ namespace DataLoader
         {
             set { name = value; }
             get { return name; }
+        }
+
+        //getter for Type readonly property
+        public SchoolType Type
+        {            
+            get { return type; }
         }
 
         //getter for YearEstablished readonly property

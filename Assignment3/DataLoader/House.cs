@@ -57,11 +57,11 @@ namespace DataLoader
         public House(string[] args) : base(args)
         {
 
-            garage = base.StringToBool(args[12]); //Convert.ToBoolean(args[12]);
+            garage = base.StringToBool(args[12]);
             if (garage == false)
                 attachedGarage = null;
             else
-                attachedGarage = base.StringToBool(args[13]);//Convert.ToBoolean(args[13]);
+                attachedGarage = base.StringToBool(args[13]);
             floors = Convert.ToUInt32(args[14]);
 
 

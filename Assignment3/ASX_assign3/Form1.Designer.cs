@@ -92,9 +92,11 @@
             this.groupBox1.Controls.Add(this.checkBox_Resi);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(24, 23);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(528, 148);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(1056, 285);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "For Sale Properties Within Price Range";
@@ -102,36 +104,38 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(333, 26);
+            this.label2.Location = new System.Drawing.Point(666, 50);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 18);
+            this.label2.Size = new System.Drawing.Size(154, 33);
             this.label2.TabIndex = 7;
             this.label2.Text = "Max Price";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(109, 26);
+            this.label1.Location = new System.Drawing.Point(218, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 18);
+            this.label1.Size = new System.Drawing.Size(146, 33);
             this.label1.TabIndex = 6;
             this.label1.Text = "Min Price";
             // 
             // trackBarMax
             // 
-            this.trackBarMax.Location = new System.Drawing.Point(327, 55);
-            this.trackBarMax.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBarMax.Location = new System.Drawing.Point(654, 106);
+            this.trackBarMax.Margin = new System.Windows.Forms.Padding(8, 10, 8, 10);
             this.trackBarMax.Name = "trackBarMax";
-            this.trackBarMax.Size = new System.Drawing.Size(171, 45);
+            this.trackBarMax.Size = new System.Drawing.Size(342, 90);
             this.trackBarMax.TabIndex = 5;
             this.trackBarMax.Scroll += new System.EventHandler(this.scrollMaxPrice);
             // 
             // trackBarMin
             // 
-            this.trackBarMin.Location = new System.Drawing.Point(108, 55);
-            this.trackBarMin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBarMin.Location = new System.Drawing.Point(216, 106);
+            this.trackBarMin.Margin = new System.Windows.Forms.Padding(8, 10, 8, 10);
             this.trackBarMin.Name = "trackBarMin";
-            this.trackBarMin.Size = new System.Drawing.Size(171, 45);
+            this.trackBarMin.Size = new System.Drawing.Size(342, 90);
             this.trackBarMin.TabIndex = 4;
             this.trackBarMin.Scroll += new System.EventHandler(this.scrollMinPrice);
             // 
@@ -139,9 +143,10 @@
             // 
             this.SalePriceRangeQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SalePriceRangeQuery.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SalePriceRangeQuery.Location = new System.Drawing.Point(433, 102);
+            this.SalePriceRangeQuery.Location = new System.Drawing.Point(866, 196);
+            this.SalePriceRangeQuery.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.SalePriceRangeQuery.Name = "SalePriceRangeQuery";
-            this.SalePriceRangeQuery.Size = new System.Drawing.Size(75, 27);
+            this.SalePriceRangeQuery.Size = new System.Drawing.Size(150, 52);
             this.SalePriceRangeQuery.TabIndex = 3;
             this.SalePriceRangeQuery.Text = "Query";
             this.SalePriceRangeQuery.UseVisualStyleBackColor = true;
@@ -151,9 +156,10 @@
             // 
             this.checkBox_Scho.AutoSize = true;
             this.checkBox_Scho.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_Scho.Location = new System.Drawing.Point(6, 70);
+            this.checkBox_Scho.Location = new System.Drawing.Point(12, 135);
+            this.checkBox_Scho.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.checkBox_Scho.Name = "checkBox_Scho";
-            this.checkBox_Scho.Size = new System.Drawing.Size(70, 21);
+            this.checkBox_Scho.Size = new System.Drawing.Size(129, 35);
             this.checkBox_Scho.TabIndex = 2;
             this.checkBox_Scho.Text = "School";
             this.checkBox_Scho.UseVisualStyleBackColor = true;
@@ -162,9 +168,10 @@
             // 
             this.checkBox_Busi.AutoSize = true;
             this.checkBox_Busi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_Busi.Location = new System.Drawing.Point(6, 47);
+            this.checkBox_Busi.Location = new System.Drawing.Point(12, 90);
+            this.checkBox_Busi.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.checkBox_Busi.Name = "checkBox_Busi";
-            this.checkBox_Busi.Size = new System.Drawing.Size(84, 21);
+            this.checkBox_Busi.Size = new System.Drawing.Size(157, 35);
             this.checkBox_Busi.TabIndex = 1;
             this.checkBox_Busi.Text = "Business";
             this.checkBox_Busi.UseVisualStyleBackColor = true;
@@ -173,18 +180,21 @@
             // 
             this.checkBox_Resi.AutoSize = true;
             this.checkBox_Resi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_Resi.Location = new System.Drawing.Point(6, 24);
+            this.checkBox_Resi.Location = new System.Drawing.Point(12, 46);
+            this.checkBox_Resi.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.checkBox_Resi.Name = "checkBox_Resi";
-            this.checkBox_Resi.Size = new System.Drawing.Size(94, 21);
+            this.checkBox_Resi.Size = new System.Drawing.Size(175, 35);
             this.checkBox_Resi.TabIndex = 0;
             this.checkBox_Resi.Text = "Residental";
             this.checkBox_Resi.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(26, 199);
+            this.groupBox2.Location = new System.Drawing.Point(52, 383);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(8, 8);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Size = new System.Drawing.Size(16, 15);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "groupBox2";
@@ -198,9 +208,11 @@
             this.groupBox3.Controls.Add(this.schoolComboBox);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox3.Location = new System.Drawing.Point(12, 182);
+            this.groupBox3.Location = new System.Drawing.Point(24, 350);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(528, 79);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox3.Size = new System.Drawing.Size(1056, 152);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "For Sale Residences Within Range of a School";
@@ -208,15 +220,20 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(345, 43);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(1);
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(586, 83);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            1569325055,
-            23283064,
+            500,
+            0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 24);
+            this.numericUpDown1.Size = new System.Drawing.Size(191, 40);
             this.numericUpDown1.TabIndex = 5;
             this.numericUpDown1.Value = new decimal(new int[] {
             50,
@@ -227,9 +244,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(343, 21);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(586, 40);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 18);
+            this.label5.Size = new System.Drawing.Size(129, 31);
             this.label5.TabIndex = 4;
             this.label5.Text = "Distance";
             // 
@@ -237,9 +256,10 @@
             // 
             this.ResidencesRangeQuery.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResidencesRangeQuery.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.ResidencesRangeQuery.Location = new System.Drawing.Point(433, 38);
+            this.ResidencesRangeQuery.Location = new System.Drawing.Point(866, 73);
+            this.ResidencesRangeQuery.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ResidencesRangeQuery.Name = "ResidencesRangeQuery";
-            this.ResidencesRangeQuery.Size = new System.Drawing.Size(75, 27);
+            this.ResidencesRangeQuery.Size = new System.Drawing.Size(150, 52);
             this.ResidencesRangeQuery.TabIndex = 3;
             this.ResidencesRangeQuery.Text = "Query";
             this.ResidencesRangeQuery.UseVisualStyleBackColor = true;
@@ -248,9 +268,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 23);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(2, 44);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 18);
+            this.label3.Size = new System.Drawing.Size(103, 31);
             this.label3.TabIndex = 1;
             this.label3.Text = "School";
             // 
@@ -258,9 +280,10 @@
             // 
             this.schoolComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.schoolComboBox.FormattingEnabled = true;
-            this.schoolComboBox.Location = new System.Drawing.Point(6, 43);
+            this.schoolComboBox.Location = new System.Drawing.Point(12, 83);
+            this.schoolComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.schoolComboBox.Name = "schoolComboBox";
-            this.schoolComboBox.Size = new System.Drawing.Size(274, 25);
+            this.schoolComboBox.Size = new System.Drawing.Size(522, 41);
             this.schoolComboBox.TabIndex = 0;
             // 
             // groupBox4
@@ -272,9 +295,11 @@
             this.groupBox4.Controls.Add(this.For_Sale_Residence_ComboBox);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox4.Location = new System.Drawing.Point(12, 281);
+            this.groupBox4.Location = new System.Drawing.Point(24, 540);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(528, 87);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox4.Size = new System.Drawing.Size(1056, 167);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Hiring Business(es) For Sale Within Range of For Sale Residence";
@@ -286,24 +311,25 @@
             0,
             0,
             0});
-            this.Query3_Distance.Location = new System.Drawing.Point(195, 49);
-            this.Query3_Distance.Margin = new System.Windows.Forms.Padding(1);
+            this.Query3_Distance.Location = new System.Drawing.Point(586, 94);
+            this.Query3_Distance.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Query3_Distance.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
             this.Query3_Distance.Name = "Query3_Distance";
-            this.Query3_Distance.Size = new System.Drawing.Size(60, 24);
+            this.Query3_Distance.Size = new System.Drawing.Size(190, 40);
             this.Query3_Distance.TabIndex = 6;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(190, 27);
+            this.label6.Location = new System.Drawing.Point(586, 52);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 17);
+            this.label6.Size = new System.Drawing.Size(121, 31);
             this.label6.TabIndex = 5;
             this.label6.Text = "Distance";
             // 
@@ -311,9 +337,10 @@
             // 
             this.Query3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Query3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Query3.Location = new System.Drawing.Point(362, 46);
+            this.Query3.Location = new System.Drawing.Point(866, 88);
+            this.Query3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Query3.Name = "Query3";
-            this.Query3.Size = new System.Drawing.Size(75, 27);
+            this.Query3.Size = new System.Drawing.Size(150, 52);
             this.Query3.TabIndex = 3;
             this.Query3.Text = "Query";
             this.Query3.UseVisualStyleBackColor = true;
@@ -323,9 +350,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 27);
+            this.label4.Location = new System.Drawing.Point(6, 52);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(141, 17);
+            this.label4.Size = new System.Drawing.Size(269, 31);
             this.label4.TabIndex = 1;
             this.label4.Text = "For-Sale Resindence";
             // 
@@ -333,9 +361,10 @@
             // 
             this.For_Sale_Residence_ComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.For_Sale_Residence_ComboBox.FormattingEnabled = true;
-            this.For_Sale_Residence_ComboBox.Location = new System.Drawing.Point(6, 49);
+            this.For_Sale_Residence_ComboBox.Location = new System.Drawing.Point(12, 94);
+            this.For_Sale_Residence_ComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.For_Sale_Residence_ComboBox.Name = "For_Sale_Residence_ComboBox";
-            this.For_Sale_Residence_ComboBox.Size = new System.Drawing.Size(177, 25);
+            this.For_Sale_Residence_ComboBox.Size = new System.Drawing.Size(522, 41);
             this.For_Sale_Residence_ComboBox.TabIndex = 0;
             // 
             // groupBox5
@@ -353,9 +382,11 @@
             this.groupBox5.Controls.Add(this.querySpecResidence);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox5.Location = new System.Drawing.Point(12, 386);
+            this.groupBox5.Location = new System.Drawing.Point(24, 742);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(528, 84);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox5.Size = new System.Drawing.Size(1056, 162);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Specific Residence Parameters";
@@ -364,26 +395,27 @@
             // 
             this.sqFtUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sqFtUpDown.Increment = new decimal(new int[] {
-            100,
+            250,
             0,
             0,
             0});
-            this.sqFtUpDown.Location = new System.Drawing.Point(186, 51);
+            this.sqFtUpDown.Location = new System.Drawing.Point(372, 98);
+            this.sqFtUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.sqFtUpDown.Maximum = new decimal(new int[] {
-            10000,
+            6000,
             0,
             0,
             0});
             this.sqFtUpDown.Minimum = new decimal(new int[] {
-            500,
+            1200,
             0,
             0,
             0});
             this.sqFtUpDown.Name = "sqFtUpDown";
-            this.sqFtUpDown.Size = new System.Drawing.Size(69, 24);
+            this.sqFtUpDown.Size = new System.Drawing.Size(138, 40);
             this.sqFtUpDown.TabIndex = 16;
             this.sqFtUpDown.Value = new decimal(new int[] {
-            500,
+            1200,
             0,
             0,
             0});
@@ -391,19 +423,15 @@
             // bathUpDown
             // 
             this.bathUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bathUpDown.Location = new System.Drawing.Point(149, 51);
+            this.bathUpDown.Location = new System.Drawing.Point(298, 98);
+            this.bathUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bathUpDown.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.bathUpDown.Minimum = new decimal(new int[] {
-            1,
+            6,
             0,
             0,
             0});
             this.bathUpDown.Name = "bathUpDown";
-            this.bathUpDown.Size = new System.Drawing.Size(31, 24);
+            this.bathUpDown.Size = new System.Drawing.Size(62, 40);
             this.bathUpDown.TabIndex = 15;
             this.bathUpDown.Value = new decimal(new int[] {
             1,
@@ -414,19 +442,15 @@
             // bedUpDown
             // 
             this.bedUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bedUpDown.Location = new System.Drawing.Point(108, 51);
+            this.bedUpDown.Location = new System.Drawing.Point(216, 98);
+            this.bedUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.bedUpDown.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.bedUpDown.Minimum = new decimal(new int[] {
-            1,
+            6,
             0,
             0,
             0});
             this.bedUpDown.Name = "bedUpDown";
-            this.bedUpDown.Size = new System.Drawing.Size(31, 24);
+            this.bedUpDown.Size = new System.Drawing.Size(62, 40);
             this.bedUpDown.TabIndex = 14;
             this.bedUpDown.Value = new decimal(new int[] {
             1,
@@ -438,9 +462,10 @@
             // 
             this.attachedCheckBox.AutoSize = true;
             this.attachedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.attachedCheckBox.Location = new System.Drawing.Point(261, 57);
+            this.attachedCheckBox.Location = new System.Drawing.Point(574, 110);
+            this.attachedCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.attachedCheckBox.Name = "attachedCheckBox";
-            this.attachedCheckBox.Size = new System.Drawing.Size(92, 22);
+            this.attachedCheckBox.Size = new System.Drawing.Size(177, 37);
             this.attachedCheckBox.TabIndex = 13;
             this.attachedCheckBox.Text = "Attached?";
             this.attachedCheckBox.UseVisualStyleBackColor = true;
@@ -450,9 +475,10 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(183, 30);
+            this.label9.Location = new System.Drawing.Point(366, 58);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(74, 18);
+            this.label9.Size = new System.Drawing.Size(145, 33);
             this.label9.TabIndex = 12;
             this.label9.Text = "Min Sq. ft.";
             // 
@@ -460,9 +486,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(146, 30);
+            this.label8.Location = new System.Drawing.Point(292, 58);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(38, 18);
+            this.label8.Size = new System.Drawing.Size(74, 33);
             this.label8.TabIndex = 11;
             this.label8.Text = "Bath";
             // 
@@ -470,9 +497,10 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(105, 31);
+            this.label7.Location = new System.Drawing.Point(210, 60);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 18);
+            this.label7.Size = new System.Drawing.Size(66, 33);
             this.label7.TabIndex = 10;
             this.label7.Text = "Bed";
             // 
@@ -480,9 +508,10 @@
             // 
             this.garageCheckBox.AutoSize = true;
             this.garageCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.garageCheckBox.Location = new System.Drawing.Point(261, 30);
+            this.garageCheckBox.Location = new System.Drawing.Point(574, 58);
+            this.garageCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.garageCheckBox.Name = "garageCheckBox";
-            this.garageCheckBox.Size = new System.Drawing.Size(76, 22);
+            this.garageCheckBox.Size = new System.Drawing.Size(144, 37);
             this.garageCheckBox.TabIndex = 6;
             this.garageCheckBox.Text = "Garage";
             this.garageCheckBox.UseVisualStyleBackColor = true;
@@ -492,9 +521,10 @@
             // 
             this.apartmentCheckBox.AutoSize = true;
             this.apartmentCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apartmentCheckBox.Location = new System.Drawing.Point(6, 53);
+            this.apartmentCheckBox.Location = new System.Drawing.Point(12, 102);
+            this.apartmentCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.apartmentCheckBox.Name = "apartmentCheckBox";
-            this.apartmentCheckBox.Size = new System.Drawing.Size(94, 22);
+            this.apartmentCheckBox.Size = new System.Drawing.Size(181, 37);
             this.apartmentCheckBox.TabIndex = 5;
             this.apartmentCheckBox.Text = "Apartment";
             this.apartmentCheckBox.UseVisualStyleBackColor = true;
@@ -504,9 +534,10 @@
             // 
             this.houseCheckBox.AutoSize = true;
             this.houseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.houseCheckBox.Location = new System.Drawing.Point(6, 30);
+            this.houseCheckBox.Location = new System.Drawing.Point(12, 58);
+            this.houseCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.houseCheckBox.Name = "houseCheckBox";
-            this.houseCheckBox.Size = new System.Drawing.Size(71, 22);
+            this.houseCheckBox.Size = new System.Drawing.Size(131, 37);
             this.houseCheckBox.TabIndex = 4;
             this.houseCheckBox.Text = "House";
             this.houseCheckBox.UseVisualStyleBackColor = true;
@@ -515,9 +546,10 @@
             // 
             this.querySpecResidence.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.querySpecResidence.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.querySpecResidence.Location = new System.Drawing.Point(362, 30);
+            this.querySpecResidence.Location = new System.Drawing.Point(866, 58);
+            this.querySpecResidence.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.querySpecResidence.Name = "querySpecResidence";
-            this.querySpecResidence.Size = new System.Drawing.Size(75, 27);
+            this.querySpecResidence.Size = new System.Drawing.Size(150, 52);
             this.querySpecResidence.TabIndex = 3;
             this.querySpecResidence.Text = "Query";
             this.querySpecResidence.UseVisualStyleBackColor = true;
@@ -528,9 +560,11 @@
             this.groupBox6.Controls.Add(this.button5);
             this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox6.Location = new System.Drawing.Point(13, 481);
+            this.groupBox6.Location = new System.Drawing.Point(26, 925);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(527, 62);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox6.Size = new System.Drawing.Size(1054, 119);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "List Of Properties Owned by Out-Of-Towners";
@@ -539,9 +573,10 @@
             // 
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button5.Location = new System.Drawing.Point(362, 19);
+            this.button5.Location = new System.Drawing.Point(866, 46);
+            this.button5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 27);
+            this.button5.Size = new System.Drawing.Size(150, 52);
             this.button5.TabIndex = 0;
             this.button5.Text = "Query";
             this.button5.UseVisualStyleBackColor = true;
@@ -551,10 +586,12 @@
             // 
             this.result_ListBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.result_ListBox.FormattingEnabled = true;
-            this.result_ListBox.ItemHeight = 15;
-            this.result_ListBox.Location = new System.Drawing.Point(546, 29);
+            this.result_ListBox.IntegralHeight = false;
+            this.result_ListBox.ItemHeight = 27;
+            this.result_ListBox.Location = new System.Drawing.Point(1092, 56);
+            this.result_ListBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.result_ListBox.Name = "result_ListBox";
-            this.result_ListBox.Size = new System.Drawing.Size(491, 514);
+            this.result_ListBox.Size = new System.Drawing.Size(978, 985);
             this.result_ListBox.TabIndex = 6;
             // 
             // label10
@@ -562,18 +599,19 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label10.Location = new System.Drawing.Point(543, 9);
+            this.label10.Location = new System.Drawing.Point(1086, 17);
+            this.label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(115, 18);
+            this.label10.Size = new System.Drawing.Size(214, 33);
             this.label10.TabIndex = 7;
             this.label10.Text = "Query Results";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(913, 573);
+            this.ClientSize = new System.Drawing.Size(1826, 1102);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.result_ListBox);
             this.Controls.Add(this.groupBox6);
@@ -583,6 +621,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "ASX\' Real Estate Querying System";
             this.Load += new System.EventHandler(this.Form1_Load);

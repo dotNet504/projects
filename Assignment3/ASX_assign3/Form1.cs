@@ -360,6 +360,7 @@ namespace ASX_assign3
         }//End of Event to query 4
 
 
+        //This method is invoked on Query-5 button click
         private void query5_click(object sender, EventArgs e)
         {
 
@@ -399,7 +400,7 @@ namespace ASX_assign3
             return;
         }
 
-
+        //This method is invoked when Apartment checkbox is changed
         private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (apartmentCheckBox.Checked)
@@ -415,6 +416,7 @@ namespace ASX_assign3
             }
         }
 
+        //This method is invoked when Garage checkbox is changed
         private void garageCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (garageCheckBox.Checked)
@@ -584,8 +586,7 @@ namespace ASX_assign3
             House tempHouse = (House)i;
             result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            //string ownerFirstName = ownerInfo.First().FirstName;
-            //string ownerLastName = ownerInfo.First().LastName;
+          
             result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.");
             string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
             if (tempHouse.Garage == true)
@@ -751,9 +752,9 @@ namespace ASX_assign3
             //no property is selected
             if ( (allDek.Count() == 0) && (allSyc.Count() == 0) )
             {
-                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("     #### DeKalb ####");
                 result_ListBox.Items.Add("");
-                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("     #### Sycamore ####");
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("Your query yielded no matches!");
                 result_ListBox.Items.Add("");
@@ -765,7 +766,7 @@ namespace ASX_assign3
             //output all selected properties in Dek
             if (allDek.Count() > 0)
             {
-                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("     #### DeKalb ####");
                 result_ListBox.Items.Add("");
                 foreach (var i in allDek)
                 {
@@ -793,7 +794,7 @@ namespace ASX_assign3
             //output no selected properties in Dekalb
             else
             {
-                result_ListBox.Items.Add("     #### DeKalb   ####");
+                result_ListBox.Items.Add("     #### DeKalb ####");
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("Your query yielded no matches in DeKalb area!");
                 result_ListBox.Items.Add("");
@@ -803,7 +804,7 @@ namespace ASX_assign3
             //output all selected properties in Sycamore
             if (allSyc.Count() > 0)
             {
-                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("     #### Sycamore ####");
                 result_ListBox.Items.Add("");
                 foreach (var i in allSyc)
                 {
@@ -828,7 +829,7 @@ namespace ASX_assign3
             //output no selected properties in Sycamore
             else
             {
-                result_ListBox.Items.Add("     #### Sycamore   ####");
+                result_ListBox.Items.Add("     #### Sycamore ####");
                 result_ListBox.Items.Add("");
                 result_ListBox.Items.Add("Your query yielded no matches in Sycamore area!");
                 result_ListBox.Items.Add("");
@@ -867,7 +868,7 @@ namespace ASX_assign3
 
             //select the saleable house and Apartment with range of the selected school
             allSaleableProps = from qqq in allProps where (  ((qqq is House) || (qqq is Apartment)) && (qqq.ForSale == true)) select qqq;
-            var selecteProps = from qqq in allSaleableProps where (((qqq is House) || (qqq is Apartment)) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= numericUpDown1.Value* numericUpDown1.Value)) orderby qqq.SalePrice ascending select qqq;
+            var selecteProps = from qqq in allSaleableProps where (((qqq is House) || (qqq is Apartment)) && ((selectSchool.First().X - qqq.X) * (selectSchool.First().X - qqq.X) + (selectSchool.First().Y - qqq.Y) * (selectSchool.First().Y - qqq.Y) <= numericUpDown1.Value* numericUpDown1.Value)) orderby qqq.SalePrice descending select qqq;
 
 
             //output the selected House and Apartment
@@ -944,7 +945,6 @@ namespace ASX_assign3
                 label1.Text = "Min Price: " + String.Format("{0:$#,0}", trackBarMin.Value);
             }
         }
-
 
         #endregion
 
