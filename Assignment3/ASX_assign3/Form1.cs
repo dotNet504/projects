@@ -70,8 +70,8 @@ namespace ASX_assign3
             trackBarMin.Maximum = 350000;
             trackBarMax.Minimum = 0;
             trackBarMax.Maximum = 350000;
-            trackBarMin.Value = 65000;
-            trackBarMax.Value = 310000;
+            trackBarMin.Value = 0;
+            trackBarMax.Value = 0;
             trackBarMin.TickFrequency = (int)(350000 - 0) / 15;
             trackBarMax.TickFrequency = (int)(350000 - 0) / 15;
             label1.Text = "Min Price: " + String.Format("{0:$#,0}", trackBarMin.Value);
