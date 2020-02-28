@@ -170,6 +170,7 @@ namespace ASX_assign3
                 bath = " baths, ";
             }
 
+
             string hHeader = string.Format("Houses with at least " + bedUpDown.Value + bed + bathUpDown.Value + " " + bath +
                                         sqFtUpDown.Value + " sq. footage");
 
@@ -233,20 +234,26 @@ namespace ASX_assign3
                 result_ListBox.Items.Add(hyphen);
                 foreach (var h in finResult)
                 {
-
+                    
                     if (h.Home != null && h.Garage.Length != 0 && garageChecked.Equals(bool.Parse(h.Garage)))
                     {
+                        string flrs = " floor.";
+                        if((h.Home as House).Floors > 1)
+                        {
+                            flrs = " floors.";
+                        }
+
                         result_ListBox.Items.Add(h.Home.StreetAddr + " " + h.Home.City + ", " + h.Home.State
                                                                                           + " " + h.Home.Zip);
                         result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
                             h.Home.Baths + " baths, " + h.Home.Sqft + " sq.ft. ");
-                        string strZ = string.Format("with a  detached garage : " + +(h.Home as House).Floors + " floor.");
+                        string strZ = string.Format("with a  detached garage : " + +(h.Home as House).Floors + flrs);
                         if(!((h.Home as House).Garage))
                         {
-                            strZ = "with no garage : " + (h.Home as House).Floors + " floor.";
+                            strZ = "with no garage : " + (h.Home as House).Floors + flrs;
                         } else if ( ((h.Home as House).Garage) && (h.Home as House).AttachedGarage.GetValueOrDefault(false).Equals(true))
                         {
-                            strZ = "with an attached garage : " + (h.Home as House).Floors + " floor.";
+                            strZ = "with an attached garage : " + (h.Home as House).Floors + flrs;
                         }
                         string str = string.Format("{0: $0,000}", h.Home.SalePrice);
                         result_ListBox.Items.Add(strZ + "\t" + str);
@@ -293,18 +300,24 @@ namespace ASX_assign3
 
                     } else if (h.Home is House)
                     {
+                        string flrs = " floor.";
+                        if ((h.Home as House).Floors > 1)
+                        {
+                            flrs = " floors.";
+                        }
+
                         result_ListBox.Items.Add(h.Home.StreetAddr + " " + h.Home.City + ", " + h.Home.State
                                                                   + " " + h.Home.Zip);
                         result_ListBox.Items.Add("Owner: " + h.FullName + " | " + h.Home.Bedrooms + " beds, " +
                             h.Home.Baths + " baths, " + h.Home.Sqft + " sq.ft.");
-                        string strZ = string.Format("with a  detached Garage : " + +(h.Home as House).Floors + " floor.");
+                        string strZ = string.Format("with a  detached Garage : " + +(h.Home as House).Floors + flrs);
                         if (!((h.Home as House).Garage))
                         {
-                            strZ = "with no garage : " + (h.Home as House).Floors + " floor.";
+                            strZ = "with no garage : " + (h.Home as House).Floors + flrs;
                         }
                         else if (((h.Home as House).Garage) && (h.Home as House).AttachedGarage.GetValueOrDefault(false).Equals(true))
                         {
-                            strZ = "with an attached garage : " + (h.Home as House).Floors + " floor.";
+                            strZ = "with an attached garage : " + (h.Home as House).Floors + flrs;
                         }
                         string str = string.Format("{0: $0,000}", h.Home.SalePrice);
                         result_ListBox.Items.Add(strZ + "\t\t" + str);
@@ -367,7 +380,7 @@ namespace ASX_assign3
             result_ListBox.Items.Clear();
             result_ListBox.Items.Add("Properties Owned by Out-Of-Towners");
             result_ListBox.Items.Add(hyphen);
-           var rrr = from i in CommunitiesList
+            var rrr = from i in CommunitiesList
                       from j in i.Props
                       where (i.OutOfTowner(j.OwnerID).Equals(false))
                       select j;
