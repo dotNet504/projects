@@ -84,7 +84,7 @@ namespace Assignment4
             populateForSaleResidences(sycamoreHouses, sycamoreApartments);
 
         }
-    
+
 
         // Load school infor to the combobox for Queary 2(For sale Residences within Range of a School)
         private void Load_School_Information()
@@ -150,7 +150,7 @@ namespace Assignment4
             }
             else //apartment is not checked
                 garageCheckBox.Visible = true;
-        
+
         }
 
         //This method is invoked when Garage checkbox is changed
@@ -162,7 +162,7 @@ namespace Assignment4
             }
             else //garage is not checked
                 attachedCheckBox.Visible = false;
-            
+
         }
 
         private void scrollMaxPrice(object sender, EventArgs e)
@@ -186,6 +186,55 @@ namespace Assignment4
                 trackBarMax.Value = trackBarMin.Value;
                 label8.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
             }
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+            Pen p = new Pen(Brushes.Black);
+            FontFamily fontFamily = new FontFamily("Arial");
+            Font font = new Font(
+               fontFamily,
+               10,
+               FontStyle.Regular,
+               GraphicsUnit.Pixel);
+            var lstDekalb = CommunitiesList.FirstOrDefault();
+            var tst = lstDekalb.Props.GroupBy(x => x.StreetName);
+            foreach (var item in tst)
+            {
+                if (item.Count() == 1)
+                {
+                    var data = item.FirstOrDefault();
+                    var x = 2 * data.X;
+                    var y = 2 * data.Y;
+                    e.Graphics.DrawLine(p, x, 0, x, y);
+                   // e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x, y);
+                    e.Graphics.DrawLine(p, 0, y, x, y);
+                }
+                else
+                {
+                    List<Point> pfs = new List<Point>();
+                    foreach (var point in item)
+                    {
+                        pfs.Add(new Point(Convert.ToInt32(point.X), Convert.ToInt32(point.Y)));
+                    }
+
+                    var data = item.FirstOrDefault();
+                    var x = 2 * data.X;
+                    var y = 2 * data.Y;
+                    e.Graphics.DrawCurve(p, pfs.ToArray());
+                   // e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x, y);
+                    //e.Graphics.DrawCurve(p, 0, y, x, y);
+                }
+                //var x = 2 * item.X;
+                //var y = 2 * item.Y;
+                //e.Graphics.DrawLine(p, x, 0, x, y);
+                ////e.Graphics.DrawString(item.StreetName, font, Brushes.Black, x, y);
+                //e.Graphics.DrawLine(p, 0, y, x, y);
+
+            }
+
+
+            e.Dispose();
         }
     }
 }
