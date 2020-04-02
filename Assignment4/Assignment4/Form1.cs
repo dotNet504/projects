@@ -31,10 +31,19 @@ namespace Assignment4
         private const string dekalbVal = "Dekalb:";
         private const string sycamoreVal = "Sycamore:";
         private const string shortHyphen = "-------------";
+        public float zoom = 1f;
 
         public Form1()
         {
             InitializeComponent();
+            
+            //set the range of trackbar 1 from 100% to 175%
+            trackBar1.Minimum = 100;
+            trackBar1.Maximum = 175;
+            // at the begining the scale is 100% so we diable the two scrollbars
+            hScrollBar1.Enabled = false;
+            vScrollBar1.Enabled = false;
+
 
             _businessLayer = new BusinessLayer();
             dekalbPersons = new List<Person>();
@@ -206,16 +215,16 @@ namespace Assignment4
                     var data = item.FirstOrDefault();
                     var x = 2 * data.X;
                     var y = 2 * data.Y;
-                    e.Graphics.DrawLine(p, x, 0, x, y);
+                    e.Graphics.DrawLine(p, x * zoom - hScrollBar1.Value, 0 *zoom - vScrollBar1.Value, x*zoom - hScrollBar1.Value, y*zoom - vScrollBar1.Value);
                    // e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x, y);
-                    e.Graphics.DrawLine(p, 0, y, x, y);
+                    e.Graphics.DrawLine(p, 0 * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, x *zoom - hScrollBar1.Value, y*zoom - vScrollBar1.Value);
                 }
                 else
                 {
                     List<Point> pfs = new List<Point>();
                     foreach (var point in item)
                     {
-                        pfs.Add(new Point(Convert.ToInt32(point.X), Convert.ToInt32(point.Y)));
+                        pfs.Add(new Point(Convert.ToInt32(point.X *zoom) - hScrollBar1.Value, Convert.ToInt32(point.Y *zoom)- vScrollBar1.Value));
                     }
 
                     var data = item.FirstOrDefault();
@@ -235,6 +244,45 @@ namespace Assignment4
 
 
             e.Dispose();
+        }
+
+        private void test(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show(e.X.ToString() + " " + e.Y.ToString());
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            if (trackBar1.Value>100)
+            {
+                hScrollBar1.Enabled = true;
+                vScrollBar1.Enabled = true;
+            }
+            else
+            {
+                hScrollBar1.Enabled = false;
+                vScrollBar1.Enabled = false;
+            }
+            zoom = trackBar1.Value / 100f;
+            panel3.Refresh();
+            if (trackBar1.Value > 100)
+            {
+                hScrollBar1.Minimum = 0;
+                hScrollBar1.Maximum = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
+                vScrollBar1.Minimum = 0;
+                vScrollBar1.Maximum = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
+
+            }
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            panel3.Refresh();
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            panel3.Refresh();
         }
     }
 }
