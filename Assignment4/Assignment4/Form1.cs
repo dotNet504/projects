@@ -200,7 +200,7 @@ namespace Assignment4
 
         #region Queries
 
-        //This method is invoked on Query-5 button click
+        //This method is invoked on Search button click
         private void searchButton_Click(object sender, EventArgs e)
         {
             if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
@@ -246,9 +246,6 @@ namespace Assignment4
 
                     var qResult = query_Two.Concat(otherProps);
                     finQuery = qResult;
-                    //  MessageBox.Show((selectSchool.First().Name));
-                    //MessageBox.Show((query_Two.First().);
-                    //MessageBox.Show(query_Two.Count().ToString());
                 }
                 #endregion
 
@@ -291,6 +288,7 @@ namespace Assignment4
                                                                                       select z.FullName).ToArray())
                                                      });
 
+                    finQuery = queryThree;
                 }
                 #endregion
 
@@ -298,10 +296,13 @@ namespace Assignment4
                 if (houseCheckBox.Checked || apartmentCheckBox.Checked)
                 {
                     bool houseChecked = (houseCheckBox.Checked.Equals(true) && apartmentCheckBox.Checked.Equals(false));
+
+                    //Save all other properties from finQuery result
                     var otherProps = from res in finQuery
                                      where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
                                      select res;
 
+                    // General query for Q4
                     var query_Four = from res in finQuery
                                      where res.PropT.GetType().Equals(typeof(House)) && houseCheckBox.Checked
                                            || res.PropT.GetType().Equals(typeof(Apartment)) && apartmentCheckBox.Checked
@@ -309,6 +310,7 @@ namespace Assignment4
                                             && ((res.PropT as Residential).Sqft >= sqFtUpDown.Value))
                                      select res;
 
+                    // If only House was checked, Queries from Q4 and dumps it's result into query_FOur
                     if (houseChecked)
                     {
                         var qHouse = from res in query_Four
@@ -317,6 +319,8 @@ namespace Assignment4
                                      select res;
                         query_Four = qHouse;
                     }
+
+                    finQuery = otherProps.Concat(query_Four);
                 }
                 #endregion
             }
