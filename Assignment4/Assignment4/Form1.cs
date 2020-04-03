@@ -575,5 +575,13 @@ namespace Assignment4
 
             panel3.Refresh();
         }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                do_query();
+            }
+        }
     }
 }
