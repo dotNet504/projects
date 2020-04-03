@@ -213,8 +213,8 @@ namespace Assignment4
 
         #region Queries
 
-        //This method is invoked on Search button click
-        private void searchButton_Click(object sender, EventArgs e)
+        // This method handles querying used for the map_drawing
+        private void do_query()
         {
             if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
             {
@@ -339,10 +339,13 @@ namespace Assignment4
             }
         }
 
-
-
-
         #endregion
+
+        //This method is invoked on Search button click
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            do_query();
+        }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
