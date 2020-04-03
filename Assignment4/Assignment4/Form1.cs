@@ -27,6 +27,7 @@ namespace Assignment4
         private List<Business> dekalbBusinesses;
         private List<Business> sycamoreBusinesses;
 
+        private static bool Qreload = false;
         //Constant Variables declaration
         private const string dekalbVal = "Dekalb:";
         private const string sycamoreVal = "Sycamore:";
@@ -264,7 +265,7 @@ namespace Assignment4
 
                 #region Query_3
                 //Validate selected data
-                if (For_Sale_Residence_ComboBox.SelectedIndex != -1 && For_Sale_Residence_ComboBox.SelectedItem.ToString() != ""
+                if (For_Sale_Residence_ComboBox.SelectedValue != null && For_Sale_Residence_ComboBox.SelectedIndex != -1 && For_Sale_Residence_ComboBox.SelectedItem.ToString() != ""
                     && For_Sale_Residence_ComboBox.SelectedItem.ToString() != shortHyphen && For_Sale_Residence_ComboBox.SelectedItem.ToString() != sycamoreVal
                     && For_Sale_Residence_ComboBox.SelectedItem.ToString() != dekalbVal && For_Sale_Residence_ComboBox.SelectedItem.ToString() != "\n")
                 {
@@ -335,7 +336,48 @@ namespace Assignment4
 
                     finQuery = otherProps.Concat(query_Four);
                 }
+
+                if (Qreload)
+                {
+
+                    List<House> dHouse = new List<House>();
+                    List<House> sHouse = new List<House>();
+                    List<Apartment> dApartment = new List<Apartment>();
+                    List<Apartment> sApartment = new List<Apartment>();
+
+                    foreach (var res in finQuery)
+                    {
+                        if ((res.PropT is House) && (res.PropT.City == "DeKalb"))
+                        {
+                            dHouse.Add(res.PropT as House);
+                        }
+                        else if ((res.PropT is Apartment) && (res.PropT.City == "DeKalb"))
+                        {
+                            dApartment.Add(res.PropT as Apartment);
+                        }
+                        else if ((res.PropT is House) && (res.PropT.City == "Sycamore"))
+                        {
+                            sHouse.Add(res.PropT as House);
+                        }
+                        else if ((res.PropT is Apartment) && (res.PropT.City == "Sycamore"))
+                        {
+                            sApartment.Add(res.PropT as Apartment);
+                        }
+                    }
+
+
+                    For_Sale_Residence_ComboBox.Items.Clear();
+                    For_Sale_Residence_ComboBox.Items.Add(dekalbVal);
+                    For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
+                    populateForSaleResidences(dHouse, dApartment);
+                    For_Sale_Residence_ComboBox.Items.Add("\n");
+                    For_Sale_Residence_ComboBox.Items.Add(sycamoreVal);
+                    For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
+                    populateForSaleResidences(sHouse, sApartment);
+
+                }
                 #endregion
+                Qreload = true;
             }
         }
 
