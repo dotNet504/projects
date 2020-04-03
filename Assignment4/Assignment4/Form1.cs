@@ -33,16 +33,29 @@ namespace Assignment4
         private const string shortHyphen = "-------------";
         public float zoom = 1f;
 
+        //create the range of original PT
+        public int minX = 0;
+        public int maxX = 0;
+        public int minY = 0;
+        public int maxY = 0;
+
+        //record the displacement
+        public int xDiff;
+        public int yDiff;
+
         public Form1()
         {
             InitializeComponent();
 
-            //set the range of trackbar 1 from 100% to 175%
+            //set the range of trackbar 1 from 100% to 300%
             trackBar1.Minimum = 100;
-            trackBar1.Maximum = 175;
+            trackBar1.Maximum = 400;
             // at the begining the scale is 100% so we diable the two scrollbars
-            hScrollBar1.Enabled = false;
-            vScrollBar1.Enabled = false;
+
+            minX = 0;
+            maxX = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
+            minY = 0;
+            maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
 
 
             _businessLayer = new BusinessLayer();
@@ -352,25 +365,25 @@ namespace Assignment4
                     if(dekalbHouses.Any(house=> house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     if (dekalbSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     if (dekalbBusinesses.Any(business => business.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     StringFormat strF = new StringFormat();
                     strF.Alignment = StringAlignment.Center;
-                    e.Graphics.DrawLine(p, x * zoom - hScrollBar1.Value, 0 *zoom - vScrollBar1.Value, x*zoom - hScrollBar1.Value, y*zoom - vScrollBar1.Value);
-                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, strF);
-                    e.Graphics.DrawLine(p, 0 * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, x *zoom - hScrollBar1.Value, y*zoom - vScrollBar1.Value);
+                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 *zoom - yDiff, x*zoom - xDiff, y*zoom - yDiff);
+                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x *zoom - xDiff, y*zoom - yDiff);
                     strF.FormatFlags = StringFormatFlags.DirectionVertical;
-                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, strF);
+                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 else
                 {
@@ -382,19 +395,19 @@ namespace Assignment4
                         if (dekalbHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         if (dekalbSchools.Any(school => school.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         if (dekalbBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
-                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - hScrollBar1.Value, Convert.ToInt32(y * zoom) - vScrollBar1.Value));
+                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
                     }
                      e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
@@ -413,25 +426,25 @@ namespace Assignment4
                     if (sycamoreHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     if (sycamoreSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     if (sycamoreBusinesses.Any(business => business.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
-                       new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                       new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                     }
                     StringFormat strF = new StringFormat();
                     strF.Alignment = StringAlignment.Center;
-                    e.Graphics.DrawLine(p, x * zoom - hScrollBar1.Value, 0 * zoom - vScrollBar1.Value, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value);
-                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, strF);
-                    e.Graphics.DrawLine(p, 0 * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value);
+                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     strF.FormatFlags = StringFormatFlags.DirectionVertical;
-                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - hScrollBar1.Value, y * zoom - vScrollBar1.Value, strF);
+                    e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 else
                 {
@@ -443,19 +456,19 @@ namespace Assignment4
                         if (sycamoreHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         if (sycamoreSchools.Any(school => school.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         if (sycamoreBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
-                           new Rectangle(Convert.ToInt32(x * zoom - hScrollBar1.Value), Convert.ToInt32(y * zoom - vScrollBar1.Value), 15, 15));
+                           new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
-                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - hScrollBar1.Value, Convert.ToInt32(y * zoom) - vScrollBar1.Value));
+                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
                     }
                     e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
@@ -465,33 +478,42 @@ namespace Assignment4
             e.Dispose();
         }
 
-        private void test(object sender, MouseEventArgs e)
-        {
-            MessageBox.Show(e.X.ToString() + " " + e.Y.ToString());
-        }
+
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            if (trackBar1.Value > 100)
-            {
-                hScrollBar1.Enabled = true;
-                vScrollBar1.Enabled = true;
-            }
-            else
-            {
-                hScrollBar1.Enabled = false;
-                vScrollBar1.Enabled = false;
-            }
-            zoom = trackBar1.Value / 100f;
-            panel3.Refresh();
-            if (trackBar1.Value > 100)
-            {
-                hScrollBar1.Minimum = 0;
-                hScrollBar1.Maximum = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
-                vScrollBar1.Minimum = 0;
-                vScrollBar1.Maximum = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
 
+            zoom = trackBar1.Value / 100f;
+
+            //reset the range of the drawing area
+            minX = 0;
+            maxX = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
+            minY = 0;
+            maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
+
+
+            if (xDiff < 0)
+            {
+                xDiff = 0;
             }
+            if (xDiff > maxX)
+            {
+                xDiff = maxX;
+            }
+
+            if (yDiff < 0)
+            {
+                yDiff = 0;
+            }
+
+            if (yDiff > maxY)
+            {
+                yDiff = maxY;
+            }
+
+            panel3.Refresh();
+
+
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -501,6 +523,53 @@ namespace Assignment4
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
+            panel3.Refresh();
+        }
+        
+
+        //record the mouse down and mouse up
+        public Point startPt;
+        public Point endPt;
+
+
+        private void panel3_move_down(object sender, MouseEventArgs e)
+        {
+            //MessageBox.Show(e.X.ToString() + " " + e.Y.ToString());
+            startPt.X = e.X;
+            startPt.Y = e.Y;
+        }
+
+
+        private void panel3_move_up(object sender, MouseEventArgs e)
+        {
+            
+            endPt.X = e.X;
+            endPt.Y = e.Y;
+            int xdelta =  startPt.X  - endPt.X;
+            int ydelta =  startPt.Y  - endPt.Y;
+
+            xDiff = xDiff + xdelta;
+            yDiff = yDiff + ydelta;
+
+            if (xDiff < 0) 
+            {
+                xDiff = 0;
+            }
+            if (xDiff > maxX) 
+            {
+                xDiff = maxX;
+            }
+
+            if (yDiff < 0) 
+            {
+                yDiff = 0;
+            }
+
+            if (yDiff > maxY) 
+            {
+                yDiff = maxY;
+            }
+
             panel3.Refresh();
         }
     }
