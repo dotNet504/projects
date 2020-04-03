@@ -54,6 +54,9 @@
     <Compile Include="School.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Icons\Business.png" />
+    <Content Include="Icons\Home.png" />
+    <Content Include="Icons\School.png" />
     <Content Include="InputFiles\Dekalb\a.txt" />
     <Content Include="InputFiles\Dekalb\b.txt" />
     <Content Include="InputFiles\Dekalb\p.txt" />
