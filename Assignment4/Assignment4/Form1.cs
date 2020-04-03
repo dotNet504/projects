@@ -201,7 +201,7 @@ namespace Assignment4
         #region Queries
 
         //This method is invoked on Query-5 button click
-        private void search_click()
+        private void searchButton_Click(object sender, EventArgs e)
         {
             if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
             {
@@ -318,10 +318,11 @@ namespace Assignment4
                         query_Four = qHouse;
                     }
                 }
-
                 #endregion
             }
         }
+
+
 
 
         #endregion
