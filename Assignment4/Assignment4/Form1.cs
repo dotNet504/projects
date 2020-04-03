@@ -123,7 +123,7 @@ namespace Assignment4
         }
         #endregion
 
-        #region - populateForSaleResidences
+        #region - Minor Helper Methods
         //This method populates the data for For-Sale Houses and Apartments information in combobox.
         private void populateForSaleResidences(List<House> lstHouses, List<Apartment> lstApartments)
         {
@@ -145,7 +145,7 @@ namespace Assignment4
                 details.Unit));
             }
         }
-        #endregion
+        
 
         //This method is invoked when Apartment checkbox is changed
         private void apartmentCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -196,6 +196,135 @@ namespace Assignment4
                 label8.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
             }
         }
+        #endregion
+
+        #region Queries
+
+        //This method is invoked on Query-5 button click
+        private void search_click()
+        {
+            if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
+            {
+                //Query_1
+                var query_One = from comms in CommunitiesList
+                                from props in comms.Props.OfType<Property>()
+                                where (((props.GetType().Equals(typeof(Apartment)) || props.GetType().Equals(typeof(House))) && (residentialCheckBox.Checked))
+                                || ((props.GetType().Equals(typeof(Business))) && (businessCheckBox.Checked))
+                                || ((props.GetType().Equals(typeof(School))) && (schoolCheckBox.Checked)))
+                                where (props.ForSale.Equals(true)) && (props.SalePrice <= trackBarMax.Value && props.SalePrice >= trackBarMin.Value)
+                                select new
+                                {
+                                    PropT = props,
+                                    OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
+                                                                 where z.Id == props.OwnerID
+                                                                 select z.FullName).ToArray())
+                                };
+
+                var finQuery = query_One;
+
+                #region Query_2
+                if ((schoolComboBox.SelectedIndex != -1) && (schoolComboBox.SelectedItem.ToString() != "DeKalb:") && (schoolComboBox.SelectedItem.ToString() != "Sycamore:")
+                            && (schoolComboBox.SelectedItem.ToString() != "------") && (schoolComboBox.SelectedItem.ToString() != ""))
+                {
+                    var selectSchool = from z in CommunitiesList
+                                       from school in z.Props.OfType<School>()
+                                       where school.Name.Equals(schoolComboBox.SelectedItem.ToString())
+                                       select school;
+
+                    uint schoolX = selectSchool.First().X;
+                    uint schoolY = selectSchool.First().Y;
+
+                    var otherProps = from res in finQuery
+                                     where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
+                                     select res;
+
+                    var query_Two = from res in finQuery
+                                    where (res.PropT.GetType().Equals(typeof(Apartment)) || res.PropT.GetType().Equals(typeof(House)))
+                                    where ((schoolX - res.PropT.X) * (schoolX - res.PropT.X) + (schoolY - res.PropT.Y) * (schoolY - res.PropT.Y)
+                                                     <= schoolDistanceUpDown.Value * schoolDistanceUpDown.Value)
+                                    select res;
+
+                    var qResult = query_Two.Concat(otherProps);
+                    finQuery = qResult;
+                    //  MessageBox.Show((selectSchool.First().Name));
+                    //MessageBox.Show((query_Two.First().);
+                    //MessageBox.Show(query_Two.Count().ToString());
+                }
+                #endregion
+
+                #region Query_3
+                //Validate selected data
+                if (For_Sale_Residence_ComboBox.SelectedIndex != -1 && For_Sale_Residence_ComboBox.SelectedItem.ToString() != ""
+                    && For_Sale_Residence_ComboBox.SelectedItem.ToString() != shortHyphen && For_Sale_Residence_ComboBox.SelectedItem.ToString() != sycamoreVal
+                    && For_Sale_Residence_ComboBox.SelectedItem.ToString() != dekalbVal && For_Sale_Residence_ComboBox.SelectedItem.ToString() != "\n")
+                {
+                    //Get selected data
+                    var selectRes = from z in CommunitiesList
+                                    from resdnt in z.Props.OfType<Residential>()
+                                    where resdnt.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString())
+                                    select resdnt;
+
+                    if (For_Sale_Residence_ComboBox.SelectedItem.ToString().Contains("#"))
+                    {
+                        //Query apartments in Dekalb and Sycamore for selected Index full data
+                        selectRes = from zComm in CommunitiesList
+                                    from aProps in zComm.Props.OfType<Residential>()
+                                    where (aProps.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[0].Trim()) &&
+                                            (aProps as Apartment).Unit.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[1].Trim()))
+                                    select aProps;
+                    }
+
+                    //query all businesses that are hiring, result could contain duplicates of businesses in finQuery
+                    var queryThree = finQuery.Concat(from comms in CommunitiesList
+                                                     from biz in comms.Props.OfType<Property>()
+                                                     where ((biz.GetType().Equals(typeof(Business))) &&
+                                                                 ((selectRes.First().X - biz.X) * (selectRes.First().X - biz.X) +
+                                                                 (selectRes.First().Y - biz.Y) * (selectRes.First().Y - biz.Y)
+                                                                    <= residenceDistanceUpDown.Value * residenceDistanceUpDown.Value) &&
+                                                               ((biz as Business).ActiveRecruitment > 0)
+                                                             )
+                                                     select new
+                                                     {
+                                                         PropT = biz,
+                                                         OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
+                                                                                      where z.Id == biz.OwnerID
+                                                                                      select z.FullName).ToArray())
+                                                     });
+
+                }
+                #endregion
+
+                #region Query_4
+                if (houseCheckBox.Checked || apartmentCheckBox.Checked)
+                {
+                    bool houseChecked = (houseCheckBox.Checked.Equals(true) && apartmentCheckBox.Checked.Equals(false));
+                    var otherProps = from res in finQuery
+                                     where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
+                                     select res;
+
+                    var query_Four = from res in finQuery
+                                     where res.PropT.GetType().Equals(typeof(House)) && houseCheckBox.Checked
+                                           || res.PropT.GetType().Equals(typeof(Apartment)) && apartmentCheckBox.Checked
+                                     where (((res.PropT as Residential).Bedrooms >= bedUpDown.Value) && ((res.PropT as Residential).Baths >= bathUpDown.Value)
+                                            && ((res.PropT as Residential).Sqft >= sqFtUpDown.Value))
+                                     select res;
+
+                    if (houseChecked)
+                    {
+                        var qHouse = from res in query_Four
+                                     where res.PropT.GetType().Equals(typeof(House))
+                                     where ((res.PropT as House).Garage.Equals(garageCheckBox.Checked) && (res.PropT as House).AttachedGarage.GetValueOrDefault(false).Equals(attachedCheckBox.Checked))
+                                     select res;
+                        query_Four = qHouse;
+                    }
+                }
+
+                #endregion
+            }
+        }
+
+
+        #endregion
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
