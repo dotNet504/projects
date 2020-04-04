@@ -72,6 +72,7 @@ namespace Assignment4
             maxX = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
+            label10.Text = "Scale: " + trackBar1.Value + " %";
 
 
             _businessLayer = new BusinessLayer();
@@ -708,7 +709,7 @@ namespace Assignment4
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-
+            label10.Text = "Scale: " + trackBar1.Value + " %";
             zoom = trackBar1.Value / 100f;
 
             //reset the range of the drawing area
@@ -1126,6 +1127,9 @@ namespace Assignment4
             return schoolInfo;
         }
 
+        private void label10_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

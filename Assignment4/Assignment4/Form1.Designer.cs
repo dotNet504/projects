@@ -64,6 +64,7 @@
             this.schoolCheckBox = new System.Windows.Forms.CheckBox();
             this.residentialCheckBox = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -83,13 +84,14 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.trackBar1);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1434, 830);
+            this.panel1.Size = new System.Drawing.Size(1434, 968);
             this.panel1.TabIndex = 0;
             // 
             // trackBar1
@@ -126,7 +128,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(441, 830);
+            this.panel2.Size = new System.Drawing.Size(441, 968);
             this.panel2.TabIndex = 1;
             // 
             // searchButton
@@ -545,12 +547,22 @@
             this.residentialCheckBox.Text = "Residential";
             this.residentialCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(456, 916);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(60, 20);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "label10";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(1434, 830);
+            this.ClientSize = new System.Drawing.Size(1434, 968);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
@@ -620,6 +632,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label10;
     }
 }
 
