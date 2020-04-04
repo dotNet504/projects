@@ -11,6 +11,7 @@ using DataLoader;
 
 namespace Assignment4
 {
+
     public partial class Form1 : Form
     {
         //Declaration of variables
@@ -26,6 +27,8 @@ namespace Assignment4
         private List<School> sycamoreSchools;
         private List<Business> dekalbBusinesses;
         private List<Business> sycamoreBusinesses;
+
+        public IEnumerable<Property> temp_finQuery = Enumerable.Empty<Property>();
         private static bool Qreload = false;
 
 
@@ -42,8 +45,8 @@ namespace Assignment4
         public int maxY = 0;
 
         //record the displacement
-        public int xDiff;
-        public int yDiff;
+        public int xDiff=0;
+        public int yDiff=0;
 
         private Boolean panelReset = true;
 
@@ -226,9 +229,14 @@ namespace Assignment4
 
         #region Queries
 
+        //public List<Property> temp_finQuery;
+
+        
         // This method handles querying used for the map_drawing
         private void do_query(PaintEventArgs e)
         {
+            //reset the coordinate
+
 
             var finQuery = from comms in CommunitiesList
                            from props in comms.Props.OfType<Property>()
@@ -354,6 +362,11 @@ namespace Assignment4
 
                 finQuery = otherProps.Concat(query_Four);
             }
+
+
+            temp_finQuery = from temp_property in finQuery where(temp_property.PropT is Property ) select temp_property.PropT;
+
+
             if (Qreload)
             {
 
@@ -523,7 +536,14 @@ namespace Assignment4
         private void searchButton_Click(object sender, EventArgs e)
         {
             panelReset = false;
+            xDiff = 0;
+            yDiff = 0;
+            trackBar1.Value = 100;
+            zoom = trackBar1.Value / 100f;
+
+
             panel3.Refresh();
+            //MessageBox.Show(xDiff.ToString() + "  " + yDiff.ToString());
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
@@ -537,6 +557,7 @@ namespace Assignment4
             Pen p = new Pen(Brushes.Black);
             FontFamily fontFamily = new FontFamily("Arial");
             Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+            zoom = trackBar1.Value / 100f;
 
             var lstDekalb = CommunitiesList.Where(x => x.Name.ToLower() == "dekalb").FirstOrDefault();
             var grpDlk = lstDekalb.Props.GroupBy(x => x.StreetName);
@@ -696,6 +717,8 @@ namespace Assignment4
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
 
+            //xDiff = Convert.ToInt32( xDiff / zoom);
+            //yDiff = Convert.ToInt32( yDiff / zoom);
 
             if (xDiff < 0)
             {
@@ -721,15 +744,7 @@ namespace Assignment4
 
         }
 
-        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            panel3.Refresh();
-        }
 
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            panel3.Refresh();
-        }
 
 
         //record the mouse down and mouse up
@@ -742,12 +757,16 @@ namespace Assignment4
             //MessageBox.Show(e.X.ToString() + " " + e.Y.ToString());
             startPt.X = e.X;
             startPt.Y = e.Y;
+
+
+
         }
 
 
         private void panel3_move_up(object sender, MouseEventArgs e)
         {
 
+            //MessageBox.Show(xDiff.ToString() + "  " + yDiff.ToString());
             endPt.X = e.X;
             endPt.Y = e.Y;
             int xdelta = startPt.X - endPt.X;
@@ -786,5 +805,327 @@ namespace Assignment4
                 panel3.Refresh();
             }
         }
+        private void mouse_hover(object sender, EventArgs e)
+        {
+            toolTip1.Active = true;
+            var pos = panel3.PointToClient(Cursor.Position);
+            /////
+            ///
+            IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
+            //select Dek and Syc people to the allPople
+            var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunityDek = selectedCommunityNameDek.First();
+            var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            var selectedCommunitySyc = selectedCommunityNameSyc.First();
+            allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
+
+            int X = pos.X;
+            int Y = pos.Y;
+            float xProjected = 0;
+            float yProjected = 0;
+            int distanceThreshold = 20;
+            string propertyInfor = "";
+
+
+            if (panelReset == true)
+            {
+
+                var lstDekalb = CommunitiesList.Where(x => x.Name.ToLower() == "dekalb").FirstOrDefault();
+                var grpDek = lstDekalb.Props;
+
+                foreach (var item in grpDek)
+                {
+                    if ((Math.Abs(X - (2 * item.X * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
+                    {
+
+                        if (item is House)
+                        {
+                            propertyInfor = PrintHouseInfo(allPeople, item);
+                        }
+                        if (item is Apartment)
+                        {
+                            propertyInfor = PrintApartmentInfo(allPeople, item);
+                        }
+                        if (item is School)
+                        {
+                            propertyInfor = PrintSchoolInfo(allPeople, item); ;
+                        }
+                        if (item is Business)
+                        {
+                            propertyInfor = PrintBusinessInfo(allPeople, item);
+                        }
+
+                    }
+                }
+                var lstSycamore = CommunitiesList.Where(x => x.Name.ToLower() == "Sycamore".ToLower()).FirstOrDefault();
+                var grpSyc = lstSycamore.Props;
+                foreach (var item in grpSyc)
+                {
+                    if ((Math.Abs(X - ((250 + (2 * item.X)) * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
+                    {
+                        if (item is House)
+                        {
+                            propertyInfor = PrintHouseInfo(allPeople, item);
+                        }
+                        if (item is Apartment)
+                        {
+                            propertyInfor = PrintApartmentInfo(allPeople, item);
+                        }
+                        if (item is School)
+                        {
+                            propertyInfor = PrintSchoolInfo(allPeople, item);
+                        }
+                        if (item is Business)
+                        {
+                            propertyInfor = PrintBusinessInfo(allPeople, item);
+                        }
+                    }
+                }
+                //toolTip1.Show(propertyInfor, panel3);
+            }
+
+            //for the searched results
+            else
+            {
+                foreach (var res in temp_finQuery)
+                {
+                    if ((res.City.ToLower() == "DeKalb".ToLower()))
+                    {
+                        xProjected = (2 * res.X) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - yDiff;
+                    }
+                    else
+                    {
+                        xProjected = (250 + (2 * res.X)) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - xDiff;
+                    }
+                    if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
+                    {
+                        if (res is House)
+                        {
+                            propertyInfor = PrintHouseInfo(allPeople, res);
+                        }
+                        if (res is Apartment)
+                        {
+                            propertyInfor = PrintApartmentInfo(allPeople, res);
+                        }
+                        if (res is School)
+                        {
+                            propertyInfor = PrintSchoolInfo(allPeople, res);
+                        }
+                        if (res is Business)
+                        {
+                            propertyInfor = PrintBusinessInfo(allPeople, res);
+                        }
+                    }
+
+                }
+            }
+            toolTip1.Show(propertyInfor, panel3);
+
+        }
+        private void panel3MouseMove(object sender, MouseEventArgs e)
+        {
+
+
+            
+            IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
+            //select Dek and Syc people to the allPople
+            var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
+            var selectedCommunityDek = selectedCommunityNameDek.First();
+            var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
+            var selectedCommunitySyc = selectedCommunityNameSyc.First();
+            allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
+
+            int X = e.X;
+            int Y = e.Y;
+            float xProjected = 0;
+            float yProjected = 0;
+            int distanceThreshold = 20;
+            bool switchToolTip = false;
+
+
+            if (panelReset == true)
+            {
+
+                var lstDekalb = CommunitiesList.Where(x => x.Name.ToLower() == "dekalb").FirstOrDefault();
+                var grpDek = lstDekalb.Props;
+
+                foreach (var item in grpDek)
+                {
+                    if ((Math.Abs(X - (2 * item.X * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
+                    {
+
+                        switchToolTip = true;
+
+                    }
+                }
+                var lstSycamore = CommunitiesList.Where(x => x.Name.ToLower() == "Sycamore".ToLower()).FirstOrDefault();
+                var grpSyc = lstSycamore.Props;
+                foreach (var item in grpSyc)
+                {
+                    if ((Math.Abs(X - ((250 + (2 * item.X)) * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
+                    {
+                        switchToolTip = true;
+                    }
+                }
+
+            }
+
+            //for the searched results
+            else
+            {
+                foreach (var res in temp_finQuery)
+                {
+                    if ((res.City.ToLower() == "DeKalb".ToLower()))
+                    {
+                        xProjected = (2 * res.X) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - yDiff;
+                    }
+                    else
+                    {
+                        xProjected = (250 + (2 * res.X)) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - xDiff;
+                    }
+                    if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
+                    {
+                        switchToolTip =false;
+
+                    }
+
+                }
+
+            }
+            if (switchToolTip=false)
+            {
+                toolTip1.Active = false;
+            }
+        }
+
+        //Print House info 
+        public string PrintHouseInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            House tempHouse = (House)i;
+            string houseInfo = "";
+            string SalePriceString = "";
+            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
+            houseInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+
+            // result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.");
+            houseInfo = houseInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.";
+            
+            string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
+            if (tempHouse.Garage == true)
+            {
+                if (tempHouse.SalePrice >100)
+                {
+                    SalePriceString = String.Format("{0:$0,0}", tempHouse.SalePrice);
+                }
+                else
+                {
+                    SalePriceString = "";
+                }
+                if (tempHouse.AttachedGarage == true)
+                {
+                    //result_ListBox.Items.Add(" with an attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                    //result_ListBox.Items.Add("");
+                    houseInfo = houseInfo + "\n with an attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
+                }
+                else
+                {
+                    //result_ListBox.Items.Add(" with a detached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                    //result_ListBox.Items.Add("");
+                    houseInfo = houseInfo + "\n with a detached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
+                }
+            }
+            else
+            {
+                //result_ListBox.Items.Add(" with no garage: " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
+                //result_ListBox.Items.Add("");
+                houseInfo = houseInfo + "\n with no garage: " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
+            }
+            return houseInfo;
+        }
+        //
+        //Print Aptartment info for properties within the price range
+        public string PrintApartmentInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            Apartment tempApt = (Apartment)i;
+            string aptInfo = "";
+            string SalePriceString = "";
+            //result_ListBox.Items.Add(i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip);
+            aptInfo = i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip;
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.");
+            aptInfo = aptInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.";
+            //result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
+            if (tempApt.SalePrice>100)
+            {
+                SalePriceString = String.Format("{0:$0,0}", tempApt.SalePrice);
+            }
+            else
+            {
+                SalePriceString = "";
+            }
+            aptInfo = aptInfo + "\n" + SalePriceString;
+            //result_ListBox.Items.Add("");
+            return aptInfo;
+        }
+        
+        //Print Business info for properties within the price range
+        public string PrintBusinessInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            Business tempBus = (Business)i;
+            string businessInfo = "";
+            string SalePriceString = "";
+            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
+            businessInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + String.Format("{0:$0,0}", tempBus.SalePrice));
+            if (tempBus.SalePrice >100)
+            {
+                SalePriceString = String.Format("{0:$0,0}", tempBus.SalePrice);
+            }
+            else
+            {
+                SalePriceString = "";
+            }
+            businessInfo = businessInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + SalePriceString;
+            //result_ListBox.Items.Add(tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished);
+            businessInfo = businessInfo + "\n"+tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished;
+
+
+            //result_ListBox.Items.Add("");
+            return businessInfo;
+        }
+
+        //Print School info for properties within the price range
+        public string PrintSchoolInfo(IEnumerable<Person> allPeople, Property i)
+        {
+            School tepSch = (School)i;
+            string schoolInfo = "";
+            string SalePriceString = "";
+            var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
+            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName);
+            schoolInfo = schoolInfo + i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName;
+            //result_ListBox.Items.Add(tepSch.Name + ", establoshed in " + tepSch.YearEstablished);
+            schoolInfo = schoolInfo + "\n"+tepSch.Name + ", establoshed in " + tepSch.YearEstablished;
+
+            //result_ListBox.Items.Add(tepSch.Enrolled.ToString() + " students enrolled       " + String.Format("{0:$0,0}", tepSch.SalePrice));
+            if(tepSch.SalePrice >100)
+            {
+                SalePriceString = String.Format("{0:$0,0}", tepSch.SalePrice);
+            }
+            else
+            {
+                SalePriceString = "";
+            }
+            schoolInfo = schoolInfo + "\n"+tepSch.Enrolled.ToString() + " students enrolled       " + SalePriceString;
+            //result_ListBox.Items.Add("");
+            return schoolInfo;
+        }
+
+
     }
 }
