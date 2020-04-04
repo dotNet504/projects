@@ -45,8 +45,8 @@ namespace Assignment4
         public int maxY = 0;
 
         //record the displacement
-        public int xDiff=0;
-        public int yDiff=0;
+        public int xDiff = 0;
+        public int yDiff = 0;
 
         private Boolean panelReset = true;
 
@@ -232,7 +232,7 @@ namespace Assignment4
 
         //public List<Property> temp_finQuery;
 
-        
+
         // This method handles querying used for the map_drawing
         private void do_query(PaintEventArgs e)
         {
@@ -365,7 +365,7 @@ namespace Assignment4
             }
 
 
-            temp_finQuery = from temp_property in finQuery where(temp_property.PropT is Property ) select temp_property.PropT;
+            temp_finQuery = from temp_property in finQuery where (temp_property.PropT is Property) select temp_property.PropT;
 
 
             if (Qreload)
@@ -435,7 +435,7 @@ namespace Assignment4
                     var y = 2 * gi.PropT.Y;
 
                     StringFormat strF = new StringFormat();
-                    strF.Alignment = StringAlignment.Center;
+                    strF.Alignment = StringAlignment.Far;
                     e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                     e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
@@ -457,7 +457,7 @@ namespace Assignment4
                         if (drawStringCurve)
                         {
                             StringFormat strF = new StringFormat();
-                            strF.Alignment = StringAlignment.Center;
+                            strF.Alignment = StringAlignment.Far;
                             e.Graphics.DrawString(point.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                             drawStringCurve = false;
                         }
@@ -476,7 +476,7 @@ namespace Assignment4
                     var y = 2 * gi.PropT.Y;
 
                     StringFormat strF = new StringFormat();
-                    strF.Alignment = StringAlignment.Center;
+                    strF.Alignment = StringAlignment.Far;
                     e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                     e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
@@ -498,7 +498,7 @@ namespace Assignment4
                         if (drawStringCurve)
                         {
                             StringFormat strF = new StringFormat();
-                            strF.Alignment = StringAlignment.Center;
+                            strF.Alignment = StringAlignment.Far;
                             e.Graphics.DrawString(point.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                             drawStringCurve = false;
                         }
@@ -515,20 +515,25 @@ namespace Assignment4
                 {
                     x = x + 250;
                 }
+                StringFormat strF = new StringFormat();
+                strF.Alignment = StringAlignment.Near;
                 if (item.PropT.GetType().Equals(typeof(House)) || item.PropT.GetType().Equals(typeof(Apartment)))
                 {
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 if (item.PropT.GetType().Equals(typeof(School)))
                 {
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 if (item.PropT.GetType().Equals(typeof(Business)))
                 {
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 #endregion
             }
@@ -572,23 +577,32 @@ namespace Assignment4
                     var data = item.FirstOrDefault();
                     var x = 2 * data.X;
                     var y = 2 * data.Y;
+                    StringFormat strF = new StringFormat();
+                    strF.Alignment = StringAlignment.Near;
                     if (dekalbHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+
+                        e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                     }
                     if (dekalbSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                        e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                     }
                     if (dekalbBusinesses.Any(business => business.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+
+                        e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                     }
-                    StringFormat strF = new StringFormat();
-                    strF.Alignment = StringAlignment.Center;
+
+                    strF.Alignment = StringAlignment.Far;
                     e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                     e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
@@ -603,27 +617,35 @@ namespace Assignment4
                     {
                         var x = 2 * point.X;
                         var y = 2 * point.Y;
+                        StringFormat strF = new StringFormat();
+                        strF.Alignment = StringAlignment.Near;
                         if (dekalbHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                            e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                         }
                         if (dekalbSchools.Any(school => school.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+
+                            e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
                         }
                         if (dekalbBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+
+                            e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
 
                         if (drawStringCurve)
                         {
-                            StringFormat strF = new StringFormat();
-                            strF.Alignment = StringAlignment.Center;
+
+                            strF.Alignment = StringAlignment.Far;
                             e.Graphics.DrawString(point.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                             drawStringCurve = false;
                         }
@@ -643,23 +665,30 @@ namespace Assignment4
                     var data = item.FirstOrDefault();
                     var x = 250 + (2 * data.X);
                     var y = 2 * data.Y;
+                    StringFormat strF = new StringFormat();
+                    strF.Alignment = StringAlignment.Near;
                     if (sycamoreHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                        e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                     }
                     if (sycamoreSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                        e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                     }
                     if (sycamoreBusinesses.Any(business => business.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                        e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                     }
-                    StringFormat strF = new StringFormat();
-                    strF.Alignment = StringAlignment.Center;
+                    strF.Alignment = StringAlignment.Far;
                     e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                     e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
@@ -674,27 +703,34 @@ namespace Assignment4
                     {
                         var x = 250 + (2 * point.X);
                         var y = 2 * point.Y;
+                        StringFormat strF = new StringFormat();
+                        strF.Alignment = StringAlignment.Near;
                         if (sycamoreHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                            e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                         }
                         if (sycamoreSchools.Any(school => school.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                            e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                         }
                         if (sycamoreBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                            e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
 
                         if (drawStringCurve)
                         {
-                            StringFormat strF = new StringFormat();
-                            strF.Alignment = StringAlignment.Center;
+                            strF.Alignment = StringAlignment.Far;
                             e.Graphics.DrawString(point.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                             drawStringCurve = false;
                         }
@@ -932,7 +968,7 @@ namespace Assignment4
         {
 
 
-            
+
             IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
             //select Dek and Syc people to the allPople
             var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
@@ -993,14 +1029,14 @@ namespace Assignment4
                     }
                     if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
                     {
-                        switchToolTip =false;
+                        switchToolTip = false;
 
                     }
 
                 }
 
             }
-            if (switchToolTip=false)
+            if (switchToolTip = false)
             {
                 toolTip1.Active = false;
             }
@@ -1018,11 +1054,11 @@ namespace Assignment4
 
             // result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.");
             houseInfo = houseInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.";
-            
+
             string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
             if (tempHouse.Garage == true)
             {
-                if (tempHouse.SalePrice >100)
+                if (tempHouse.SalePrice > 100)
                 {
                     SalePriceString = String.Format("{0:$0,0}", tempHouse.SalePrice);
                 }
@@ -1064,7 +1100,7 @@ namespace Assignment4
             //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.");
             aptInfo = aptInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.";
             //result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
-            if (tempApt.SalePrice>100)
+            if (tempApt.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tempApt.SalePrice);
             }
@@ -1076,7 +1112,7 @@ namespace Assignment4
             //result_ListBox.Items.Add("");
             return aptInfo;
         }
-        
+
         //Print Business info for properties within the price range
         public string PrintBusinessInfo(IEnumerable<Person> allPeople, Property i)
         {
@@ -1087,7 +1123,7 @@ namespace Assignment4
             businessInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
             //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + String.Format("{0:$0,0}", tempBus.SalePrice));
-            if (tempBus.SalePrice >100)
+            if (tempBus.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tempBus.SalePrice);
             }
@@ -1097,7 +1133,7 @@ namespace Assignment4
             }
             businessInfo = businessInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + SalePriceString;
             //result_ListBox.Items.Add(tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished);
-            businessInfo = businessInfo + "\n"+tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished;
+            businessInfo = businessInfo + "\n" + tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished;
 
 
             //result_ListBox.Items.Add("");
@@ -1114,10 +1150,10 @@ namespace Assignment4
             //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName);
             schoolInfo = schoolInfo + i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName;
             //result_ListBox.Items.Add(tepSch.Name + ", establoshed in " + tepSch.YearEstablished);
-            schoolInfo = schoolInfo + "\n"+tepSch.Name + ", establoshed in " + tepSch.YearEstablished;
+            schoolInfo = schoolInfo + "\n" + tepSch.Name + ", establoshed in " + tepSch.YearEstablished;
 
             //result_ListBox.Items.Add(tepSch.Enrolled.ToString() + " students enrolled       " + String.Format("{0:$0,0}", tepSch.SalePrice));
-            if(tepSch.SalePrice >100)
+            if (tepSch.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tepSch.SalePrice);
             }
@@ -1125,7 +1161,7 @@ namespace Assignment4
             {
                 SalePriceString = "";
             }
-            schoolInfo = schoolInfo + "\n"+tepSch.Enrolled.ToString() + " students enrolled       " + SalePriceString;
+            schoolInfo = schoolInfo + "\n" + tepSch.Enrolled.ToString() + " students enrolled       " + SalePriceString;
             //result_ListBox.Items.Add("");
             return schoolInfo;
         }
