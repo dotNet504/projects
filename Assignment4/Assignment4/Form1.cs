@@ -429,12 +429,21 @@ namespace Assignment4
                 else if (g.Count() > 1)
                 {
                     List<Point> pfs = new List<Point>();
+                    var drawStringCurve = true;
                     foreach (var point in g)
                     {
                         var x = 2 * point.PropT.X;
                         var y = 2 * point.PropT.Y;
 
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+
+                        if (drawStringCurve)
+                        {
+                            StringFormat strF = new StringFormat();
+                            strF.Alignment = StringAlignment.Center;
+                            e.Graphics.DrawString(point.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            drawStringCurve = false;
+                        }
                     }
                     e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
@@ -461,12 +470,21 @@ namespace Assignment4
                 else if (g.Count() > 1)
                 {
                     List<Point> pfs = new List<Point>();
+                    var drawStringCurve = true;
                     foreach (var point in g)
                     {
                         var x = 250 + (2 * point.PropT.X);
                         var y = 2 * point.PropT.Y;
 
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+
+                        if (drawStringCurve)
+                        {
+                            StringFormat strF = new StringFormat();
+                            strF.Alignment = StringAlignment.Center;
+                            e.Graphics.DrawString(point.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            drawStringCurve = false;
+                        }
                     }
                     e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
@@ -527,8 +545,8 @@ namespace Assignment4
                 if (item.Count() == 1)
                 {
                     var data = item.FirstOrDefault();
-                    var x = 2 *data.X;
-                    var y = 2 *data.Y;
+                    var x = 2 * data.X;
+                    var y = 2 * data.Y;
                     if (dekalbHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
@@ -555,6 +573,7 @@ namespace Assignment4
                 else
                 {
                     List<Point> pfs = new List<Point>();
+                    var drawStringCurve = true;
                     foreach (var point in item)
                     {
                         var x = 2 * point.X;
@@ -575,8 +594,17 @@ namespace Assignment4
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+
+                        if (drawStringCurve)
+                        {
+                            StringFormat strF = new StringFormat();
+                            strF.Alignment = StringAlignment.Center;
+                            e.Graphics.DrawString(point.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            drawStringCurve = false;
+                        }
                     }
                     e.Graphics.DrawCurve(p, pfs.ToArray());
+
                 }
 
             }
@@ -616,6 +644,7 @@ namespace Assignment4
                 else
                 {
                     List<Point> pfs = new List<Point>();
+                    var drawStringCurve = true;
                     foreach (var point in item)
                     {
                         var x = 250 + (2 * point.X);
@@ -636,6 +665,14 @@ namespace Assignment4
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+
+                        if (drawStringCurve)
+                        {
+                            StringFormat strF = new StringFormat();
+                            strF.Alignment = StringAlignment.Center;
+                            e.Graphics.DrawString(point.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            drawStringCurve = false;
+                        }
                     }
                     e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
