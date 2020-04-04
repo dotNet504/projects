@@ -382,6 +382,7 @@ namespace Assignment4
                     }
                 }
 
+                var temp = For_Sale_Residence_ComboBox.SelectedItem;
 
                 For_Sale_Residence_ComboBox.Items.Clear();
                 For_Sale_Residence_ComboBox.Items.Add(dekalbVal);
@@ -391,6 +392,8 @@ namespace Assignment4
                 For_Sale_Residence_ComboBox.Items.Add(sycamoreVal);
                 For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
                 populateForSaleResidences(sHouse, sApartment);
+
+                For_Sale_Residence_ComboBox.SelectedItem = temp;
 
             }
 
