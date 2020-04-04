@@ -80,20 +80,20 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Turquoise;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.trackBar1);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1912, 962);
+            this.panel1.Size = new System.Drawing.Size(2208, 1306);
             this.panel1.TabIndex = 0;
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(882, 606);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trackBar1.Location = new System.Drawing.Point(623, 1186);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(582, 90);
             this.trackBar1.TabIndex = 2;
@@ -101,11 +101,11 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.DarkGreen;
+            this.panel3.BackColor = System.Drawing.Color.LightGreen;
             this.panel3.Location = new System.Drawing.Point(614, 23);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1000, 500);
+            this.panel3.Size = new System.Drawing.Size(1700, 1100);
             this.panel3.TabIndex = 0;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_move_down);
@@ -121,16 +121,16 @@
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel2.Margin = new System.Windows.Forms.Padding(6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(588, 962);
+            this.panel2.Size = new System.Drawing.Size(588, 1306);
             this.panel2.TabIndex = 1;
             // 
             // searchButton
             // 
             this.searchButton.ForeColor = System.Drawing.SystemColors.ControlText;
             this.searchButton.Location = new System.Drawing.Point(6, 712);
-            this.searchButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.searchButton.Margin = new System.Windows.Forms.Padding(6);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(576, 44);
             this.searchButton.TabIndex = 3;
@@ -153,9 +153,9 @@
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.groupBox4.Location = new System.Drawing.Point(6, 548);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox4.Size = new System.Drawing.Size(576, 152);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
@@ -169,7 +169,7 @@
             0,
             0});
             this.sqFtUpDown.Location = new System.Drawing.Point(426, 58);
-            this.sqFtUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.sqFtUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.sqFtUpDown.Maximum = new decimal(new int[] {
             6000,
             0,
@@ -203,7 +203,7 @@
             // bathUpDown
             // 
             this.bathUpDown.Location = new System.Drawing.Point(336, 58);
-            this.bathUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.bathUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.bathUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -221,7 +221,7 @@
             // bedUpDown
             // 
             this.bedUpDown.Location = new System.Drawing.Point(244, 58);
-            this.bedUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.bedUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.bedUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -263,7 +263,7 @@
             this.attachedCheckBox.AutoSize = true;
             this.attachedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.attachedCheckBox.Location = new System.Drawing.Point(382, 102);
-            this.attachedCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.attachedCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.attachedCheckBox.Name = "attachedCheckBox";
             this.attachedCheckBox.Size = new System.Drawing.Size(142, 30);
             this.attachedCheckBox.TabIndex = 4;
@@ -276,7 +276,7 @@
             this.garageCheckBox.AutoSize = true;
             this.garageCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.garageCheckBox.Location = new System.Drawing.Point(190, 102);
-            this.garageCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.garageCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.garageCheckBox.Name = "garageCheckBox";
             this.garageCheckBox.Size = new System.Drawing.Size(116, 30);
             this.garageCheckBox.TabIndex = 3;
@@ -289,7 +289,7 @@
             this.apartmentCheckBox.AutoSize = true;
             this.apartmentCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.apartmentCheckBox.Location = new System.Drawing.Point(6, 58);
-            this.apartmentCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.apartmentCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.apartmentCheckBox.Name = "apartmentCheckBox";
             this.apartmentCheckBox.Size = new System.Drawing.Size(145, 30);
             this.apartmentCheckBox.TabIndex = 2;
@@ -302,7 +302,7 @@
             this.houseCheckBox.AutoSize = true;
             this.houseCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.houseCheckBox.Location = new System.Drawing.Point(6, 102);
-            this.houseCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.houseCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.houseCheckBox.Name = "houseCheckBox";
             this.houseCheckBox.Size = new System.Drawing.Size(107, 30);
             this.houseCheckBox.TabIndex = 1;
@@ -318,9 +318,9 @@
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox3.Location = new System.Drawing.Point(6, 419);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox3.Size = new System.Drawing.Size(576, 117);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
@@ -334,7 +334,7 @@
             0,
             0});
             this.residenceDistanceUpDown.Location = new System.Drawing.Point(414, 62);
-            this.residenceDistanceUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.residenceDistanceUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.residenceDistanceUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -372,7 +372,7 @@
             this.For_Sale_Residence_ComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.For_Sale_Residence_ComboBox.FormattingEnabled = true;
             this.For_Sale_Residence_ComboBox.Location = new System.Drawing.Point(6, 62);
-            this.For_Sale_Residence_ComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.For_Sale_Residence_ComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.For_Sale_Residence_ComboBox.Name = "For_Sale_Residence_ComboBox";
             this.For_Sale_Residence_ComboBox.Size = new System.Drawing.Size(396, 34);
             this.For_Sale_Residence_ComboBox.TabIndex = 9;
@@ -386,9 +386,9 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox2.Location = new System.Drawing.Point(6, 285);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox2.Size = new System.Drawing.Size(576, 123);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
@@ -402,7 +402,7 @@
             0,
             0});
             this.schoolDistanceUpDown.Location = new System.Drawing.Point(418, 62);
-            this.schoolDistanceUpDown.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.schoolDistanceUpDown.Margin = new System.Windows.Forms.Padding(6);
             this.schoolDistanceUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -440,7 +440,7 @@
             this.schoolComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.schoolComboBox.FormattingEnabled = true;
             this.schoolComboBox.Location = new System.Drawing.Point(6, 62);
-            this.schoolComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.schoolComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.schoolComboBox.Name = "schoolComboBox";
             this.schoolComboBox.Size = new System.Drawing.Size(396, 34);
             this.schoolComboBox.TabIndex = 10;
@@ -458,9 +458,9 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlLight;
             this.groupBox1.Location = new System.Drawing.Point(6, 12);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox1.Size = new System.Drawing.Size(576, 262);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
@@ -491,7 +491,7 @@
             // trackBarMax
             // 
             this.trackBarMax.Location = new System.Drawing.Point(230, 162);
-            this.trackBarMax.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.trackBarMax.Margin = new System.Windows.Forms.Padding(6);
             this.trackBarMax.Name = "trackBarMax";
             this.trackBarMax.Size = new System.Drawing.Size(208, 90);
             this.trackBarMax.TabIndex = 4;
@@ -500,7 +500,7 @@
             // trackBarMin
             // 
             this.trackBarMin.Location = new System.Drawing.Point(230, 65);
-            this.trackBarMin.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.trackBarMin.Margin = new System.Windows.Forms.Padding(6);
             this.trackBarMin.Name = "trackBarMin";
             this.trackBarMin.Size = new System.Drawing.Size(208, 90);
             this.trackBarMin.TabIndex = 3;
@@ -511,7 +511,7 @@
             this.businessCheckBox.AutoSize = true;
             this.businessCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.businessCheckBox.Location = new System.Drawing.Point(12, 92);
-            this.businessCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.businessCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.businessCheckBox.Name = "businessCheckBox";
             this.businessCheckBox.Size = new System.Drawing.Size(133, 30);
             this.businessCheckBox.TabIndex = 2;
@@ -523,7 +523,7 @@
             this.schoolCheckBox.AutoSize = true;
             this.schoolCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.schoolCheckBox.Location = new System.Drawing.Point(12, 148);
-            this.schoolCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.schoolCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.schoolCheckBox.Name = "schoolCheckBox";
             this.schoolCheckBox.Size = new System.Drawing.Size(111, 30);
             this.schoolCheckBox.TabIndex = 1;
@@ -535,7 +535,7 @@
             this.residentialCheckBox.AutoSize = true;
             this.residentialCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.residentialCheckBox.Location = new System.Drawing.Point(12, 37);
-            this.residentialCheckBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.residentialCheckBox.Margin = new System.Windows.Forms.Padding(6);
             this.residentialCheckBox.Name = "residentialCheckBox";
             this.residentialCheckBox.Size = new System.Drawing.Size(152, 30);
             this.residentialCheckBox.TabIndex = 0;
@@ -547,11 +547,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Highlight;
-            this.ClientSize = new System.Drawing.Size(1912, 962);
+            this.ClientSize = new System.Drawing.Size(2208, 1306);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

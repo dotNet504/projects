@@ -51,6 +51,14 @@ namespace Assignment4
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            ////Logic to autosize the output window
+            //this.AutoSize = true;
+            //this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+
+            //FlowLayoutPanel flowPanel = new FlowLayoutPanel();
+            //flowPanel.AutoSize = true;
+            //flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            //this.Controls.Add(flowPanel);
 
             //set the range of trackbar 1 from 100% to 300%
             trackBar1.Minimum = 100;
@@ -519,8 +527,8 @@ namespace Assignment4
                 if (item.Count() == 1)
                 {
                     var data = item.FirstOrDefault();
-                    var x = data.X;
-                    var y = data.Y;
+                    var x = 2 *data.X;
+                    var y = 2 *data.Y;
                     if (dekalbHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
@@ -549,8 +557,8 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in item)
                     {
-                        var x = point.X;
-                        var y = point.Y;
+                        var x = 2 * point.X;
+                        var y = 2 * point.Y;
                         if (dekalbHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
@@ -580,8 +588,8 @@ namespace Assignment4
                 if (item.Count() == 1)
                 {
                     var data = item.FirstOrDefault();
-                    var x = 250 + data.X;
-                    var y = data.Y;
+                    var x = 250 + (2 * data.X);
+                    var y = 2 * data.Y;
                     if (sycamoreHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
@@ -610,8 +618,8 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in item)
                     {
-                        var x = 250 + point.X;
-                        var y = point.Y;
+                        var x = 250 + (2 * point.X);
+                        var y = 2 * point.Y;
                         if (sycamoreHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
