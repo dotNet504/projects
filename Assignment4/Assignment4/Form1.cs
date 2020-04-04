@@ -26,6 +26,8 @@ namespace Assignment4
         private List<School> sycamoreSchools;
         private List<Business> dekalbBusinesses;
         private List<Business> sycamoreBusinesses;
+        private static bool Qreload = false;
+
 
         //Constant Variables declaration
         private const string dekalbVal = "Dekalb:";
@@ -220,225 +222,270 @@ namespace Assignment4
         private void do_query(PaintEventArgs e)
         {
 
+            var finQuery = from comms in CommunitiesList
+                           from props in comms.Props.OfType<Property>()
+                           select new
+                           {
+                               PropT = props,
+                               OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
+                                                            where z.Id == props.OwnerID
+                                                            select z.FullName).ToArray())
+                           };
+
+            #region Query_1
             if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
             {
-                //Query_1
-                var query_One = from comms in CommunitiesList
-                                from props in comms.Props.OfType<Property>()
-                                where (((props.GetType().Equals(typeof(Apartment)) || props.GetType().Equals(typeof(House))) && (residentialCheckBox.Checked))
-                                || ((props.GetType().Equals(typeof(Business))) && (businessCheckBox.Checked))
-                                || ((props.GetType().Equals(typeof(School))) && (schoolCheckBox.Checked)))
-                                where (props.ForSale.Equals(true)) && (props.SalePrice <= trackBarMax.Value && props.SalePrice >= trackBarMin.Value)
-                                select new
-                                {
-                                    PropT = props,
-                                    OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
-                                                                 where z.Id == props.OwnerID
-                                                                 select z.FullName).ToArray())
-                                };
+                var query_One = from props in finQuery
+                                where (((props.PropT.GetType().Equals(typeof(Apartment)) || props.PropT.GetType().Equals(typeof(House))) && (residentialCheckBox.Checked))
+                                || ((props.PropT.GetType().Equals(typeof(Business))) && (businessCheckBox.Checked))
+                                || ((props.PropT.GetType().Equals(typeof(School))) && (schoolCheckBox.Checked)))
+                                where (props.PropT.ForSale.Equals(true)) && (props.PropT.SalePrice <= trackBarMax.Value && props.PropT.SalePrice >= trackBarMin.Value)
+                                select props;
 
-                var finQuery = query_One;
+                finQuery = query_One;
+            }
+            #endregion
 
-                #region Query_2
-                if ((schoolComboBox.SelectedIndex != -1) && (schoolComboBox.SelectedItem.ToString() != "DeKalb:") && (schoolComboBox.SelectedItem.ToString() != "Sycamore:")
+            #region Query_2
+            if ((schoolComboBox.SelectedIndex != -1) && (schoolComboBox.SelectedItem.ToString() != "DeKalb:") && (schoolComboBox.SelectedItem.ToString() != "Sycamore:")
                             && (schoolComboBox.SelectedItem.ToString() != "------") && (schoolComboBox.SelectedItem.ToString() != ""))
+            {
+                var selectSchool = from z in CommunitiesList
+                                   from school in z.Props.OfType<School>()
+                                   where school.Name.Equals(schoolComboBox.SelectedItem.ToString())
+                                   select school;
+
+                uint schoolX = selectSchool.First().X;
+                uint schoolY = selectSchool.First().Y;
+
+                var otherProps = from res in finQuery
+                                 where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
+                                 select res;
+
+                var query_Two = from res in finQuery
+                                where (res.PropT.GetType().Equals(typeof(Apartment)) || res.PropT.GetType().Equals(typeof(House)))
+                                where ((schoolX - res.PropT.X) * (schoolX - res.PropT.X) + (schoolY - res.PropT.Y) * (schoolY - res.PropT.Y)
+                                                 <= schoolDistanceUpDown.Value * schoolDistanceUpDown.Value)
+                                select res;
+
+                var qResult = query_Two.Concat(otherProps);
+                finQuery = qResult;
+            }
+            #endregion
+
+            #region Query_3
+            //Validate selected data
+            if (For_Sale_Residence_ComboBox.SelectedValue != null && For_Sale_Residence_ComboBox.SelectedIndex != -1 && For_Sale_Residence_ComboBox.SelectedItem.ToString() != ""
+                && For_Sale_Residence_ComboBox.SelectedItem.ToString() != shortHyphen && For_Sale_Residence_ComboBox.SelectedItem.ToString() != sycamoreVal
+                && For_Sale_Residence_ComboBox.SelectedItem.ToString() != dekalbVal && For_Sale_Residence_ComboBox.SelectedItem.ToString() != "\n")
+            {
+                //Get selected data
+                var selectRes = from z in CommunitiesList
+                                from resdnt in z.Props.OfType<Residential>()
+                                where resdnt.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString())
+                                select resdnt;
+
+                if (For_Sale_Residence_ComboBox.SelectedItem.ToString().Contains("#"))
                 {
-                    var selectSchool = from z in CommunitiesList
-                                       from school in z.Props.OfType<School>()
-                                       where school.Name.Equals(schoolComboBox.SelectedItem.ToString())
-                                       select school;
-
-                    uint schoolX = selectSchool.First().X;
-                    uint schoolY = selectSchool.First().Y;
-
-                    var otherProps = from res in finQuery
-                                     where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
-                                     select res;
-
-                    var query_Two = from res in finQuery
-                                    where (res.PropT.GetType().Equals(typeof(Apartment)) || res.PropT.GetType().Equals(typeof(House)))
-                                    where ((schoolX - res.PropT.X) * (schoolX - res.PropT.X) + (schoolY - res.PropT.Y) * (schoolY - res.PropT.Y)
-                                                     <= schoolDistanceUpDown.Value * schoolDistanceUpDown.Value)
-                                    select res;
-
-                    var qResult = query_Two.Concat(otherProps);
-                    finQuery = qResult;
-                }
-                #endregion
-
-                #region Query_3
-                //Validate selected data
-                if (For_Sale_Residence_ComboBox.SelectedIndex != -1 && For_Sale_Residence_ComboBox.SelectedItem.ToString() != ""
-                    && For_Sale_Residence_ComboBox.SelectedItem.ToString() != shortHyphen && For_Sale_Residence_ComboBox.SelectedItem.ToString() != sycamoreVal
-                    && For_Sale_Residence_ComboBox.SelectedItem.ToString() != dekalbVal && For_Sale_Residence_ComboBox.SelectedItem.ToString() != "\n")
-                {
-                    //Get selected data
-                    var selectRes = from z in CommunitiesList
-                                    from resdnt in z.Props.OfType<Residential>()
-                                    where resdnt.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString())
-                                    select resdnt;
-
-                    if (For_Sale_Residence_ComboBox.SelectedItem.ToString().Contains("#"))
-                    {
-                        //Query apartments in Dekalb and Sycamore for selected Index full data
-                        selectRes = from zComm in CommunitiesList
-                                    from aProps in zComm.Props.OfType<Residential>()
-                                    where (aProps.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[0].Trim()) &&
-                                            (aProps as Apartment).Unit.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[1].Trim()))
-                                    select aProps;
-                    }
-
-                    //query all businesses that are hiring, result could contain duplicates of businesses in finQuery
-                    var queryThree = finQuery.Concat(from comms in CommunitiesList
-                                                     from biz in comms.Props.OfType<Property>()
-                                                     where ((biz.GetType().Equals(typeof(Business))) &&
-                                                                 ((selectRes.First().X - biz.X) * (selectRes.First().X - biz.X) +
-                                                                 (selectRes.First().Y - biz.Y) * (selectRes.First().Y - biz.Y)
-                                                                    <= residenceDistanceUpDown.Value * residenceDistanceUpDown.Value) &&
-                                                               ((biz as Business).ActiveRecruitment > 0)
-                                                             )
-                                                     select new
-                                                     {
-                                                         PropT = biz,
-                                                         OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
-                                                                                      where z.Id == biz.OwnerID
-                                                                                      select z.FullName).ToArray())
-                                                     });
-
-                    finQuery = queryThree;
-                }
-                #endregion
-
-                #region Query_4
-                if (houseCheckBox.Checked || apartmentCheckBox.Checked)
-                {
-                    bool houseChecked = (houseCheckBox.Checked.Equals(true) && apartmentCheckBox.Checked.Equals(false));
-
-                    //Save all other properties from finQuery result
-                    var otherProps = from res in finQuery
-                                     where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
-                                     select res;
-
-                    // General query for Q4
-                    var query_Four = from res in finQuery
-                                     where res.PropT.GetType().Equals(typeof(House)) && houseCheckBox.Checked
-                                           || res.PropT.GetType().Equals(typeof(Apartment)) && apartmentCheckBox.Checked
-                                     where (((res.PropT as Residential).Bedrooms >= bedUpDown.Value) && ((res.PropT as Residential).Baths >= bathUpDown.Value)
-                                            && ((res.PropT as Residential).Sqft >= sqFtUpDown.Value))
-                                     select res;
-
-                    // If only House was checked, Queries from Q4 and dumps it's result into query_FOur
-                    if (houseChecked)
-                    {
-                        var qHouse = from res in query_Four
-                                     where res.PropT.GetType().Equals(typeof(House))
-                                     where ((res.PropT as House).Garage.Equals(garageCheckBox.Checked) && (res.PropT as House).AttachedGarage.GetValueOrDefault(false).Equals(attachedCheckBox.Checked))
-                                     select res;
-                        query_Four = qHouse;
-                    }
-
-                    finQuery = otherProps.Concat(query_Four);
+                    //Query apartments in Dekalb and Sycamore for selected Index full data
+                    selectRes = from zComm in CommunitiesList
+                                from aProps in zComm.Props.OfType<Residential>()
+                                where (aProps.StreetAddr.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[0].Trim()) &&
+                                        (aProps as Apartment).Unit.Equals(For_Sale_Residence_ComboBox.SelectedItem.ToString().Split('#')[1].Trim()))
+                                select aProps;
                 }
 
-                // draw lines
-                Pen p = new Pen(Brushes.Black);
-                FontFamily fontFamily = new FontFamily("Arial");
-                Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+                //query all businesses that are hiring, result could contain duplicates of businesses in finQuery
+                var queryThree = finQuery.Concat(from comms in CommunitiesList
+                                                 from biz in comms.Props.OfType<Property>()
+                                                 where ((biz.GetType().Equals(typeof(Business))) &&
+                                                             ((selectRes.First().X - biz.X) * (selectRes.First().X - biz.X) +
+                                                             (selectRes.First().Y - biz.Y) * (selectRes.First().Y - biz.Y)
+                                                                <= residenceDistanceUpDown.Value * residenceDistanceUpDown.Value) &&
+                                                           ((biz as Business).ActiveRecruitment > 0)
+                                                         )
+                                                 select new
+                                                 {
+                                                     PropT = biz,
+                                                     OwnerName = string.Join("", (from z in comms.Residents.OfType<Person>()
+                                                                                  where z.Id == biz.OwnerID
+                                                                                  select z.FullName).ToArray())
+                                                 });
 
-                var dklbF = finQuery.Where(x => x.PropT.City.ToLower() == "dekalb");
-                var sycaF = finQuery.Where(x => x.PropT.City == "Sycamore");
+                finQuery = queryThree;
+            }
+            #endregion
 
-                var grpdklb = dklbF.GroupBy(x => x .PropT.StreetName);
-                var grpsyca = sycaF.GroupBy(x => x.PropT.StreetName);
+            #region Query_4
+            if (houseCheckBox.Checked || apartmentCheckBox.Checked)
+            {
+                bool houseChecked = (houseCheckBox.Checked.Equals(true) && apartmentCheckBox.Checked.Equals(false));
 
-                // lines for dekalb
-                foreach (var g in grpdklb)
+                //Save all other properties from finQuery result
+                var otherProps = from res in finQuery
+                                 where res.PropT.GetType().Equals(typeof(Business)) || res.PropT.GetType().Equals(typeof(School))
+                                 select res;
+
+                // General query for Q4
+                var query_Four = from res in finQuery
+                                 where res.PropT.GetType().Equals(typeof(House)) && houseCheckBox.Checked
+                                       || res.PropT.GetType().Equals(typeof(Apartment)) && apartmentCheckBox.Checked
+                                 where (((res.PropT as Residential).Bedrooms >= bedUpDown.Value) && ((res.PropT as Residential).Baths >= bathUpDown.Value)
+                                        && ((res.PropT as Residential).Sqft >= sqFtUpDown.Value))
+                                 select res;
+
+                // If only House was checked, Queries from Q4 and dumps it's result into query_FOur
+                if (houseChecked)
                 {
-                    if (g.Count() == 1)
-                    {
-                        var gi = g.FirstOrDefault();
-                        var x = gi.PropT.X;
-                        var y = gi.PropT.Y;
-                       
-                        StringFormat strF = new StringFormat();
-                        strF.Alignment = StringAlignment.Center;
-                        e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
-                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
-                        e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
-                        strF.FormatFlags = StringFormatFlags.DirectionVertical;
-                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    var qHouse = from res in query_Four
+                                 where res.PropT.GetType().Equals(typeof(House))
+                                 where ((res.PropT as House).Garage.Equals(garageCheckBox.Checked) && (res.PropT as House).AttachedGarage.GetValueOrDefault(false).Equals(attachedCheckBox.Checked))
+                                 select res;
+                    query_Four = qHouse;
+                }
 
+                finQuery = otherProps.Concat(query_Four);
+            }
+            if (Qreload)
+            {
+
+                List<House> dHouse = new List<House>();
+                List<House> sHouse = new List<House>();
+                List<Apartment> dApartment = new List<Apartment>();
+                List<Apartment> sApartment = new List<Apartment>();
+
+                foreach (var res in finQuery)
+                {
+                    if ((res.PropT is House) && (res.PropT.City == "DeKalb"))
+                    {
+                        dHouse.Add(res.PropT as House);
                     }
-                    else if(g.Count() > 1)
+                    else if ((res.PropT is Apartment) && (res.PropT.City == "DeKalb"))
                     {
-                        List<Point> pfs = new List<Point>();
-                        foreach (var point in g)
-                        {
-                            var x = point.PropT.X;
-                            var y = point.PropT.Y;                           
-
-                            pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
-                        }
-                        e.Graphics.DrawCurve(p, pfs.ToArray());
+                        dApartment.Add(res.PropT as Apartment);
+                    }
+                    else if ((res.PropT is House) && (res.PropT.City == "Sycamore"))
+                    {
+                        sHouse.Add(res.PropT as House);
+                    }
+                    else if ((res.PropT is Apartment) && (res.PropT.City == "Sycamore"))
+                    {
+                        sApartment.Add(res.PropT as Apartment);
                     }
                 }
 
-                // lines for sycamore
-                foreach (var g in grpsyca)
+
+                For_Sale_Residence_ComboBox.Items.Clear();
+                For_Sale_Residence_ComboBox.Items.Add(dekalbVal);
+                For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
+                populateForSaleResidences(dHouse, dApartment);
+                For_Sale_Residence_ComboBox.Items.Add("\n");
+                For_Sale_Residence_ComboBox.Items.Add(sycamoreVal);
+                For_Sale_Residence_ComboBox.Items.Add(shortHyphen);
+                populateForSaleResidences(sHouse, sApartment);
+
+            }
+
+            Qreload = true;
+
+
+            // draw lines
+            Pen p = new Pen(Brushes.Black);
+            FontFamily fontFamily = new FontFamily("Arial");
+            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            var dklbF = finQuery.Where(x => x.PropT.City.ToLower() == "dekalb");
+            var sycaF = finQuery.Where(x => x.PropT.City == "Sycamore");
+
+            var grpdklb = dklbF.GroupBy(x => x.PropT.StreetName);
+            var grpsyca = sycaF.GroupBy(x => x.PropT.StreetName);
+
+            // lines for dekalb
+            foreach (var g in grpdklb)
+            {
+                if (g.Count() == 1)
                 {
-                    if (g.Count() == 1)
-                    {
-                        var gi = g.FirstOrDefault();
-                        var x = 250 + gi.PropT.X;
-                        var y = gi.PropT.Y;
+                    var gi = g.FirstOrDefault();
+                    var x = gi.PropT.X;
+                    var y = gi.PropT.Y;
 
-                        StringFormat strF = new StringFormat();
-                        strF.Alignment = StringAlignment.Center;
-                        e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
-                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
-                        e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
-                        strF.FormatFlags = StringFormatFlags.DirectionVertical;
-                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    StringFormat strF = new StringFormat();
+                    strF.Alignment = StringAlignment.Center;
+                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                    e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                    strF.FormatFlags = StringFormatFlags.DirectionVertical;
+                    e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
 
-                    }
-                    else if (g.Count() > 1)
-                    {
-                        List<Point> pfs = new List<Point>();
-                        foreach (var point in g)
-                        {
-                            var x = 250 + point.PropT.X;
-                            var y = point.PropT.Y;
-
-                            pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
-                        }
-                        e.Graphics.DrawCurve(p, pfs.ToArray());
-                    }
                 }
-                // Adding icons
-                foreach (var item in finQuery)
+                else if (g.Count() > 1)
                 {
-                    var x = item.PropT.X;
-                    var y = item.PropT.Y;
-                    if (item.PropT.City == "Sycamore")
+                    List<Point> pfs = new List<Point>();
+                    foreach (var point in g)
                     {
-                        x = x + 250;
-                    }
-                    if (item.PropT.GetType().Equals(typeof(House)) || item.PropT.GetType().Equals(typeof(Apartment)))
-                    {
-                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
-                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    }
-                    if (item.PropT.GetType().Equals(typeof(School)))
-                    {
-                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
-                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    }
-                    if (item.PropT.GetType().Equals(typeof(Business)))
-                    {
-                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
-                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    }
+                        var x = point.PropT.X;
+                        var y = point.PropT.Y;
 
+                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+                    }
+                    e.Graphics.DrawCurve(p, pfs.ToArray());
+                }
+            }
+
+            // lines for sycamore
+            foreach (var g in grpsyca)
+            {
+                if (g.Count() == 1)
+                {
+                    var gi = g.FirstOrDefault();
+                    var x = 250 + gi.PropT.X;
+                    var y = gi.PropT.Y;
+
+                    StringFormat strF = new StringFormat();
+                    strF.Alignment = StringAlignment.Center;
+                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                    e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                    strF.FormatFlags = StringFormatFlags.DirectionVertical;
+                    e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+
+                }
+                else if (g.Count() > 1)
+                {
+                    List<Point> pfs = new List<Point>();
+                    foreach (var point in g)
+                    {
+                        var x = 250 + point.PropT.X;
+                        var y = point.PropT.Y;
+
+                        pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+                    }
+                    e.Graphics.DrawCurve(p, pfs.ToArray());
+                }
+            }
+            // Adding icons
+            foreach (var item in finQuery)
+            {
+                var x = item.PropT.X;
+                var y = item.PropT.Y;
+                if (item.PropT.City == "Sycamore")
+                {
+                    x = x + 250;
+                }
+                if (item.PropT.GetType().Equals(typeof(House)) || item.PropT.GetType().Equals(typeof(Apartment)))
+                {
+                    e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
+                  new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                }
+                if (item.PropT.GetType().Equals(typeof(School)))
+                {
+                    e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
+                  new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                }
+                if (item.PropT.GetType().Equals(typeof(Business)))
+                {
+                    e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
+                  new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
                 }
                 #endregion
             }
