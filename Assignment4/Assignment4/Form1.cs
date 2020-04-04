@@ -414,8 +414,8 @@ namespace Assignment4
                 if (g.Count() == 1)
                 {
                     var gi = g.FirstOrDefault();
-                    var x = gi.PropT.X;
-                    var y = gi.PropT.Y;
+                    var x = 2 * gi.PropT.X;
+                    var y = 2 * gi.PropT.Y;
 
                     StringFormat strF = new StringFormat();
                     strF.Alignment = StringAlignment.Center;
@@ -431,8 +431,8 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in g)
                     {
-                        var x = point.PropT.X;
-                        var y = point.PropT.Y;
+                        var x = 2 * point.PropT.X;
+                        var y = 2 * point.PropT.Y;
 
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
                     }
@@ -446,8 +446,8 @@ namespace Assignment4
                 if (g.Count() == 1)
                 {
                     var gi = g.FirstOrDefault();
-                    var x = 250 + gi.PropT.X;
-                    var y = gi.PropT.Y;
+                    var x = 250 + (2 * gi.PropT.X);
+                    var y = 2 * gi.PropT.Y;
 
                     StringFormat strF = new StringFormat();
                     strF.Alignment = StringAlignment.Center;
@@ -463,8 +463,8 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in g)
                     {
-                        var x = 250 + point.PropT.X;
-                        var y = point.PropT.Y;
+                        var x = 250 + (2 * point.PropT.X);
+                        var y = 2 * point.PropT.Y;
 
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
                     }
@@ -474,8 +474,8 @@ namespace Assignment4
             // Adding icons
             foreach (var item in finQuery)
             {
-                var x = item.PropT.X;
-                var y = item.PropT.Y;
+                var x = 2 * item.PropT.X;
+                var y = 2 * item.PropT.Y;
                 if (item.PropT.City == "Sycamore")
                 {
                     x = x + 250;
