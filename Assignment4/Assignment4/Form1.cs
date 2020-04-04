@@ -43,9 +43,12 @@ namespace Assignment4
         public int xDiff;
         public int yDiff;
 
+        private Boolean panelReset = true;
+
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
 
             //set the range of trackbar 1 from 100% to 300%
             trackBar1.Minimum = 100;
@@ -214,8 +217,9 @@ namespace Assignment4
         #region Queries
 
         // This method handles querying used for the map_drawing
-        private void do_query()
+        private void do_query(PaintEventArgs e)
         {
+
             if (residentialCheckBox.Checked || businessCheckBox.Checked || schoolCheckBox.Checked)
             {
                 //Query_1
@@ -335,6 +339,107 @@ namespace Assignment4
 
                     finQuery = otherProps.Concat(query_Four);
                 }
+
+                // draw lines
+                Pen p = new Pen(Brushes.Black);
+                FontFamily fontFamily = new FontFamily("Arial");
+                Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+
+                var dklbF = finQuery.Where(x => x.PropT.City.ToLower() == "dekalb");
+                var sycaF = finQuery.Where(x => x.PropT.City == "Sycamore");
+
+                var grpdklb = dklbF.GroupBy(x => x .PropT.StreetName);
+                var grpsyca = sycaF.GroupBy(x => x.PropT.StreetName);
+
+                // lines for dekalb
+                foreach (var g in grpdklb)
+                {
+                    if (g.Count() == 1)
+                    {
+                        var gi = g.FirstOrDefault();
+                        var x = gi.PropT.X;
+                        var y = gi.PropT.Y;
+                       
+                        StringFormat strF = new StringFormat();
+                        strF.Alignment = StringAlignment.Center;
+                        e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                        strF.FormatFlags = StringFormatFlags.DirectionVertical;
+                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+
+                    }
+                    else if(g.Count() > 1)
+                    {
+                        List<Point> pfs = new List<Point>();
+                        foreach (var point in g)
+                        {
+                            var x = point.PropT.X;
+                            var y = point.PropT.Y;                           
+
+                            pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+                        }
+                        e.Graphics.DrawCurve(p, pfs.ToArray());
+                    }
+                }
+
+                // lines for sycamore
+                foreach (var g in grpsyca)
+                {
+                    if (g.Count() == 1)
+                    {
+                        var gi = g.FirstOrDefault();
+                        var x = 250 + gi.PropT.X;
+                        var y = gi.PropT.Y;
+
+                        StringFormat strF = new StringFormat();
+                        strF.Alignment = StringAlignment.Center;
+                        e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
+                        strF.FormatFlags = StringFormatFlags.DirectionVertical;
+                        e.Graphics.DrawString(gi.PropT.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
+
+                    }
+                    else if (g.Count() > 1)
+                    {
+                        List<Point> pfs = new List<Point>();
+                        foreach (var point in g)
+                        {
+                            var x = 250 + point.PropT.X;
+                            var y = point.PropT.Y;
+
+                            pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
+                        }
+                        e.Graphics.DrawCurve(p, pfs.ToArray());
+                    }
+                }
+                // Adding icons
+                foreach (var item in finQuery)
+                {
+                    var x = item.PropT.X;
+                    var y = item.PropT.Y;
+                    if (item.PropT.City == "Sycamore")
+                    {
+                        x = x + 250;
+                    }
+                    if (item.PropT.GetType().Equals(typeof(House)) || item.PropT.GetType().Equals(typeof(Apartment)))
+                    {
+                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
+                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    }
+                    if (item.PropT.GetType().Equals(typeof(School)))
+                    {
+                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
+                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    }
+                    if (item.PropT.GetType().Equals(typeof(Business)))
+                    {
+                        e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
+                      new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
+                    }
+
+                }
                 #endregion
             }
         }
@@ -344,28 +449,32 @@ namespace Assignment4
         //This method is invoked on Search button click
         private void searchButton_Click(object sender, EventArgs e)
         {
-            do_query();
+            panelReset = false;
+            panel3.Refresh();
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
+            if (panelReset == false)
+            {
+                do_query(e);
+                return;
+            }
+
             Pen p = new Pen(Brushes.Black);
             FontFamily fontFamily = new FontFamily("Arial");
-            Font font = new Font(
-               fontFamily,
-               10,
-               FontStyle.Regular,
-               GraphicsUnit.Pixel);
-            var lstDekalb = CommunitiesList.Where(x => x.Name == "Dekalb").FirstOrDefault();
+            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+
+            var lstDekalb = CommunitiesList.Where(x => x.Name.ToLower() == "dekalb").FirstOrDefault();
             var grpDlk = lstDekalb.Props.GroupBy(x => x.StreetName);
             foreach (var item in grpDlk)
             {
                 if (item.Count() == 1)
                 {
                     var data = item.FirstOrDefault();
-                    var x =  data.X;
-                    var y =  data.Y;
-                    if(dekalbHouses.Any(house=> house.Id == data.Id))
+                    var x = data.X;
+                    var y = data.Y;
+                    if (dekalbHouses.Any(house => house.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
@@ -382,9 +491,9 @@ namespace Assignment4
                     }
                     StringFormat strF = new StringFormat();
                     strF.Alignment = StringAlignment.Center;
-                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 *zoom - yDiff, x*zoom - xDiff, y*zoom - yDiff);
+                    e.Graphics.DrawLine(p, x * zoom - xDiff, 0 * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
-                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x *zoom - xDiff, y*zoom - yDiff);
+                    e.Graphics.DrawLine(p, 0 * zoom - xDiff, y * zoom - yDiff, x * zoom - xDiff, y * zoom - yDiff);
                     strF.FormatFlags = StringFormatFlags.DirectionVertical;
                     e.Graphics.DrawString(data.StreetName, font, Brushes.Black, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
@@ -393,8 +502,8 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in item)
                     {
-                        var x =  point.X;
-                        var y =  point.Y;
+                        var x = point.X;
+                        var y = point.Y;
                         if (dekalbHouses.Any(house => house.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
@@ -412,7 +521,7 @@ namespace Assignment4
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
                     }
-                     e.Graphics.DrawCurve(p, pfs.ToArray());
+                    e.Graphics.DrawCurve(p, pfs.ToArray());
                 }
 
             }
@@ -454,7 +563,7 @@ namespace Assignment4
                     List<Point> pfs = new List<Point>();
                     foreach (var point in item)
                     {
-                        var x = 250 +  point.X;
+                        var x = 250 + point.X;
                         var y = point.Y;
                         if (sycamoreHouses.Any(house => house.Id == point.Id))
                         {
@@ -477,6 +586,7 @@ namespace Assignment4
                 }
 
             }
+
 
             e.Dispose();
         }
@@ -528,7 +638,7 @@ namespace Assignment4
         {
             panel3.Refresh();
         }
-        
+
 
         //record the mouse down and mouse up
         public Point startPt;
@@ -545,30 +655,30 @@ namespace Assignment4
 
         private void panel3_move_up(object sender, MouseEventArgs e)
         {
-            
+
             endPt.X = e.X;
             endPt.Y = e.Y;
-            int xdelta =  startPt.X  - endPt.X;
-            int ydelta =  startPt.Y  - endPt.Y;
+            int xdelta = startPt.X - endPt.X;
+            int ydelta = startPt.Y - endPt.Y;
 
             xDiff = xDiff + xdelta;
             yDiff = yDiff + ydelta;
 
-            if (xDiff < 0) 
+            if (xDiff < 0)
             {
                 xDiff = 0;
             }
-            if (xDiff > maxX) 
+            if (xDiff > maxX)
             {
                 xDiff = maxX;
             }
 
-            if (yDiff < 0) 
+            if (yDiff < 0)
             {
                 yDiff = 0;
             }
 
-            if (yDiff > maxY) 
+            if (yDiff > maxY)
             {
                 yDiff = maxY;
             }
@@ -580,7 +690,8 @@ namespace Assignment4
         {
             if (e.KeyCode == Keys.Enter)
             {
-                do_query();
+                panelReset = false;
+                panel3.Refresh();
             }
         }
     }
