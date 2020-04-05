@@ -1,4 +1,4 @@
-﻿namespace Assignment4
+﻿namespace ASX_Assign4
 {
     partial class Form1
     {

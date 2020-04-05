@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  *                                                                                                       *
- *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 3					 Spring 2020     *                                          
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 4					 Spring 2020     *                                          
  *																										 *
  *  Programmer's: Swathi Reddy Konatham (Z1864290),
  *                Abdulsalam Olaoye (Z1836477),
@@ -8,6 +8,7 @@
  *																										 *
  *  Class Name: Residential
  *  Purpose   : Windows application that displays the property details of Dekalb & Sycamore Communities. *
+ *              The properties are plotted as map.                                                       *
  *********************************************************************************************************/
 
 using System;

@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 4					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form1
+ *  Purpose   : Windows application that displays the property details of Dekalb & Sycamore Communities. *
+ *              The properties are plotted as map.                                                       *
+ *********************************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataLoader;
 
-namespace Assignment4
+namespace ASX_Assign4
 {
 
     public partial class Form1 : Form

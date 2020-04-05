@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Assignment4.Properties
+namespace ASX_Assign4.Properties
 {
 
 
