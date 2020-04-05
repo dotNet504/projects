@@ -101,7 +101,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1912, 1210);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label10
             // 
@@ -116,7 +115,7 @@
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(623, 1186);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(581, 90);
             this.trackBar1.TabIndex = 2;
@@ -124,7 +123,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.LightGreen;
+            this.panel3.BackColor = System.Drawing.Color.Gainsboro;
             this.panel3.Controls.Add(this.label17);
             this.panel3.Controls.Add(this.label16);
             this.panel3.Controls.Add(this.label15);
@@ -161,7 +160,6 @@
             this.label16.Size = new System.Drawing.Size(98, 25);
             this.label16.TabIndex = 5;
             this.label16.Text = "2.5 miles";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label15
             // 

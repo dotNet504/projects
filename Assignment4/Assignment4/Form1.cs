@@ -67,7 +67,7 @@ namespace ASX_Assign4
         public Form1()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;         
+            this.WindowState = FormWindowState.Maximized;
 
             //set the range of trackbar 1 from 100% to 175%
             trackBar1.Minimum = 100;
@@ -101,8 +101,8 @@ namespace ASX_Assign4
 
             label11.Text = "Scale: " + trackBar1.Value + " %";
             zoom = trackBar1.Value / 100f;
-            
-            
+
+
             string underScoreSym = "";
             int underScoreNum = 0;
             underScoreNum = 5 + Convert.ToInt32(trackBar1.Value / 10);
@@ -545,19 +545,21 @@ namespace ASX_Assign4
                 {
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawString("     House#: " + item.PropT.AddNumber.ToString(), font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 if (item.PropT.GetType().Equals(typeof(School)))
                 {
+                    var s = (School)item.PropT;
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawString("     " + s.Name, font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 if (item.PropT.GetType().Equals(typeof(Business)))
                 {
+                    var b = (Business)item.PropT;
                     e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                   new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                    e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+                    e.Graphics.DrawString("     " + b.Name, font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                 }
                 #endregion
             }
@@ -583,6 +585,7 @@ namespace ASX_Assign4
         //This method is used for drawing map on the panel
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
+
             if (panelReset == false)
             {
                 do_query(e);
@@ -610,14 +613,14 @@ namespace ASX_Assign4
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
 
-                        e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("     House#: " + dekalbHouses.FirstOrDefault(house => house.Id == data.Id).AddNumber.ToString(), font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                     }
                     if (dekalbSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                        e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("      " + dekalbSchools.FirstOrDefault(house => house.Id == data.Id).Name, font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                     }
                     if (dekalbBusinesses.Any(business => business.Id == data.Id))
@@ -625,7 +628,7 @@ namespace ASX_Assign4
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
 
-                        e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("      " + dekalbBusinesses.FirstOrDefault(house => house.Id == data.Id).Name, font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                     }
 
                     strF.Alignment = StringAlignment.Far;
@@ -649,7 +652,7 @@ namespace ASX_Assign4
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                            e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("     House#: " + dekalbHouses.FirstOrDefault(house => house.Id == point.Id).AddNumber.ToString(), font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                         }
                         if (dekalbSchools.Any(school => school.Id == point.Id))
@@ -657,14 +660,14 @@ namespace ASX_Assign4
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
 
-                            e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("      " + dekalbSchools.FirstOrDefault(house => house.Id == point.Id).Name, font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
                         }
                         if (dekalbBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
 
-                            e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("      " + dekalbBusinesses.FirstOrDefault(house => house.Id == point.Id).Name, font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
 
@@ -697,21 +700,21 @@ namespace ASX_Assign4
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                        e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("     House#: " + sycamoreHouses.FirstOrDefault(house => house.Id == data.Id).AddNumber.ToString(), font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                     }
                     if (sycamoreSchools.Any(school => school.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                        e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("      " + sycamoreSchools.FirstOrDefault(house => house.Id == data.Id).Name, font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                     }
                     if (sycamoreBusinesses.Any(business => business.Id == data.Id))
                     {
                         e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                        new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                        e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+                        e.Graphics.DrawString("      " + sycamoreBusinesses.FirstOrDefault(house => house.Id == data.Id).Name, font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                     }
                     strF.Alignment = StringAlignment.Far;
@@ -735,21 +738,21 @@ namespace ASX_Assign4
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Home.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                            e.Graphics.DrawString("HOME", font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("     House#: " + sycamoreHouses.FirstOrDefault(house => house.Id == point.Id).AddNumber.ToString(), font, Brushes.Red, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                         }
                         if (sycamoreSchools.Any(school => school.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/School.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                            e.Graphics.DrawString("SCHOOL", font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("      " + sycamoreSchools.FirstOrDefault(house => house.Id == point.Id).Name, font, Brushes.DarkBlue, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                         }
                         if (sycamoreBusinesses.Any(business => business.Id == point.Id))
                         {
                             e.Graphics.DrawImage(Image.FromFile(@"../../../DataLoader/Icons/Business.png"),
                            new Rectangle(Convert.ToInt32(x * zoom - xDiff), Convert.ToInt32(y * zoom - yDiff), 15, 15));
-                            e.Graphics.DrawString("BUSINESS", font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
+                            e.Graphics.DrawString("      " + sycamoreBusinesses.FirstOrDefault(house => house.Id == point.Id).Name, font, Brushes.DarkOrange, x * zoom - xDiff, y * zoom - yDiff, strF);
 
                         }
                         pfs.Add(new Point(Convert.ToInt32(x * zoom) - xDiff, Convert.ToInt32(y * zoom) - yDiff));
@@ -827,7 +830,7 @@ namespace ASX_Assign4
 
         //This method is used on movedown of map panel 
         private void panel3_move_down(object sender, MouseEventArgs e)
-        {            
+        {
             startPt.X = e.X;
             startPt.Y = e.Y;
         }
@@ -991,10 +994,10 @@ namespace ASX_Assign4
                 }
             }
             toolTip1.Show(propertyInfor, panel3);
-            
+
             if (Sleep > 75)
             {
-                System.Threading.Thread.Sleep(200);               
+                System.Threading.Thread.Sleep(200);
             }
             Sleep++;
         }
@@ -1005,7 +1008,7 @@ namespace ASX_Assign4
             House tempHouse = (House)i;
             string houseInfo = "";
             string SalePriceString = "";
-            
+
             houseInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
 
@@ -1044,12 +1047,12 @@ namespace ASX_Assign4
             Apartment tempApt = (Apartment)i;
             string aptInfo = "";
             string SalePriceString = "";
-           
+
             aptInfo = i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            
+
             aptInfo = aptInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.";
-            
+
             if (tempApt.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tempApt.SalePrice);
@@ -1104,19 +1107,8 @@ namespace ASX_Assign4
                 SalePriceString = "";
             }
             schoolInfo = schoolInfo + "\n" + tepSch.Enrolled.ToString() + " students enrolled       " + SalePriceString;
-            
+
             return schoolInfo;
-        }
-
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
