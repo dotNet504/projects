@@ -63,9 +63,9 @@ namespace Assignment4
             //flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             //this.Controls.Add(flowPanel);
 
-            //set the range of trackbar 1 from 100% to 300%
+            //set the range of trackbar 1 from 100% to 175%
             trackBar1.Minimum = 100;
-            trackBar1.Maximum = 400;
+            trackBar1.Maximum = 175;
             // at the begining the scale is 100% so we diable the two scrollbars
 
             minX = 0;
@@ -73,6 +73,7 @@ namespace Assignment4
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
             label10.Text = "Scale: " + trackBar1.Value + " %";
+            label11.Text = "|_____|_____|";
 
 
             _businessLayer = new BusinessLayer();
@@ -549,6 +550,7 @@ namespace Assignment4
             yDiff = 0;
             trackBar1.Value = 100;
             zoom = trackBar1.Value / 100f;
+            label10.Text = "Scale: " + trackBar1.Value + " %";
 
 
             panel3.Refresh();
@@ -745,11 +747,19 @@ namespace Assignment4
         }
 
 
-
+        
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label10.Text = "Scale: " + trackBar1.Value + " %";
             zoom = trackBar1.Value / 100f;
+            string underScoreSym = "";
+
+            int underScoreNum = Convert.ToInt32(trackBar1.Value / 10) - 10;
+            for (int i = 0; i < 10+underScoreNum; i++)
+            {
+                underScoreSym = underScoreSym + '_';
+            }
+            label11.Text = '|' + underScoreSym + '|' + underScoreSym + '|';
 
             //reset the range of the drawing area
             minX = 0;
@@ -837,6 +847,10 @@ namespace Assignment4
             panel3.Refresh();
         }
 
+
+
+
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -847,7 +861,9 @@ namespace Assignment4
         }
         private void mouse_hover(object sender, EventArgs e)
         {
+            
             toolTip1.Active = true;
+            
             var pos = panel3.PointToClient(Cursor.Position);
             /////
             ///
@@ -937,7 +953,7 @@ namespace Assignment4
                     else
                     {
                         xProjected = (250 + (2 * res.X)) * zoom - xDiff;
-                        yProjected = (2 * res.Y) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - yDiff;
                     }
                     if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
                     {
@@ -962,12 +978,25 @@ namespace Assignment4
                 }
             }
             toolTip1.Show(propertyInfor, panel3);
+            
+            
 
         }
+
+
+
+
         private void panel3MouseMove(object sender, MouseEventArgs e)
         {
 
 
+
+
+            
+            
+            toolTip1.Active = true;
+            bool switchToolTip = false;
+            var pos = panel3.PointToClient(Cursor.Position);
 
             IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
             //select Dek and Syc people to the allPople
@@ -976,13 +1005,14 @@ namespace Assignment4
             var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
             var selectedCommunitySyc = selectedCommunityNameSyc.First();
             allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
+            
 
-            int X = e.X;
-            int Y = e.Y;
+            int X = pos.X;
+            int Y = pos.Y;
             float xProjected = 0;
             float yProjected = 0;
             int distanceThreshold = 20;
-            bool switchToolTip = false;
+            string propertyInfor = "";
 
 
             if (panelReset == true)
@@ -995,9 +1025,7 @@ namespace Assignment4
                 {
                     if ((Math.Abs(X - (2 * item.X * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
                     {
-
                         switchToolTip = true;
-
                     }
                 }
                 var lstSycamore = CommunitiesList.Where(x => x.Name.ToLower() == "Sycamore".ToLower()).FirstOrDefault();
@@ -1009,7 +1037,7 @@ namespace Assignment4
                         switchToolTip = true;
                     }
                 }
-
+                //toolTip1.Show(propertyInfor, panel3);
             }
 
             //for the searched results
@@ -1025,21 +1053,29 @@ namespace Assignment4
                     else
                     {
                         xProjected = (250 + (2 * res.X)) * zoom - xDiff;
-                        yProjected = (2 * res.Y) * zoom - xDiff;
+                        yProjected = (2 * res.Y) * zoom - yDiff;
                     }
                     if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
                     {
-                        switchToolTip = false;
+
+                        switchToolTip = true;
 
                     }
 
                 }
+            }
 
-            }
-            if (switchToolTip = false)
+
+            if (switchToolTip == false)
             {
-                toolTip1.Active = false;
+                
+
+                toolTip1.Show("Please hover your mouse on an icon", panel3);
+                ResetMouseEventArgs();
             }
+
+
+
         }
 
         //Print House info 
@@ -1166,9 +1202,15 @@ namespace Assignment4
             return schoolInfo;
         }
 
-        private void label10_Click(object sender, EventArgs e)
+
+
+
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
+
+
     }
 }
