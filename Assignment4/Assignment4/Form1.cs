@@ -49,19 +49,12 @@ namespace Assignment4
         public int yDiff = 0;
 
         private Boolean panelReset = true;
+        int Sleep = 0;
 
         public Form1()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
-            ////Logic to autosize the output window
-            //this.AutoSize = true;
-            //this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-            //FlowLayoutPanel flowPanel = new FlowLayoutPanel();
-            //flowPanel.AutoSize = true;
-            //flowPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            //this.Controls.Add(flowPanel);
+            this.WindowState = FormWindowState.Maximized;         
 
             //set the range of trackbar 1 from 100% to 175%
             trackBar1.Minimum = 100;
@@ -747,7 +740,7 @@ namespace Assignment4
         }
 
 
-        
+
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label10.Text = "Scale: " + trackBar1.Value + " %";
@@ -755,7 +748,7 @@ namespace Assignment4
             string underScoreSym = "";
 
             int underScoreNum = Convert.ToInt32(trackBar1.Value / 10) - 10;
-            for (int i = 0; i < 10+underScoreNum; i++)
+            for (int i = 0; i < 10 + underScoreNum; i++)
             {
                 underScoreSym = underScoreSym + '_';
             }
@@ -766,9 +759,6 @@ namespace Assignment4
             maxX = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
-
-            //xDiff = Convert.ToInt32( xDiff / zoom);
-            //yDiff = Convert.ToInt32( yDiff / zoom);
 
             if (xDiff < 0)
             {
@@ -791,10 +781,7 @@ namespace Assignment4
 
             panel3.Refresh();
 
-
         }
-
-
 
 
         //record the mouse down and mouse up
@@ -803,20 +790,14 @@ namespace Assignment4
 
 
         private void panel3_move_down(object sender, MouseEventArgs e)
-        {
-            //MessageBox.Show(e.X.ToString() + " " + e.Y.ToString());
+        {            
             startPt.X = e.X;
             startPt.Y = e.Y;
-
-
-
         }
 
 
         private void panel3_move_up(object sender, MouseEventArgs e)
         {
-
-            //MessageBox.Show(xDiff.ToString() + "  " + yDiff.ToString());
             endPt.X = e.X;
             endPt.Y = e.Y;
             int xdelta = startPt.X - endPt.X;
@@ -848,9 +829,6 @@ namespace Assignment4
         }
 
 
-
-
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -859,14 +837,11 @@ namespace Assignment4
                 panel3.Refresh();
             }
         }
-        private void mouse_hover(object sender, EventArgs e)
+
+        private void panel3MouseMove(object sender, MouseEventArgs e)
         {
-            
             toolTip1.Active = true;
-            
             var pos = panel3.PointToClient(Cursor.Position);
-            /////
-            ///
             IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
             //select Dek and Syc people to the allPople
             var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
@@ -937,7 +912,6 @@ namespace Assignment4
                         }
                     }
                 }
-                //toolTip1.Show(propertyInfor, panel3);
             }
 
             //for the searched results
@@ -979,103 +953,11 @@ namespace Assignment4
             }
             toolTip1.Show(propertyInfor, panel3);
             
-            
-
-        }
-
-
-
-
-        private void panel3MouseMove(object sender, MouseEventArgs e)
-        {
-
-
-
-
-            
-            
-            toolTip1.Active = true;
-            bool switchToolTip = false;
-            var pos = panel3.PointToClient(Cursor.Position);
-
-            IEnumerable<Person> allPeople = Enumerable.Empty<Person>();
-            //select Dek and Syc people to the allPople
-            var selectedCommunityNameDek = from propDek in CommunitiesList where ((propDek.Name == "Dekalb")) select propDek;
-            var selectedCommunityDek = selectedCommunityNameDek.First();
-            var selectedCommunityNameSyc = from propDek in CommunitiesList where ((propDek.Name == "Sycamore")) select propDek;
-            var selectedCommunitySyc = selectedCommunityNameSyc.First();
-            allPeople = selectedCommunitySyc.Residents.Union(selectedCommunityDek.Residents);
-            
-
-            int X = pos.X;
-            int Y = pos.Y;
-            float xProjected = 0;
-            float yProjected = 0;
-            int distanceThreshold = 20;
-            string propertyInfor = "";
-
-
-            if (panelReset == true)
+            if (Sleep > 75)
             {
-
-                var lstDekalb = CommunitiesList.Where(x => x.Name.ToLower() == "dekalb").FirstOrDefault();
-                var grpDek = lstDekalb.Props;
-
-                foreach (var item in grpDek)
-                {
-                    if ((Math.Abs(X - (2 * item.X * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
-                    {
-                        switchToolTip = true;
-                    }
-                }
-                var lstSycamore = CommunitiesList.Where(x => x.Name.ToLower() == "Sycamore".ToLower()).FirstOrDefault();
-                var grpSyc = lstSycamore.Props;
-                foreach (var item in grpSyc)
-                {
-                    if ((Math.Abs(X - ((250 + (2 * item.X)) * zoom - xDiff)) < distanceThreshold) && (Math.Abs(Y - (2 * item.Y * zoom - yDiff)) < distanceThreshold))
-                    {
-                        switchToolTip = true;
-                    }
-                }
-                //toolTip1.Show(propertyInfor, panel3);
+                System.Threading.Thread.Sleep(200);               
             }
-
-            //for the searched results
-            else
-            {
-                foreach (var res in temp_finQuery)
-                {
-                    if ((res.City.ToLower() == "DeKalb".ToLower()))
-                    {
-                        xProjected = (2 * res.X) * zoom - xDiff;
-                        yProjected = (2 * res.Y) * zoom - yDiff;
-                    }
-                    else
-                    {
-                        xProjected = (250 + (2 * res.X)) * zoom - xDiff;
-                        yProjected = (2 * res.Y) * zoom - yDiff;
-                    }
-                    if ((Math.Abs(X - xProjected) < distanceThreshold) && (Math.Abs(Y - yProjected) < distanceThreshold))
-                    {
-
-                        switchToolTip = true;
-
-                    }
-
-                }
-            }
-
-
-            if (switchToolTip == false)
-            {
-                
-
-                toolTip1.Show("Please hover your mouse on an icon", panel3);
-                ResetMouseEventArgs();
-            }
-
-
-
+            Sleep++;
         }
 
         //Print House info 
@@ -1084,11 +966,10 @@ namespace Assignment4
             House tempHouse = (House)i;
             string houseInfo = "";
             string SalePriceString = "";
-            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
+            
             houseInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
 
-            // result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.");
             houseInfo = houseInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempHouse.Bedrooms.ToString() + " beds, " + tempHouse.Baths.ToString() + " baths, " + tempHouse.Sqft.ToString() + " sq.ft.";
 
             string floorString = tempHouse.Floors > 1 ? "floors" : "floor";
@@ -1104,21 +985,15 @@ namespace Assignment4
                 }
                 if (tempHouse.AttachedGarage == true)
                 {
-                    //result_ListBox.Items.Add(" with an attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
-                    //result_ListBox.Items.Add("");
                     houseInfo = houseInfo + "\n with an attached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
                 }
                 else
                 {
-                    //result_ListBox.Items.Add(" with a detached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
-                    //result_ListBox.Items.Add("");
                     houseInfo = houseInfo + "\n with a detached garage | " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
                 }
             }
             else
             {
-                //result_ListBox.Items.Add(" with no garage: " + tempHouse.Floors.ToString() + " " + floorString + ".     " + String.Format("{0:$0,0}", tempHouse.SalePrice));
-                //result_ListBox.Items.Add("");
                 houseInfo = houseInfo + "\n with no garage: " + tempHouse.Floors.ToString() + " " + floorString + ".     " + SalePriceString;
             }
             return houseInfo;
@@ -1130,12 +1005,12 @@ namespace Assignment4
             Apartment tempApt = (Apartment)i;
             string aptInfo = "";
             string SalePriceString = "";
-            //result_ListBox.Items.Add(i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip);
+           
             aptInfo = i.StreetAddr + " Apt. " + tempApt.Unit + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.");
+            
             aptInfo = aptInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " | " + tempApt.Bedrooms.ToString() + " beds, " + tempApt.Baths.ToString() + " baths, " + tempApt.Sqft.ToString() + " sq.ft.";
-            //result_ListBox.Items.Add(String.Format("{0:$0,0}", tempApt.SalePrice));
+            
             if (tempApt.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tempApt.SalePrice);
@@ -1155,10 +1030,8 @@ namespace Assignment4
             Business tempBus = (Business)i;
             string businessInfo = "";
             string SalePriceString = "";
-            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip);
             businessInfo = i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip;
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            //result_ListBox.Items.Add("Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + String.Format("{0:$0,0}", tempBus.SalePrice));
             if (tempBus.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tempBus.SalePrice);
@@ -1168,11 +1041,8 @@ namespace Assignment4
                 SalePriceString = "";
             }
             businessInfo = businessInfo + "\nOwner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName + " |      " + SalePriceString;
-            //result_ListBox.Items.Add(tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished);
             businessInfo = businessInfo + "\n" + tempBus.Name + ", a " + tempBus.Type.ToString() + " type of business, established in " + tempBus.YearEstablished;
 
-
-            //result_ListBox.Items.Add("");
             return businessInfo;
         }
 
@@ -1183,12 +1053,9 @@ namespace Assignment4
             string schoolInfo = "";
             string SalePriceString = "";
             var ownerInfo = from aperson in allPeople where (aperson.Id.CompareTo(i.OwnerID) == 0) select aperson;
-            //result_ListBox.Items.Add(i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName);
             schoolInfo = schoolInfo + i.StreetAddr + " " + i.City + ", " + i.State + " " + i.Zip + " | " + "Owner: " + ownerInfo.First().LastName + ", " + ownerInfo.First().FirstName;
-            //result_ListBox.Items.Add(tepSch.Name + ", establoshed in " + tepSch.YearEstablished);
-            schoolInfo = schoolInfo + "\n" + tepSch.Name + ", establoshed in " + tepSch.YearEstablished;
+            schoolInfo = schoolInfo + "\n" + tepSch.Name + ", established in " + tepSch.YearEstablished;
 
-            //result_ListBox.Items.Add(tepSch.Enrolled.ToString() + " students enrolled       " + String.Format("{0:$0,0}", tepSch.SalePrice));
             if (tepSch.SalePrice > 100)
             {
                 SalePriceString = String.Format("{0:$0,0}", tepSch.SalePrice);
@@ -1198,12 +1065,9 @@ namespace Assignment4
                 SalePriceString = "";
             }
             schoolInfo = schoolInfo + "\n" + tepSch.Enrolled.ToString() + " students enrolled       " + SalePriceString;
-            //result_ListBox.Items.Add("");
+            
             return schoolInfo;
         }
-
-
-
 
 
         private void panel1_Paint(object sender, PaintEventArgs e)

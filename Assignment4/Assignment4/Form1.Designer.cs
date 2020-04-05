@@ -125,7 +125,6 @@
             this.panel3.TabIndex = 0;
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_move_down);
-            this.panel3.MouseHover += new System.EventHandler(this.mouse_hover);
             this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel3MouseMove);
             this.panel3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel3_move_up);
             // 
