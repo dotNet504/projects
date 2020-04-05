@@ -100,7 +100,6 @@ namespace ASX_Assign4
             sycamoreBusinesses = _businessLayer.lstSycamoreBusiness;
 
 
-
             trackBarMin.Minimum = 0;
             trackBarMin.Maximum = 350000;
             trackBarMax.Minimum = 0;
@@ -211,6 +210,7 @@ namespace ASX_Assign4
 
         }
 
+        //This method is used for Max price scroll bar
         private void scrollMaxPrice(object sender, EventArgs e)
         {
             label8.Text = "Max Price: " + String.Format("{0:$#,0}", trackBarMax.Value);
@@ -222,6 +222,7 @@ namespace ASX_Assign4
             }
         }
 
+        //This method is used for Min price scroll bar
         private void scrollMinPrice(object sender, EventArgs e)
         {
 
@@ -235,10 +236,7 @@ namespace ASX_Assign4
         }
         #endregion
 
-        #region Queries
-
-        //public List<Property> temp_finQuery;
-
+        #region Queries       
 
         // This method handles querying used for the map_drawing
         private void do_query(PaintEventArgs e)
@@ -563,6 +561,7 @@ namespace ASX_Assign4
             //MessageBox.Show(xDiff.ToString() + "  " + yDiff.ToString());
         }
 
+        //This method is used for drawing map on the panel
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
             if (panelReset == false)
@@ -753,7 +752,7 @@ namespace ASX_Assign4
         }
 
 
-
+        //This method is used for zoom track bar
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label10.Text = "Scale: " + trackBar1.Value + " %";
@@ -802,6 +801,7 @@ namespace ASX_Assign4
         public Point endPt;
 
 
+        //This method is used on movedown of map panel 
         private void panel3_move_down(object sender, MouseEventArgs e)
         {            
             startPt.X = e.X;
@@ -809,6 +809,7 @@ namespace ASX_Assign4
         }
 
 
+        //This method is used on moveup of map panel 
         private void panel3_move_up(object sender, MouseEventArgs e)
         {
             endPt.X = e.X;
@@ -841,7 +842,7 @@ namespace ASX_Assign4
             panel3.Refresh();
         }
 
-
+        //This method is used on Key Down
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -851,6 +852,7 @@ namespace ASX_Assign4
             }
         }
 
+        //This method is used on MouseMOve to display tooltip information
         private void panel3MouseMove(object sender, MouseEventArgs e)
         {
             toolTip1.Active = true;
