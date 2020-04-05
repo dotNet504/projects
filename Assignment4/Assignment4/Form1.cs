@@ -79,7 +79,7 @@ namespace ASX_Assign4
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
             label10.Text = "Scale: " + trackBar1.Value + " %";
-            label11.Text = "|_____|_____|";
+
 
 
             _businessLayer = new BusinessLayer();
@@ -98,6 +98,25 @@ namespace ASX_Assign4
             sycamoreSchools = new List<School>();
             sycamoreSchools = _businessLayer.lstSycamoreSchools;
             sycamoreBusinesses = _businessLayer.lstSycamoreBusiness;
+
+            label11.Text = "Scale: " + trackBar1.Value + " %";
+            zoom = trackBar1.Value / 100f;
+            
+            
+            string underScoreSym = "";
+            int underScoreNum = 0;
+            underScoreNum = 5 + Convert.ToInt32(trackBar1.Value / 10);
+            for (int i = 0; i < 10 + underScoreNum; i++)
+
+            {
+                underScoreSym = underScoreSym + '-';
+            }
+            label11.Text = '|' + underScoreSym + '|' + underScoreSym + '|';
+            label14.Location = new Point(label11.Location.X + label11.Size.Width - Convert.ToInt32(label14.Width / 2), label14.Location.Y);
+            label15.Location = new Point(label11.Location.X + Convert.ToInt32(label11.Size.Width / 2) - Convert.ToInt32(label15.Width / 2), label14.Location.Y);
+            label16.Location = new Point(label11.Location.X + Convert.ToInt32(label11.Size.Width / 4) - Convert.ToInt32(label16.Width / 2), label14.Location.Y);
+            label17.Location = new Point(label11.Location.X + Convert.ToInt32(3 * label11.Size.Width / 4) - Convert.ToInt32(label17.Width / 2), label14.Location.Y);
+
 
 
             trackBarMin.Minimum = 0;
@@ -759,12 +778,17 @@ namespace ASX_Assign4
             zoom = trackBar1.Value / 100f;
             string underScoreSym = "";
 
-            int underScoreNum = Convert.ToInt32(trackBar1.Value / 10) - 10;
+            int underScoreNum = 5 + Convert.ToInt32(trackBar1.Value / 10);
             for (int i = 0; i < 10 + underScoreNum; i++)
+
             {
-                underScoreSym = underScoreSym + '_';
+                underScoreSym = underScoreSym + '-';
             }
             label11.Text = '|' + underScoreSym + '|' + underScoreSym + '|';
+            label14.Location = new Point(label11.Location.X + label11.Size.Width - Convert.ToInt32(label14.Width / 2), label14.Location.Y);
+            label15.Location = new Point(label11.Location.X + Convert.ToInt32(label11.Size.Width / 2) - Convert.ToInt32(label15.Width / 2), label14.Location.Y);
+            label16.Location = new Point(label11.Location.X + Convert.ToInt32(label11.Size.Width / 4) - Convert.ToInt32(label16.Width / 2), label14.Location.Y);
+            label17.Location = new Point(label11.Location.X + Convert.ToInt32(3 * label11.Size.Width / 4) - Convert.ToInt32(label17.Width / 2), label14.Location.Y);
 
             //reset the range of the drawing area
             minX = 0;
@@ -1090,6 +1114,9 @@ namespace ASX_Assign4
 
         }
 
+        private void label16_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
