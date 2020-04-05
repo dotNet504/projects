@@ -41,6 +41,7 @@ namespace ASX_Assign4
         private List<Business> dekalbBusinesses;
         private List<Business> sycamoreBusinesses;
 
+        //obtain the properties from the searched results
         public IEnumerable<Property> temp_finQuery = Enumerable.Empty<Property>();
         private static bool Qreload = false;
 
@@ -52,10 +53,12 @@ namespace ASX_Assign4
         public float zoom = 1f;
 
         //create the range of original PT
+        
         public int minX = 0;
         public int maxX = 0;
         public int minY = 0;
         public int maxY = 0;
+        
 
         //record the displacement
         public int xDiff = 0;
@@ -72,12 +75,12 @@ namespace ASX_Assign4
             //set the range of trackbar 1 from 100% to 175%
             trackBar1.Minimum = 100;
             trackBar1.Maximum = 175;
-            // at the begining the scale is 100% so we diable the two scrollbars
-
+            // at the begining the scale is 100% so we diable the two scrollbars          
             minX = 0;
             maxX = Convert.ToInt32(panel3.Width * zoom) - panel3.Width;
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
+            
             label10.Text = "Scale: " + trackBar1.Value + " %";
 
 
@@ -776,8 +779,9 @@ namespace ASX_Assign4
         {
             label10.Text = "Scale: " + trackBar1.Value + " %";
             zoom = trackBar1.Value / 100f;
+            
+            // adding the distance bar
             string underScoreSym = "";
-
             int underScoreNum = 5 + Convert.ToInt32(trackBar1.Value / 10);
             for (int i = 0; i < 10 + underScoreNum; i++)
 
@@ -796,6 +800,7 @@ namespace ASX_Assign4
             minY = 0;
             maxY = Convert.ToInt32(panel3.Height * zoom) - panel3.Height;
 
+            //if displacement cross the boundary, then drag it to the boundary
             if (xDiff < 0)
             {
                 xDiff = 0;
@@ -827,7 +832,8 @@ namespace ASX_Assign4
 
         //This method is used on movedown of map panel 
         private void panel3_move_down(object sender, MouseEventArgs e)
-        {            
+        { 
+            //record the starting points
             startPt.X = e.X;
             startPt.Y = e.Y;
         }
@@ -836,14 +842,20 @@ namespace ASX_Assign4
         //This method is used on moveup of map panel 
         private void panel3_move_up(object sender, MouseEventArgs e)
         {
+            //record the end points 
             endPt.X = e.X;
             endPt.Y = e.Y;
+
+            //calculate the delta
             int xdelta = startPt.X - endPt.X;
             int ydelta = startPt.Y - endPt.Y;
 
+
+            //calculate the displacement
             xDiff = xDiff + xdelta;
             yDiff = yDiff + ydelta;
 
+            //if displacement cross the boundary, then drag it back
             if (xDiff < 0)
             {
                 xDiff = 0;
