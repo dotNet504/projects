@@ -363,7 +363,12 @@ namespace Asx_Assign5
                     displayText("Pawn", Color.AliceBlue);
                     moveSwitch = PawnProcessing(currentPiece, e.X, e.Y);
                 }
-                
+
+                if (currentPieceName.Contains("King"))
+                {
+                    MessageBox.Show("King");
+                    moveSwitch = KingProcessing(currentPiece, e.X, e.Y);
+                }
 
                 if (moveSwitch==0)
                 {
@@ -378,14 +383,15 @@ namespace Asx_Assign5
 
         private bool checkEmptyGrid(int X, int Y)
         {
-            //MessageBox.Show("check whether it is empty");
+
             int boardX = (X - 10) / 80;
             int boardY = (Y - 10) / 80;
+            //MessageBox.Show("check whether it is empty" + boardX.ToString() + "  " + boardY.ToString());
             Pieces temp1 = _whites.Find(x => ((x.X == 30 + boardX * 80) && (x.Y == 30 + boardY * 80)));
             Pieces temp2 = _blacks.Find(x => ((x.X == 30 + boardX * 80) && (x.Y == 30 + boardY * 80)));
 
-            //no poece in that grid
-            if ((temp1 == null) || (temp2 == null))
+            //no piece in that grid
+            if ((temp1 == null) && (temp2 == null))
             {
                 return true;
             }
@@ -398,7 +404,7 @@ namespace Asx_Assign5
 
         private bool checkEnemyGrid(Pieces currentKnight, int X, int Y)
         {
-            //MessageBox.Show("looking for enemy");
+            
             int currentPieceBoardX = (currentKnight.X - 10) / 80;
             int currentPieceBoardY = (currentKnight.Y - 10) / 80;
             int targetgridBoardX = (X - 10) / 80;
@@ -888,23 +894,94 @@ namespace Asx_Assign5
 
 
         #region Pawn piece
+
+
+
         private bool CheckPawnMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
             int currentPieceBoardY = (currentPiece.Y - 10) / 80;
             int targetgridBoardX = (X - 10) / 80;
             int targetgridBoardY = (Y - 10) / 80;
-            int hstep = 0;
-            int vstep = 0;
+
+            int hstep = targetgridBoardX - currentPieceBoardX;
+            int vstep = targetgridBoardY - currentPieceBoardY;
+
+
+            if ((hstep == 0) && (vstep == 0))
+            {
+                MessageBox.Show("a piece cannot move to his own gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
+            }
+
 
             if (whiteTurnSwitch == true)
             {
-                return true;
+
+                if (currentPieceBoardY == 1)
+                {
+                    if( (vstep ==1) &&  (hstep == 0) && (checkEmptyGrid(X, Y )))   
+                    {
+                        return true;
+                    }
+                    if( (vstep == 2) && (hstep == 0) && (checkEmptyGrid(X, Y )) && (checkEmptyGrid(X, Y -80)))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if ((vstep == 1) && (hstep == 0) && (checkEmptyGrid(X, Y)))
+                    {
+                        return true;
+                    }
+                    if ((vstep == 1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
+                    {
+                        MessageBox.Show("attack!!!!!!!!!!!!!!");
+                        return true;
+                    }
+                    
+                    return false;
+                }
+
             }
             else
             {
-                return true;
+                if (currentPieceBoardY == 6)
+                {
+                    if ((vstep == -1) && (hstep == 0) && (checkEmptyGrid(X, Y)))
+                    {
+                        return true;
+                    }
+                    if ((vstep == -2) && (hstep == 0) && (checkEmptyGrid(X, Y )) && (checkEmptyGrid(X, Y +80)))
+                    {
+                        return true;
+                    }
+
+
+                }
+                else
+                {
+                    if ((vstep == -1) && (hstep == 0) && (checkEmptyGrid(X, Y)))
+                    {
+                        return true;
+                    }
+                    else if ((vstep == -1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
+                    {
+                        MessageBox.Show("attack");
+                        return true;
+                    }
+
+                    return false;
+                }
             }
+            return false;
 
 
 
@@ -914,7 +991,630 @@ namespace Asx_Assign5
         private int PawnProcessing(Pieces currentPiece, int X, int Y)
         {
             //check whether the Rook will move to a reasonbale grid
-            if (CheckQueenMove(currentPiece, X, Y))
+            if (CheckPawnMove(currentPiece, X, Y))
+            {
+                // if the target grid is empty, move the piece on it. 
+                if (checkEmptyGrid(X, Y))
+                {
+
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+                //if the target grid is occupied by enemy, replaceing the Enemy piece 
+                if (checkEnemyGrid(currentPiece, X, Y))
+                {
+
+                    removeEnemyPiece(currentPiece, X, Y);
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+
+
+                if (whiteTurnSwitch == true)
+                {
+                    foreach (var w in _whites)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var w in _blacks)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                return 0;
+            }
+            //the target grid is not reasonable
+            else
+            {
+
+                return 1;
+            }
+        }
+        #endregion
+
+
+        #region King piece
+
+
+        private bool CheckKingMove(Pieces currentPiece, int X, int Y)
+        {
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+
+            int hstep = targetgridBoardX - currentPieceBoardX;
+            int vstep = targetgridBoardY - currentPieceBoardY;
+            Pieces temp;
+
+
+            int tempX = 0;
+            int tempY = 0;
+
+            if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
+            {
+                MessageBox.Show("a piece cannot move to his own gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
+            }
+
+            if ((Math.Abs(hstep) <= 1) && (Math.Abs(vstep) <= 1))
+            {
+
+
+                #region white king
+                if (whiteTurnSwitch == true)
+                {
+                    MessageBox.Show("white turn");
+
+
+                    //cross
+                    #region straight lines
+                    //to right
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY;
+                    while( checkEmptyGrid(30+tempX*80,30 + tempY*80))
+                    {
+                        MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
+                        tempX = tempX + 1;
+                        tempY = tempY;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+
+                    }
+
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+                    //to bottom
+                    tempX = targetgridBoardX;
+                    tempY = targetgridBoardY + 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        MessageBox.Show("to bottom" + tempX.ToString() + "   " + tempY.ToString());
+                        tempX = tempX;
+                        tempY = tempY + 1;
+                        
+
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+                    //to left
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+
+                    //to top
+                    tempX = targetgridBoardX ;
+                    tempY = targetgridBoardY - 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+                    #endregion
+
+
+                    //dignola
+                    #region Diagonal 
+                    //to bottom-left
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY + 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX + 1;
+                        tempY = tempY + 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+                    tempX = targetgridBoardX-1;
+                    tempY = targetgridBoardY-1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+                    tempX = targetgridBoardX-1;
+                    tempY = targetgridBoardY+1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY + 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY - 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX + 1;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+                    #endregion
+                    //L form
+                    for (int i = -2;i<3;i = i+4)
+                        for(int j = -1; j < 2; j = j + 2)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("Knight") ))
+                            {
+                                MessageBox.Show("will be attacked by Knight");
+                                return false;
+                            }
+                        }
+                    for (int i = -1; i < 2; i = i + 2)
+                        for (int j = -2; j < 3; j = j + 4)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("Knight")))
+                            {
+                                MessageBox.Show("will be attacked by Knight");
+                                return false;
+                            }
+                        }
+
+                    //detect Pawn
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY + 1;
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Pawn")))
+                    {
+                        MessageBox.Show("will be attacked by Pawn");
+                        return false;
+                    }
+
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY + 1;
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Pawn")))
+                    {
+                        MessageBox.Show("will be attacked by Pawn");
+                        return false;
+                    }
+                    //detect King
+                    for(int i =-1;i<2;i++)
+                        for (int j = -1; j < 2; j++)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("King")))
+                            {
+                                MessageBox.Show("will be attacked by Pawn");
+                                return false;
+                            }
+                        }
+
+                }
+                #endregion
+
+                #region black king
+                else
+                {
+                    //MessageBox.Show("Black turn");
+
+
+                    //cross
+                    #region straight lines
+                    //to right
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
+                        tempX = tempX + 1;
+                        tempY = tempY;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+
+                    }
+
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+                    //to bottom
+                    tempX = targetgridBoardX;
+                    tempY = targetgridBoardY + 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        MessageBox.Show("to bottom" + tempX.ToString() + "   " + tempY.ToString());
+                        tempX = tempX;
+                        tempY = tempY + 1;
+
+
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+                    //to left
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            break;
+                        }
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+
+
+                    //to top
+                    tempX = targetgridBoardX;
+                    tempY = targetgridBoardY - 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if (temp != null)
+                    {
+                        MessageBox.Show(temp.Name);
+                    }
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Rook");
+                        return false;
+                    }
+                    #endregion
+
+
+                    //dignola
+                    #region Diagonal 
+                    //to bottom-left
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY + 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX + 1;
+                        tempY = tempY + 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY - 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY + 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX - 1;
+                        tempY = tempY + 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+
+
+
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY - 1;
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    {
+                        tempX = tempX + 1;
+                        tempY = tempY - 1;
+                        if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
+                        {
+                            MessageBox.Show("time to break");
+                            break;
+                        }
+
+                    }
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
+                    {
+                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        return false;
+                    }
+                    #endregion
+                    //L form
+                    for (int i = -2; i < 3; i = i + 4)
+                        for (int j = -1; j < 2; j = j + 2)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("Knight")))
+                            {
+                                MessageBox.Show("will be attacked by Knight");
+                                return false;
+                            }
+                        }
+                    for (int i = -1; i < 2; i = i + 2)
+                        for (int j = -2; j < 3; j = j + 4)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("Knight")))
+                            {
+                                MessageBox.Show("will be attacked by Knight");
+                                return false;
+                            }
+                        }
+
+                    //detect Pawn
+                    tempX = targetgridBoardX + 1;
+                    tempY = targetgridBoardY + 1;
+                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Pawn")))
+                    {
+                        MessageBox.Show("will be attacked by Pawn");
+                        return false;
+                    }
+
+                    tempX = targetgridBoardX - 1;
+                    tempY = targetgridBoardY + 1;
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    if ((temp != null) && (temp.Name.Contains("Pawn")))
+                    {
+                        MessageBox.Show("will be attacked by Pawn");
+                        return false;
+                    }
+                    //detect King
+                    for (int i = -1; i < 2; i++)
+                        for (int j = -1; j < 2; j++)
+                        {
+                            tempX = targetgridBoardX + i;
+                            tempY = targetgridBoardY + j;
+                            temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                            if ((temp != null) && (temp.Name.Contains("King")))
+                            {
+                                MessageBox.Show("will be attacked by Pawn");
+                                return false;
+                            }
+                        }
+
+                }
+                #endregion
+            }
+            else
+            {
+                MessageBox.Show("one step please");
+                return false;
+            }
+            MessageBox.Show("yes this step is right");
+            return true;
+
+
+
+
+
+        }
+        private int KingProcessing(Pieces currentPiece, int X, int Y)
+        {
+            //check whether the knight will move to a reasonbale grid
+            if (CheckKingMove(currentPiece, X, Y))
             {
                 // if the target grid is empty, move the piece on it. 
                 if (checkEmptyGrid(X, Y))
@@ -962,7 +1662,10 @@ namespace Asx_Assign5
                 return 1;
             }
         }
+
+
         #endregion
+
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -982,5 +1685,6 @@ namespace Asx_Assign5
             DISPLAY_COLOR = t;
             pictureBox1.Refresh();
         }
+
     }
 }
