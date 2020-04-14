@@ -134,12 +134,13 @@ namespace Asx_Assign5
         {
             int xSpace = -10;
             _whites = new List<Pieces>();
-
+            /*
             int iXPawn = 0;
             for (int i = 0; i < 8; i++)
             {
                 var p = new Pieces
                 {
+                    
                     Name = "Pawn" + (i + 1),
                     Icon = Image.FromFile(@"../../../Asx_Assign5/Images/WhitePawn.png"),
                     X = 40 + xSpace + iXPawn,
@@ -148,6 +149,7 @@ namespace Asx_Assign5
                 _whites.Add(p);
                 iXPawn += 80;
             }
+            */
             _whites.Add(new Pieces
             {
                 Name = "King",
@@ -215,6 +217,8 @@ namespace Asx_Assign5
             int xSpace = -10;
             _blacks = new List<Pieces>();
 
+
+            /*
             int iXPawn = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -227,7 +231,7 @@ namespace Asx_Assign5
                 };
                 _blacks.Add(p);
                 iXPawn += 80;
-            }
+            }*/
             _blacks.Add(new Pieces
             {
                 Name = "King",
@@ -337,9 +341,20 @@ namespace Asx_Assign5
                 }
                 if (currentPieceName.Contains("Bishop"))
                 {
-                    MessageBox.Show("Bishop");
+                    //MessageBox.Show("Bishop");
                     moveSwitch = BishopProcessing(currentPiece, e.X, e.Y);
                 }
+                if (currentPieceName.Contains("Rook"))
+                {
+                    MessageBox.Show("Rook");
+                    moveSwitch = RookProcessing(currentPiece, e.X, e.Y);
+                }
+                if (currentPieceName.Contains("Queen"))
+                {
+                    MessageBox.Show("Queen");
+                    moveSwitch = QueenProcessing(currentPiece, e.X, e.Y);
+                }
+
                 if (moveSwitch==0)
                 {
                     whiteTurnSwitch = !whiteTurnSwitch;
@@ -446,6 +461,19 @@ namespace Asx_Assign5
             //MessageBox.Show(    Math.Abs(currentPieceBoardX - targetgridBoardX).ToString()   );
             //MessageBox.Show(   Math.Abs(currentPieceBoardY - targetgridBoardY).ToString()    );
 
+            if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
+            {
+                MessageBox.Show("a piece cannot move to his gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
+            }
+
+
             if ((Math.Abs(currentPieceBoardX - targetgridBoardX) == 1) && (Math.Abs(currentPieceBoardY - targetgridBoardY) == 2))
             {
 
@@ -459,6 +487,8 @@ namespace Asx_Assign5
         }
         private int KnightProcessing(Pieces currentKnight, int X,int Y)
         {
+
+            //check whether the knight will move to a reasonbale grid
             if (CheckKnightMove(currentKnight, X, Y))
             {
                 // if the target grid is empty, move the piece on it. 
@@ -501,72 +531,355 @@ namespace Asx_Assign5
                 }
                 return 0;
             }
+            //the target grid is not reasonable
             else
             {
                 return 1;
             }
-            #endregion
+            
         }
-
+        #endregion
         #region Bishop piece
-        private bool CheckBishopMove(Pieces currentKnight, int X, int Y)
-        {
-            return 1
-        }
-        private int BishopProcessing(Pieces currentPiece, int X, int Y)
+        private bool CheckBishopMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
             int currentPieceBoardY = (currentPiece.Y - 10) / 80;
             int targetgridBoardX = (X - 10) / 80;
             int targetgridBoardY = (Y - 10) / 80;
-
-            if (Math.Abs(currentPieceBoardX - targetgridBoardX) != Math.Abs(currentPieceBoardY - targetgridBoardY))
+            
+            if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("bishop piece should move in any direction diagonally.");
-                return 1;
+                MessageBox.Show("a piece cannot move to his gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX >7) || (targetgridBoardY <0 )|| (targetgridBoardY>7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
             }
 
-            currentPiece.X = 30 + ((X - 10) / 80) * 80;
-            currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
-            if ()
-
-            //update the position for the new move
-            if (whiteTurnSwitch == true)
+            if (   (currentPieceBoardX - targetgridBoardX)  != (currentPieceBoardY - targetgridBoardY)   )
             {
-                foreach (var w in _whites)
+                MessageBox.Show("Bishop should go dignoal ");
+                return false;
+            }
+
+            //MessageBox.Show()
+            int hstep = (targetgridBoardX - currentPieceBoardX)/Math.Abs(targetgridBoardX - currentPieceBoardX);
+            int vstep = (targetgridBoardY - currentPieceBoardY)/ Math.Abs(targetgridBoardY - currentPieceBoardY);
+
+            //check whether some pieces on the path
+            for (int i = 0; i < Math.Abs(targetgridBoardX - currentPieceBoardX)-1; i++ )
+            {
+                Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1 ) * vstep) * 80)));
+                Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                if ((temp1 != null) || (temp1 != null))
                 {
-                    if (w.Name == currentPiece.Name)
+                    MessageBox.Show("sth is on the path");
+                    return false;
+                }
+
+            }
+            return true;
+
+        }
+        private int BishopProcessing(Pieces currentPiece, int X, int Y)
+        {
+
+            //check whether the Bishop will move to a reasonbale grid
+            if (CheckBishopMove(currentPiece, X, Y))
+            {
+                // if the target grid is empty, move the piece on it. 
+                if (checkEmptyGrid(X, Y))
+                {
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+                //if the target grid is occupied by enemy, replaceing the Enemy piece 
+                if (checkEnemyGrid(currentPiece, X, Y))
+                {
+                    //MessageBox.Show("enemy is found");
+                    removeEnemyPiece(currentPiece, X, Y);
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+
+
+                if (whiteTurnSwitch == true)
+                {
+                    foreach (var w in _whites)
                     {
-                        MessageBox.Show("changing it");
-                        w.X = currentPiece.X;
-                        w.Y = currentPiece.Y;
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
                     }
                 }
+                else
+                {
+                    foreach (var w in _blacks)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                return 0;
             }
+            //the target grid is not reasonable
             else
             {
-                foreach (var w in _blacks)
-                {
-                    if (w.Name == currentPiece.Name)
-                    {
-                        w.X = currentPiece.X;
-                        w.Y = currentPiece.Y;
-                    }
-                }
-            }
-
-            return 0;
-
-
-
-            
+                return 1;
+            }            
         }
 
 
         #endregion
 
+        #region Rook piece
+
+        private bool CheckRookMove(Pieces currentPiece, int X, int Y)
+        {
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+            int hstep = 0;
+            int vstep = 0;
+
+            if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
+            {
+                MessageBox.Show("a piece cannot move to his own gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
+            }
+            if (  ((currentPieceBoardX - targetgridBoardX) != 0)  && (currentPieceBoardY - targetgridBoardY)!=0  )
+            {
+                MessageBox.Show("Rook should go stright.");
+                return false;
+            }
+
+            
+            if ( (currentPieceBoardX - targetgridBoardX) == 0  )
+            {
+                vstep = (targetgridBoardY - currentPieceBoardY) / Math.Abs(targetgridBoardY - currentPieceBoardY);
+            }
+            if ((currentPieceBoardY - targetgridBoardY) == 0)
+            {
+                hstep = (targetgridBoardX - currentPieceBoardX) / Math.Abs(targetgridBoardX - currentPieceBoardX);
+            }
+
+                
+            
+
+            //check whether some pieces on the path
+            for (int i = 0; i < Math.Abs(targetgridBoardX - currentPieceBoardX) - 1; i++)
+            {
+                Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                if ((temp1 != null) || (temp1 != null))
+                {
+                    MessageBox.Show("sth is on the path");
+                    return false;
+                }
+
+            }
+            return true;
+
+        }
+
+
+        private int RookProcessing(Pieces currentPiece, int X, int Y)
+        {
+            //check whether the Rook will move to a reasonbale grid
+            if (CheckRookMove(currentPiece, X, Y))
+            {
+                // if the target grid is empty, move the piece on it. 
+                if (checkEmptyGrid(X, Y))
+                {
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+                //if the target grid is occupied by enemy, replaceing the Enemy piece 
+                if (checkEnemyGrid(currentPiece, X, Y))
+                {
+                    //MessageBox.Show("enemy is found");
+                    removeEnemyPiece(currentPiece, X, Y);
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+
+
+                if (whiteTurnSwitch == true)
+                {
+                    foreach (var w in _whites)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var w in _blacks)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                return 0;
+            }
+            //the target grid is not reasonable
+            else
+            {
+                return 1;
+            }
+        }
+
+
+        #endregion
+
+        #region queen piece
+
+        private bool CheckQueenMove(Pieces currentPiece, int X, int Y)
+        {
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+            int hstep = 0;
+            int vstep = 0;
+
+            if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
+            {
+                MessageBox.Show("a piece cannot move to his own gird");
+                return false;
+            }
+            if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
+            {
+                MessageBox.Show("a piece cannot move to outside");
+                return false;
+
+            }
+            if (  ((currentPieceBoardX - targetgridBoardX) == 0) || ((currentPieceBoardY - targetgridBoardY) == 0) || (Math.Abs(currentPieceBoardX - targetgridBoardX) == Math.Abs(currentPieceBoardY - targetgridBoardY)))
+            {
+                if ((currentPieceBoardX - targetgridBoardX) == 0)
+                {
+                    vstep = (targetgridBoardY - currentPieceBoardY) / Math.Abs(targetgridBoardY - currentPieceBoardY);
+                }
+                else if ((currentPieceBoardY - targetgridBoardY) == 0)
+                {
+                    hstep = (targetgridBoardX - currentPieceBoardX) / Math.Abs(targetgridBoardX - currentPieceBoardX);
+                }
+                else
+                {
+                    hstep = (targetgridBoardX - currentPieceBoardX) / Math.Abs(targetgridBoardX - currentPieceBoardX);
+                    vstep = (targetgridBoardY - currentPieceBoardY) / Math.Abs(targetgridBoardY - currentPieceBoardY);
+                }
+
+                //check whether some pieces on the path
+                for (int i = 0; i < Math.Abs(targetgridBoardX - currentPieceBoardX) - 1; i++)
+                {
+                    Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                    Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                    if ((temp1 != null) || (temp1 != null))
+                    {
+                        MessageBox.Show("sth is on the path");
+                        return false;
+                    }
+
+                }
+                return true;
+
+            }
+            else
+            {
+                MessageBox.Show("queen's move is illgel.");
+                return false;
+            }
 
 
 
+
+
+
+
+
+
+        }
+
+
+        private int QueenProcessing(Pieces currentPiece, int X, int Y)
+        {
+            //check whether the Rook will move to a reasonbale grid
+            if (CheckQueenMove(currentPiece, X, Y))
+            {
+                // if the target grid is empty, move the piece on it. 
+                if (checkEmptyGrid(X, Y))
+                {
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+                //if the target grid is occupied by enemy, replaceing the Enemy piece 
+                if (checkEnemyGrid(currentPiece, X, Y))
+                {
+                    //MessageBox.Show("enemy is found");
+                    removeEnemyPiece(currentPiece, X, Y);
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+
+
+                if (whiteTurnSwitch == true)
+                {
+                    foreach (var w in _whites)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var w in _blacks)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                return 0;
+            }
+            //the target grid is not reasonable
+            else
+            {
+                return 1;
+            }
+        }
+        #endregion
+
+
+        #region Pawn piece
+
+
+        #endregion
     }
 }
