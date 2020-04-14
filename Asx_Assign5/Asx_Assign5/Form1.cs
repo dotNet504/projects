@@ -631,7 +631,7 @@ namespace Asx_Assign5
             {
                 Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1 ) * vstep) * 80)));
                 Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
-                if ((temp1 != null) || (temp1 != null))
+                if ((temp1 != null) || (temp2 != null))
                 {
                     //MessageBox.Show("This move is illegal. Something is on his path.");
                     return false;
