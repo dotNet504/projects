@@ -322,13 +322,53 @@ namespace Asx_Assign5
             {
                 temp = _blacks.Find(x => ((x.X == 30 + boardX * 80) && (x.Y == 30 + boardY * 80)));
             }
-            
+            RedraweBoard(g);
             //if sth is selected and nothing is selected in the last step
             if (temp != null )
             {
                 //MessageBox.Show("step 1");
                 currentPiece = temp;
+                g.DrawRectangle(new Pen(Brushes.Red, 5), new Rectangle(10 + boardX * 80+5, 10 + boardY * 80+5, 70, 70));
                 moveSwitch = 1;
+
+                //visualize the possible grid
+                if (currentPiece.Name.Contains("Knight"))
+                {
+
+                    KnightPossibleGrid(currentPiece);
+
+                }
+               
+                if (currentPiece.Name.Contains("Bishop"))
+                {
+ 
+                    BishopPossibleGrid(currentPiece);
+                }
+                
+               if (currentPiece.Name.Contains("Rook"))
+               {
+
+                   RookPossibleGrid(currentPiece);
+               }
+                
+                if (currentPiece.Name.Contains("Queen"))
+                {
+
+                    QueenPossibleGrid(currentPiece);
+                }
+                
+                if (currentPiece.Name.Contains("Pawn"))
+                {
+                    PawnPossibleGrid(currentPiece);
+                }
+                
+                if (currentPiece.Name.Contains("King"))
+                {
+                    KingPossibleGrid(currentPiece);
+                }
+
+
+
                 return;
             }
 
@@ -341,32 +381,33 @@ namespace Asx_Assign5
                 {
                     //if the knight is moved, return 0, otherwise,return 1
                     moveSwitch = KnightProcessing(currentPiece, e.X, e.Y);
+
                 }
                 if (currentPieceName.Contains("Bishop"))
                 {
-                    //MessageBox.Show("Bishop");
+
                     moveSwitch = BishopProcessing(currentPiece, e.X, e.Y);
                 }
                 if (currentPieceName.Contains("Rook"))
                 {
-                    MessageBox.Show("Rook");
+
                     moveSwitch = RookProcessing(currentPiece, e.X, e.Y);
                 }
                 if (currentPieceName.Contains("Queen"))
                 {
-                    MessageBox.Show("Queen");
+
                     moveSwitch = QueenProcessing(currentPiece, e.X, e.Y);
                 }
                 if (currentPieceName.Contains("Pawn"))
                 {
-                    //MessageBox.Show("Pawn");
+
                     displayText("Pawn", Color.AliceBlue);
                     moveSwitch = PawnProcessing(currentPiece, e.X, e.Y);
                 }
 
                 if (currentPieceName.Contains("King"))
                 {
-                    MessageBox.Show("King");
+
                     moveSwitch = KingProcessing(currentPiece, e.X, e.Y);
                 }
 
@@ -474,17 +515,15 @@ namespace Asx_Assign5
             int targetgridBoardX = (X - 10) / 80;
             int targetgridBoardY = (Y - 10) / 80;
 
-            //MessageBox.Show(    Math.Abs(currentPieceBoardX - targetgridBoardX).ToString()   );
-            //MessageBox.Show(   Math.Abs(currentPieceBoardY - targetgridBoardY).ToString()    );
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("a piece cannot move to his gird");
+                //MessageBox.Show("A piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                MessageBox.Show("a piece cannot move to outside");
+                //MessageBox.Show("A piece cannot move to outside");
                 return false;
 
             }
@@ -520,6 +559,7 @@ namespace Asx_Assign5
                     removeEnemyPiece(currentKnight, X, Y);
                     currentPiece.X = 30 + ((X - 10) / 80) * 80;
                     currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+
                 }
 
 
@@ -550,6 +590,7 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
+                MessageBox.Show("This piece cannot reach that square.");
                 return 1;
             }
             
@@ -565,7 +606,7 @@ namespace Asx_Assign5
             
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("a piece cannot move to his gird");
+                //MessageBox.Show("a piece cannot move to his gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX >7) || (targetgridBoardY <0 )|| (targetgridBoardY>7))
@@ -575,9 +616,9 @@ namespace Asx_Assign5
 
             }
 
-            if (   (currentPieceBoardX - targetgridBoardX)  != (currentPieceBoardY - targetgridBoardY)   )
+            if (   Math.Abs(currentPieceBoardX - targetgridBoardX)  != Math.Abs(currentPieceBoardY - targetgridBoardY)   )
             {
-                MessageBox.Show("Bishop should go dignoal ");
+                //MessageBox.Show("Bishop should go dignoal direction");
                 return false;
             }
 
@@ -592,7 +633,7 @@ namespace Asx_Assign5
                 Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
                 if ((temp1 != null) || (temp1 != null))
                 {
-                    MessageBox.Show("sth is on the path");
+                    //MessageBox.Show("This move is illegal. Something is on his path.");
                     return false;
                 }
 
@@ -649,6 +690,7 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
+                MessageBox.Show("This piece cannot reach that square");
                 return 1;
             }            
         }
@@ -669,18 +711,18 @@ namespace Asx_Assign5
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("a piece cannot move to his own gird");
+                //MessageBox.Show("A piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                MessageBox.Show("a piece cannot move to outside");
+                MessageBox.Show("A piece cannot move to outside");
                 return false;
 
             }
             if (  ((currentPieceBoardX - targetgridBoardX) != 0)  && (currentPieceBoardY - targetgridBoardY)!=0  )
             {
-                MessageBox.Show("Rook should go stright.");
+                //MessageBox.Show("Rook can only move in a stright line.");
                 return false;
             }
 
@@ -700,11 +742,22 @@ namespace Asx_Assign5
             //check whether some pieces on the path
             for (int i = 0; i < Math.Abs(targetgridBoardX - currentPieceBoardX) - 1; i++)
             {
-                Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
-                Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
-                if ((temp1 != null) || (temp1 != null))
+                Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i ) * vstep) * 80)));
+                Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i ) * vstep) * 80)));
+                if ((temp1 != null) || (temp2 != null))
                 {
-                    MessageBox.Show("sth is on the path");
+                    //MessageBox.Show("This move is illegal.Somethig is on his path.");
+                    return false;
+                }
+
+            }
+            for (int i = 0; i < Math.Abs(targetgridBoardY - currentPieceBoardY) - 1; i++)
+            {
+                Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i ) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i ) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                if ((temp1 != null) || (temp2 != null))
+                {
+                    //MessageBox.Show("This move is illegal.Somethig is on his path.");
                     return false;
                 }
 
@@ -762,6 +815,7 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
+                MessageBox.Show("This piece cannot reach that square");
                 return 1;
             }
         }
@@ -782,12 +836,12 @@ namespace Asx_Assign5
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("a piece cannot move to his own gird");
+                //MessageBox.Show("a piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                MessageBox.Show("a piece cannot move to outside");
+                //MessageBox.Show("a piece cannot move to outside");
                 return false;
 
             }
@@ -812,29 +866,35 @@ namespace Asx_Assign5
                 {
                     Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
                     Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
-                    if ((temp1 != null) || (temp1 != null))
+                    if ((temp1 != null) || (temp2 != null))
                     {
-                        MessageBox.Show("sth is on the path");
+                        //MessageBox.Show("sth is on the path");
                         return false;
                     }
 
                 }
+
+                for (int i = 0; i < Math.Abs(targetgridBoardY - currentPieceBoardY) - 1; i++)
+                {
+                    Pieces temp1 = _whites.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                    Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
+                    if ((temp1 != null) || (temp2 != null))
+                    {
+                        //MessageBox.Show("sth is on the path");
+                        return false;
+                    }
+
+                }
+
+
                 return true;
 
             }
             else
             {
-                MessageBox.Show("queen's move is illgel.");
+                
                 return false;
             }
-
-
-
-
-
-
-
-
 
         }
 
@@ -887,6 +947,7 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
+                MessageBox.Show("This piece cannot reach that square");
                 return 1;
             }
         }
@@ -910,12 +971,12 @@ namespace Asx_Assign5
 
             if ((hstep == 0) && (vstep == 0))
             {
-                MessageBox.Show("a piece cannot move to his own gird");
+                //MessageBox.Show("a piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                MessageBox.Show("a piece cannot move to outside");
+                //MessageBox.Show("a piece cannot move to outside");
                 return false;
 
             }
@@ -934,6 +995,11 @@ namespace Asx_Assign5
                     {
                         return true;
                     }
+                    if ((vstep == 1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
+                    {
+                        //MessageBox.Show("attack!!!!!!!!!!!!!!");
+                        return true;
+                    }
                 }
                 else
                 {
@@ -943,7 +1009,7 @@ namespace Asx_Assign5
                     }
                     if ((vstep == 1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
                     {
-                        MessageBox.Show("attack!!!!!!!!!!!!!!");
+                        //MessageBox.Show("attack!!!!!!!!!!!!!!");
                         return true;
                     }
                     
@@ -963,7 +1029,11 @@ namespace Asx_Assign5
                     {
                         return true;
                     }
-
+                    if ((vstep == -1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
+                    {
+                        //MessageBox.Show("attack!!!!!!!!!!!!!!");
+                        return true;
+                    }
 
                 }
                 else
@@ -974,7 +1044,7 @@ namespace Asx_Assign5
                     }
                     else if ((vstep == -1) && (Math.Abs(hstep) == 1) && (checkEnemyGrid(currentPiece, X, Y)))
                     {
-                        MessageBox.Show("attack");
+                        //MessageBox.Show("attack");
                         return true;
                     }
 
@@ -1037,7 +1107,7 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
-
+                MessageBox.Show("This piece cannot reach that square");
                 return 1;
             }
         }
@@ -1045,8 +1115,6 @@ namespace Asx_Assign5
 
 
         #region King piece
-
-
         private bool CheckKingMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -1064,12 +1132,12 @@ namespace Asx_Assign5
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                MessageBox.Show("a piece cannot move to his own gird");
+                //MessageBox.Show("a piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                MessageBox.Show("a piece cannot move to outside");
+                //MessageBox.Show("a piece cannot move to outside");
                 return false;
 
             }
@@ -1081,9 +1149,6 @@ namespace Asx_Assign5
                 #region white king
                 if (whiteTurnSwitch == true)
                 {
-                    MessageBox.Show("white turn");
-
-
                     //cross
                     #region straight lines
                     //to right
@@ -1091,7 +1156,7 @@ namespace Asx_Assign5
                     tempY = targetgridBoardY;
                     while( checkEmptyGrid(30+tempX*80,30 + tempY*80))
                     {
-                        MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
+                        //MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
                         tempX = tempX + 1;
                         tempY = tempY;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
@@ -1100,16 +1165,10 @@ namespace Asx_Assign5
                         }
 
                     }
-
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
-
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1117,25 +1176,18 @@ namespace Asx_Assign5
                     tempX = targetgridBoardX;
                     tempY = targetgridBoardY + 1;
                     while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
-                    {
-                        MessageBox.Show("to bottom" + tempX.ToString() + "   " + tempY.ToString());
+                    {                   
                         tempX = tempX;
-                        tempY = tempY + 1;
-                        
-
+                        tempY = tempY + 1;                        
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
                         }
                     }
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1152,13 +1204,10 @@ namespace Asx_Assign5
                         }
                     }
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
+
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1172,19 +1221,15 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
                             break;
                         }
 
                     }
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
+
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
                     #endregion
@@ -1201,7 +1246,6 @@ namespace Asx_Assign5
                         tempY = tempY + 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1210,7 +1254,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1223,14 +1267,13 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
                             break;
                         }
                     }
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1243,7 +1286,7 @@ namespace Asx_Assign5
                         tempY = tempY + 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
+                            //MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1251,7 +1294,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1265,7 +1308,6 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1273,7 +1315,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
                     #endregion
@@ -1286,7 +1328,7 @@ namespace Asx_Assign5
                             temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("Knight") ))
                             {
-                                MessageBox.Show("will be attacked by Knight");
+                                //MessageBox.Show("will be attacked by Knight");
                                 return false;
                             }
                         }
@@ -1298,7 +1340,7 @@ namespace Asx_Assign5
                             temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("Knight")))
                             {
-                                MessageBox.Show("will be attacked by Knight");
+                                //MessageBox.Show("will be attacked by Knight");
                                 return false;
                             }
                         }
@@ -1309,7 +1351,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        MessageBox.Show("will be attacked by Pawn");
+                        //MessageBox.Show("will be attacked by Pawn");
                         return false;
                     }
 
@@ -1318,7 +1360,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        MessageBox.Show("will be attacked by Pawn");
+                        //MessageBox.Show("will be attacked by Pawn");
                         return false;
                     }
                     //detect King
@@ -1330,7 +1372,7 @@ namespace Asx_Assign5
                             temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("King")))
                             {
-                                MessageBox.Show("will be attacked by Pawn");
+                                //MessageBox.Show("will be attacked by Pawn");
                                 return false;
                             }
                         }
@@ -1341,17 +1383,13 @@ namespace Asx_Assign5
                 #region black king
                 else
                 {
-                    //MessageBox.Show("Black turn");
-
-
                     //cross
                     #region straight lines
                     //to right
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY;
                     while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
-                    {
-                        MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
+                    {                  
                         tempX = tempX + 1;
                         tempY = tempY;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
@@ -1362,14 +1400,10 @@ namespace Asx_Assign5
                     }
 
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
 
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1377,11 +1411,9 @@ namespace Asx_Assign5
                     tempX = targetgridBoardX;
                     tempY = targetgridBoardY + 1;
                     while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
-                    {
-                        MessageBox.Show("to bottom" + tempX.ToString() + "   " + tempY.ToString());
+                    {             
                         tempX = tempX;
                         tempY = tempY + 1;
-
 
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
@@ -1389,13 +1421,10 @@ namespace Asx_Assign5
                         }
                     }
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
+
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1412,13 +1441,10 @@ namespace Asx_Assign5
                         }
                     }
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
+
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
 
@@ -1432,19 +1458,16 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
+                            //MessageBox.Show("time to break");
                             break;
                         }
 
                     }
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
-                    if (temp != null)
-                    {
-                        MessageBox.Show(temp.Name);
-                    }
+
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Rook");
+                        //MessageBox.Show("will be attacked by Queen or Rook");
                         return false;
                     }
                     #endregion
@@ -1461,7 +1484,7 @@ namespace Asx_Assign5
                         tempY = tempY + 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
+                            //MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1470,7 +1493,7 @@ namespace Asx_Assign5
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1483,14 +1506,14 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
+                            //MessageBox.Show("time to break");
                             break;
                         }
                     }
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1503,7 +1526,7 @@ namespace Asx_Assign5
                         tempY = tempY + 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
+                            //MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1511,7 +1534,7 @@ namespace Asx_Assign5
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
 
@@ -1525,7 +1548,6 @@ namespace Asx_Assign5
                         tempY = tempY - 1;
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
-                            MessageBox.Show("time to break");
                             break;
                         }
 
@@ -1533,7 +1555,7 @@ namespace Asx_Assign5
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
-                        MessageBox.Show("will be attacked by Queen or Bishop");
+                        //MessageBox.Show("will be attacked by Queen or Bishop");
                         return false;
                     }
                     #endregion
@@ -1546,7 +1568,7 @@ namespace Asx_Assign5
                             temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("Knight")))
                             {
-                                MessageBox.Show("will be attacked by Knight");
+                                //MessageBox.Show("will be attacked by Knight");
                                 return false;
                             }
                         }
@@ -1558,27 +1580,27 @@ namespace Asx_Assign5
                             temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("Knight")))
                             {
-                                MessageBox.Show("will be attacked by Knight");
+                                //MessageBox.Show("will be attacked by Knight");
                                 return false;
                             }
                         }
 
                     //detect Pawn
                     tempX = targetgridBoardX + 1;
-                    tempY = targetgridBoardY + 1;
+                    tempY = targetgridBoardY - 1;
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        MessageBox.Show("will be attacked by Pawn");
+                        //MessageBox.Show("will be attacked by Pawn");
                         return false;
                     }
 
                     tempX = targetgridBoardX - 1;
-                    tempY = targetgridBoardY + 1;
+                    tempY = targetgridBoardY - 1;
                     temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        MessageBox.Show("will be attacked by Pawn");
+                        //MessageBox.Show("will be attacked by Pawn");
                         return false;
                     }
                     //detect King
@@ -1590,7 +1612,7 @@ namespace Asx_Assign5
                             temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("King")))
                             {
-                                MessageBox.Show("will be attacked by Pawn");
+                                //MessageBox.Show("will be attacked by Pawn");
                                 return false;
                             }
                         }
@@ -1600,10 +1622,9 @@ namespace Asx_Assign5
             }
             else
             {
-                MessageBox.Show("one step please");
+                //MessageBox.Show("only one pace is allowed");
                 return false;
-            }
-            MessageBox.Show("yes this step is right");
+            }           
             return true;
 
 
@@ -1613,6 +1634,16 @@ namespace Asx_Assign5
         }
         private int KingProcessing(Pieces currentPiece, int X, int Y)
         {
+
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+
+            int hstep = targetgridBoardX - currentPieceBoardX;
+            int vstep = targetgridBoardY - currentPieceBoardY;
+
+
             //check whether the knight will move to a reasonbale grid
             if (CheckKingMove(currentPiece, X, Y))
             {
@@ -1659,12 +1690,122 @@ namespace Asx_Assign5
             //the target grid is not reasonable
             else
             {
-                return 1;
+                if (  checkEmptyGrid(X,Y) && ((Math.Abs(hstep) <= 1) && (Math.Abs(vstep) <= 1)) && (CheckKingMove(currentPiece, X, Y)==false) )
+                {
+                    MessageBox.Show("This move exposes the King to attack");
+                    return 1;
+                }
+                else
+                {
+                    MessageBox.Show("This piece cannot reach that squar");
+                    return 1;
+                }
             }
         }
 
 
         #endregion
+
+
+        #region possible grid
+        private void KnightPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+            for (int i = 0; i<8;i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ( (CheckKnightMove(currentPiece,30+i*80,30+j*80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80))   )
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+
+
+        }
+
+        private void BishopPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+            
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((CheckBishopMove(currentPiece, 30 + i * 80, 30 + j * 80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80)))
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+
+
+        }
+
+        private void RookPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((CheckRookMove(currentPiece, 30 + i * 80, 30 + j * 80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80)))
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80+10, 60, 60));
+                    }
+                }
+        }
+
+
+        private void QueenPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((CheckQueenMove(currentPiece, 30 + i * 80, 30 + j * 80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80)))
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80+10, 10 + j * 80+10, 60, 60));
+                    }
+                }
+        }
+
+
+        private void PawnPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((CheckPawnMove(currentPiece, 30 + i * 80, 30 + j * 80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80)))
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80+10, 10 + j * 80+10, 60, 60));
+                    }
+                }
+
+        }
+
+        private void KingPossibleGrid(Pieces currentPiece)
+        {
+            Graphics g;
+            g = this.CreateGraphics();
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ((CheckKingMove(currentPiece, 30 + i * 80, 30 + j * 80)) && ((checkEmptyGrid(30 + i * 80, 30 + j * 80)) || checkEnemyGrid(currentPiece, 30 + i * 80, 30 + j * 80)))
+                    {
+                        g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80+10, 10 + j * 80+10, 60, 60));
+                    }
+                }
+        }
+
+        #endregion
+
 
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
