@@ -14,6 +14,9 @@ namespace Asx_Assign5
     {
         public List<Pieces> _whites;
         public List<Pieces> _blacks;
+        public string DISPLAY_TEXT = "Welcome to Chess game. We will be having so much FUN!!!\n\nPlayer 1 : White \n\nPlayer 2 : Black\n\nMay the best Player win!\nGoodluck!!!";
+        public Color DISPLAY_COLOR = Color.Green;
+
         public Form1()
         {
             InitializeComponent();
@@ -356,7 +359,8 @@ namespace Asx_Assign5
                 }
                 if (currentPieceName.Contains("Pawn"))
                 {
-                    MessageBox.Show("Pawn");
+                    //MessageBox.Show("Pawn");
+                    displayText("Pawn", Color.AliceBlue);
                     moveSwitch = PawnProcessing(currentPiece, e.X, e.Y);
                 }
                 
@@ -959,5 +963,24 @@ namespace Asx_Assign5
             }
         }
         #endregion
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            using (Font myFont = new Font("Arial", 14))
+            {
+
+                StringFormat drawFormat = new StringFormat();
+                e.Graphics.DrawString(DISPLAY_TEXT, myFont, new SolidBrush(DISPLAY_COLOR), pictureBox1.ClientRectangle);
+               // e.Graphics.DrawString("Hello we are having a good time, so you can go F yourself \n\n\nThe point is : 10 \n\n\n we are good\n", myFont, new SolidBrush(DISPLAY_COLOR), pictureBox1.ClientRectangle);
+
+            }
+        }
+
+        private void displayText(string txt, Color t)
+        {
+            DISPLAY_TEXT = txt;
+            DISPLAY_COLOR = t;
+            pictureBox1.Refresh();
+        }
     }
 }
