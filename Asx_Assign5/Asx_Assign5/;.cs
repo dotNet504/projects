@@ -134,7 +134,7 @@ namespace Asx_Assign5
         {
             int xSpace = -10;
             _whites = new List<Pieces>();
-            /*
+            
             int iXPawn = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -149,7 +149,7 @@ namespace Asx_Assign5
                 _whites.Add(p);
                 iXPawn += 80;
             }
-            */
+            
             _whites.Add(new Pieces
             {
                 Name = "King",
@@ -218,7 +218,7 @@ namespace Asx_Assign5
             _blacks = new List<Pieces>();
 
 
-            /*
+            
             int iXPawn = 0;
             for (int i = 0; i < 8; i++)
             {
@@ -231,7 +231,7 @@ namespace Asx_Assign5
                 };
                 _blacks.Add(p);
                 iXPawn += 80;
-            }*/
+            }
             _blacks.Add(new Pieces
             {
                 Name = "King",
@@ -354,6 +354,12 @@ namespace Asx_Assign5
                     MessageBox.Show("Queen");
                     moveSwitch = QueenProcessing(currentPiece, e.X, e.Y);
                 }
+                if (currentPieceName.Contains("Pawn"))
+                {
+                    MessageBox.Show("Pawn");
+                    moveSwitch = PawnProcessing(currentPiece, e.X, e.Y);
+                }
+                
 
                 if (moveSwitch==0)
                 {
@@ -878,8 +884,80 @@ namespace Asx_Assign5
 
 
         #region Pawn piece
+        private bool CheckPawnMove(Pieces currentPiece, int X, int Y)
+        {
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+            int hstep = 0;
+            int vstep = 0;
+
+            if (whiteTurnSwitch == true)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
 
 
+
+        }
+
+
+        private int PawnProcessing(Pieces currentPiece, int X, int Y)
+        {
+            //check whether the Rook will move to a reasonbale grid
+            if (CheckQueenMove(currentPiece, X, Y))
+            {
+                // if the target grid is empty, move the piece on it. 
+                if (checkEmptyGrid(X, Y))
+                {
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+                //if the target grid is occupied by enemy, replaceing the Enemy piece 
+                if (checkEnemyGrid(currentPiece, X, Y))
+                {
+                    //MessageBox.Show("enemy is found");
+                    removeEnemyPiece(currentPiece, X, Y);
+                    currentPiece.X = 30 + ((X - 10) / 80) * 80;
+                    currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
+                }
+
+
+                if (whiteTurnSwitch == true)
+                {
+                    foreach (var w in _whites)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var w in _blacks)
+                    {
+                        if (w.Name == currentPiece.Name)
+                        {
+                            w.X = currentPiece.X;
+                            w.Y = currentPiece.Y;
+                        }
+                    }
+                }
+                return 0;
+            }
+            //the target grid is not reasonable
+            else
+            {
+                return 1;
+            }
+        }
         #endregion
     }
 }
