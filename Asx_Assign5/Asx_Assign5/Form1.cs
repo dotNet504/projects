@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Asx_Assign5
 {
@@ -16,6 +17,10 @@ namespace Asx_Assign5
         public List<Pieces> _blacks;
         public string DISPLAY_TEXT = "Welcome to Chess game. We will be having so much FUN!!!\n\nPlayer 1 : White \n\nPlayer 2 : Black\n\nMay the best Player win!\nGoodluck!!!";
         public Color DISPLAY_COLOR = Color.Green;
+        public int FONT_SIZE = 14;
+        public Stopwatch TIMER = new Stopwatch();
+        public int MOVES_COUNTER = 0;
+        public bool RED_DISPLAY = false;
 
         public Form1()
         {
@@ -29,6 +34,7 @@ namespace Asx_Assign5
             {
                 InitializeBoard(e.Graphics);
                 initSwitch = 1;
+                TIMER.Start();
             }
             else
             {
@@ -208,7 +214,7 @@ namespace Asx_Assign5
                 _whites.Add(p);
                 iXRook += 560;
             }
-
+      
         }
 
 
@@ -290,8 +296,10 @@ namespace Asx_Assign5
                 _blacks.Add(p);
                 iXRook += 560;
             }
-
+          //  TIMER.Start();
         }
+
+       
         #endregion
 
 
@@ -395,13 +403,11 @@ namespace Asx_Assign5
                 }
                 if (currentPieceName.Contains("Queen"))
                 {
-
                     moveSwitch = QueenProcessing(currentPiece, e.X, e.Y);
                 }
                 if (currentPieceName.Contains("Pawn"))
                 {
 
-                    displayText("Pawn", Color.AliceBlue);
                     moveSwitch = PawnProcessing(currentPiece, e.X, e.Y);
                 }
 
@@ -414,6 +420,24 @@ namespace Asx_Assign5
                 if (moveSwitch==0)
                 {
                     whiteTurnSwitch = !whiteTurnSwitch;
+
+                    if (checkMate())
+                    {
+                        displayText("Checkmate Game Over !!!\n\n", Color.WhiteSmoke, 25);
+                        surrender_button.Visible = true;
+                    }
+                    else if (whiteTurnSwitch.Equals(true))
+                    {
+                        displayText("Player 1's turn", Color.Blue, 20);
+                        RED_DISPLAY = false;
+                    }
+                    else
+                    {
+                        displayText("Player 2's turn", Color.DarkRed, 20);
+                        RED_DISPLAY = true;
+                    }
+
+                    MOVES_COUNTER++;
                     RedraweBoard(g);
                 }
         
@@ -1810,21 +1834,55 @@ namespace Asx_Assign5
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            using (Font myFont = new Font("Arial", 14))
+            using (Font myFont = new Font("Arial", FONT_SIZE))
             {
 
                 StringFormat drawFormat = new StringFormat();
                 e.Graphics.DrawString(DISPLAY_TEXT, myFont, new SolidBrush(DISPLAY_COLOR), pictureBox1.ClientRectangle);
-               // e.Graphics.DrawString("Hello we are having a good time, so you can go F yourself \n\n\nThe point is : 10 \n\n\n we are good\n", myFont, new SolidBrush(DISPLAY_COLOR), pictureBox1.ClientRectangle);
-
             }
         }
 
-        private void displayText(string txt, Color t)
+        private void displayText(string txt, Color t, int fontSize)
         {
             DISPLAY_TEXT = txt;
             DISPLAY_COLOR = t;
+            FONT_SIZE = fontSize;
             pictureBox1.Refresh();
+        }
+
+        private bool checkMate()
+        {
+            UInt16 count = 0;
+
+            foreach (Pieces p in _whites)
+            {
+                if (p.Name.Contains("King"))
+                {
+                    count += 1;
+                }
+            }
+
+            foreach (Pieces p in _blacks)
+            {
+                if (p.Name.Contains("King"))
+                {
+                    count += 1;
+                }
+            }
+
+            return (count < 2) ? true : false;
+        }
+
+        private void surrender_button_Click(object sender, EventArgs e)
+        {
+            TIMER.Stop();
+            TimeSpan timeTaken = TIMER.Elapsed;
+            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Red : Color.Blue;
+            string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 2 won!!!\n\n" : "Player 1 won!!!\n\n";
+            string piecesLost = "Player 1 lost: "+ (16 - _whites.Count()).ToString() + " pieces\nPlayer 2 lost: " + (16 - _blacks.Count()).ToString() + " pieces\n\n";
+            string timeStr = "Duration: " + timeTaken.ToString(@"m\:ss");
+            string moveStr = "Moves Made: " + MOVES_COUNTER.ToString();
+            displayText(whoWon + piecesLost + timeStr + "\n\n" + moveStr, display_color, 23);
         }
 
     }

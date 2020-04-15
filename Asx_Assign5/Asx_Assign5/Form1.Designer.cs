@@ -54,6 +54,8 @@
             this.surrender_button.TabIndex = 1;
             this.surrender_button.Text = "Surrender";
             this.surrender_button.UseVisualStyleBackColor = true;
+            this.surrender_button.Visible = false;
+            this.surrender_button.Click += new System.EventHandler(this.surrender_button_Click);
             // 
             // pictureBox1
             // 
