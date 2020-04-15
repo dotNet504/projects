@@ -423,7 +423,7 @@ namespace Asx_Assign5
 
                     if (checkMate())
                     {
-                        displayText("Checkmate Game Over !!!\n\n", Color.WhiteSmoke, 25);
+                        displayText("Checkmate Game Over !!!\n\n", Color.Green, 25);
                         surrender_button.Visible = true;
                     }
                     else if (whiteTurnSwitch.Equals(true))
@@ -1877,7 +1877,7 @@ namespace Asx_Assign5
         {
             TIMER.Stop();
             TimeSpan timeTaken = TIMER.Elapsed;
-            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Red : Color.Blue;
+            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Black : Color.Beige;
             string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 2 won!!!\n\n" : "Player 1 won!!!\n\n";
             string piecesLost = "Player 1 lost: "+ (16 - _whites.Count()).ToString() + " pieces\nPlayer 2 lost: " + (16 - _blacks.Count()).ToString() + " pieces\n\n";
             string timeStr = "Duration: " + timeTaken.ToString(@"m\:ss");
