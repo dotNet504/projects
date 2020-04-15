@@ -1588,7 +1588,7 @@ namespace Asx_Assign5
                     //detect Pawn
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY - 1;
-                    temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    temp = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
                         //MessageBox.Show("will be attacked by Pawn");
