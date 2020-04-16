@@ -420,6 +420,7 @@ namespace Asx_Assign5
                 if (moveSwitch==0)
                 {
                     whiteTurnSwitch = !whiteTurnSwitch;
+                    //List<Pieces> temp_list = (whiteTurnSwitch.Equals(true)) ? _whites : _blacks;
 
                     if (checkMate())
                     {
@@ -429,11 +430,19 @@ namespace Asx_Assign5
                     else if (whiteTurnSwitch.Equals(true))
                     {
                         displayText("Player 1's turn", Color.Blue, 20);
+                        if (confirmCheck(_whites))
+                        {
+                            displayText("Player 1's turn\n" + "Check", Color.Blue, 30);
+                        }
                         RED_DISPLAY = false;
                     }
                     else
                     {
                         displayText("Player 2's turn", Color.DarkRed, 20);
+                        if (confirmCheck(_blacks))
+                        {
+                            displayText("Player 2's turn\n" + "Check", Color.DarkRed, 30);
+                        }
                         RED_DISPLAY = true;
                     }
 
@@ -1877,12 +1886,171 @@ namespace Asx_Assign5
         {
             TIMER.Stop();
             TimeSpan timeTaken = TIMER.Elapsed;
-            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Black : Color.Beige;
-            string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 2 won!!!\n\n" : "Player 1 won!!!\n\n";
+            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Beige : Color.Black;
+            string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 1 won!!!\n\n" : "Player 2 won!!!\n\n";
             string piecesLost = "Player 1 lost: "+ (16 - _whites.Count()).ToString() + " pieces\nPlayer 2 lost: " + (16 - _blacks.Count()).ToString() + " pieces\n\n";
             string timeStr = "Duration: " + timeTaken.ToString(@"m\:ss");
             string moveStr = "Moves Made: " + MOVES_COUNTER.ToString();
             displayText(whoWon + piecesLost + timeStr + "\n\n" + moveStr, display_color, 23);
+        }
+
+
+        private bool confirmCheck(List<Pieces> lst_pieces)
+        {
+           foreach (Pieces p in lst_pieces)
+            {
+                if(p.Name.Contains("Pawn") && PawnGridCheck(p))
+                {
+                    return true;
+                }
+                else if (p.Name.Contains("Rook") && RookGridCheck(p))
+                {
+                    return true;
+                }
+                else if (p.Name.Contains("Knight") && KnightGridCheck(p))
+                {
+                    return true;
+                }
+                else if (p.Name.Contains("Queen") && QueenGridCheck(p))
+                {
+                    return true;
+                }
+                else if (p.Name.Contains("King") && KingGridCheck(p))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #region Check
+
+        private bool KnightGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if (  CheckKnightMove(currentPiece, 30 + i * 80, 30 + j * 80) &&  checkKing(currentPiece, 30 + i * 80, 30 + j * 80))
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+
+            return false;
+        }
+
+        private bool BishopGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ( CheckBishopMove(currentPiece, 30 + i * 80, 30 + j * 80) && checkKing(currentPiece, 30 + i * 80, 30 + j * 80))
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+
+            return false;
+        }
+
+        private bool RookGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ( CheckRookMove(currentPiece, 30 + i * 80, 30 + j * 80) &&  checkKing(currentPiece, 30 + i * 80, 30 + j * 80)    )
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+            return false;
+        }
+
+
+        private bool QueenGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ( CheckQueenMove(currentPiece, 30 + i * 80, 30 + j * 80) &&  checkKing(currentPiece, 30 + i * 80, 30 + j * 80)   )
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+            return false;
+        }
+
+
+        private bool PawnGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if ( CheckPawnMove(currentPiece, 30 + i * 80, 30 + j * 80) && checkKing(currentPiece, 30 + i * 80, 30 + j * 80) )
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+            return false;
+        }
+
+        private bool KingGridCheck(Pieces currentPiece)
+        {
+
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++)
+                {
+                    if (    CheckKingMove(currentPiece, 30 + i * 80, 30 + j * 80) && checkKing(currentPiece, 30 + i * 80, 30 + j * 80)  )
+                    {
+                        return true;
+                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                    }
+                }
+            return false;
+        }
+
+
+
+        #endregion
+
+
+        private bool checkKing(Pieces currentPiece, int X, int Y)
+        {
+
+            int currentPieceBoardX = (currentPiece.X - 10) / 80;
+            int currentPieceBoardY = (currentPiece.Y - 10) / 80;
+            int targetgridBoardX = (X - 10) / 80;
+            int targetgridBoardY = (Y - 10) / 80;
+            Pieces temp;
+
+
+            if (whiteTurnSwitch == true)
+            {
+                temp = _blacks.Find(x => ((x.X == 30 + targetgridBoardX * 80) && (x.Y == 30 + targetgridBoardY * 80)));
+            }
+            else
+            {
+                temp = _whites.Find(x => ((x.X == 30 + targetgridBoardX * 80) && (x.Y == 30 + targetgridBoardY * 80)));
+            }
+
+            //if enemy is not empty
+            if ( temp != null && temp.Name.Equals("King") )
+            {
+               // displayText("Check", Color.Yellow, 30);
+                return true;
+            }
+            return false;
         }
 
     }
