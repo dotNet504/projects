@@ -1182,36 +1182,51 @@ namespace Asx_Assign5
                 #region white king
                 if (whiteTurnSwitch == true)
                 {
+                    Pieces tempPieceWhite = _whites.Find(x => ((x.X == 30 + -1 * 80) && (x.Y == 30 + -1 * 80)));//create this pece for skip the current(white) King
                     //cross
                     #region straight lines
+
+                    bool hCheck = true;
+                    bool vCheck = true;
+
                     //to right
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY;
-                    while( checkEmptyGrid(30+tempX*80,30 + tempY*80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while ( checkEmptyGrid(30+tempX*80,30 + tempY*80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {
-                        //MessageBox.Show("to right" + tempX.ToString() + "   " + tempY.ToString());
+
+                        
                         tempX = tempX + 1;
                         tempY = tempY;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
                         }
 
                     }
+
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        hCheck = false;
                     }
 
                     //to bottom
                     tempX = targetgridBoardX;
                     tempY = targetgridBoardY + 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+
+
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {                   
                         tempX = tempX;
-                        tempY = tempY + 1;                        
+                        tempY = tempY + 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1221,16 +1236,20 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        vCheck = false;
                     }
 
                     //to left
                     tempX = targetgridBoardX - 1;
                     tempY = targetgridBoardY;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1241,17 +1260,20 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        hCheck = false;
                     }
 
 
                     //to top
                     tempX = targetgridBoardX ;
                     tempY = targetgridBoardY - 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && tempPieceWhite.Name == "King"))
                     {
                         tempX = tempX;
                         tempY = tempY - 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1263,22 +1285,32 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
+                        //return false;
+                        vCheck = false;
+                    }
+                    if ((hCheck == false) || (vCheck== false))
+                    {
+      
                         return false;
                     }
                     #endregion
 
 
                     //dignola
+                    bool leftToRightCheck = true;
+                    bool rightToLeftCheck = true;
                     #region Diagonal 
-                    //to bottom-left
+                    //to bottom-right
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY + 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")) )
                     {
                         tempX = tempX + 1;
                         tempY = tempY + 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
-                        {
+                        {                            
                             break;
                         }
 
@@ -1288,16 +1320,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        leftToRightCheck = false;
                     }
 
-
+                    //top left
                     tempX = targetgridBoardX-1;
                     tempY = targetgridBoardY-1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY - 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1307,16 +1342,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        leftToRightCheck = false;
                     }
 
 
                     tempX = targetgridBoardX-1;
                     tempY = targetgridBoardY+1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY + 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             //MessageBox.Show("time to break");
@@ -1328,17 +1366,20 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        rightToLeftCheck = false;
                     }
 
 
 
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY - 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceWhite != null) && (tempPieceWhite.Name == "King")))
                     {
                         tempX = tempX + 1;
                         tempY = tempY - 1;
+                        tempPieceWhite = _whites.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1349,6 +1390,13 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
+                        //return false;
+                        rightToLeftCheck = false;
+                    }
+
+                    if ((rightToLeftCheck == false) || (leftToRightCheck == false))
+                    {
+
                         return false;
                     }
                     #endregion
@@ -1416,15 +1464,20 @@ namespace Asx_Assign5
                 #region black king
                 else
                 {
+                    Pieces tempPieceBlack = _blacks.Find(x => ((x.X == 30 + -1 * 80) && (x.Y == 30 + -1 * 80)));//create this pece for skip the current(white) King
                     //cross
                     #region straight lines
+                    bool hCheck = true;
+                    bool vCheck = true;
                     //to right
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {                  
                         tempX = tempX + 1;
                         tempY = tempY;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1437,16 +1490,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        hCheck = false;
                     }
 
                     //to bottom
                     tempX = targetgridBoardX;
                     tempY = targetgridBoardY + 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {             
                         tempX = tempX;
                         tempY = tempY + 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
 
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
@@ -1458,16 +1514,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        vCheck = false;
                     }
 
                     //to left
                     tempX = targetgridBoardX - 1;
                     tempY = targetgridBoardY;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1478,17 +1537,20 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
-                        return false;
+                        //return false;
+                        hCheck = false;
                     }
 
 
                     //to top
                     tempX = targetgridBoardX;
                     tempY = targetgridBoardY - 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX;
                         tempY = tempY - 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             //MessageBox.Show("time to break");
@@ -1501,6 +1563,13 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Rook");
+                        //return false;
+                        vCheck = false;
+                    }
+
+                    if ((hCheck == false) || (vCheck == false))
+                    {
+
                         return false;
                     }
                     #endregion
@@ -1508,13 +1577,18 @@ namespace Asx_Assign5
 
                     //dignola
                     #region Diagonal 
+
+                    bool leftToRightCheck = true;
+                    bool rightToLeftCheck = true;
                     //to bottom-left
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY + 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX + 1;
                         tempY = tempY + 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             //MessageBox.Show("time to break");
@@ -1527,16 +1601,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        leftToRightCheck = false;
                     }
 
 
                     tempX = targetgridBoardX - 1;
                     tempY = targetgridBoardY - 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY - 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             //MessageBox.Show("time to break");
@@ -1547,16 +1624,19 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        leftToRightCheck = false;
                     }
 
 
                     tempX = targetgridBoardX - 1;
                     tempY = targetgridBoardY + 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX - 1;
                         tempY = tempY + 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             //MessageBox.Show("time to break");
@@ -1568,17 +1648,20 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
-                        return false;
+                        //return false;
+                        rightToLeftCheck = false;
                     }
 
 
 
                     tempX = targetgridBoardX + 1;
                     tempY = targetgridBoardY - 1;
-                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80))
+                    tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
+                    while (checkEmptyGrid(30 + tempX * 80, 30 + tempY * 80) || ((tempPieceBlack != null) && (tempPieceBlack.Name == "King")))
                     {
                         tempX = tempX + 1;
                         tempY = tempY - 1;
+                        tempPieceBlack = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                         if ((tempX < 0) || (tempX > 7) || (tempY < 0) || (tempY > 7))
                         {
                             break;
@@ -1589,8 +1672,16 @@ namespace Asx_Assign5
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Bishop")))
                     {
                         //MessageBox.Show("will be attacked by Queen or Bishop");
+                        //return false;
+                        rightToLeftCheck = false;
+                    }
+                    if ((rightToLeftCheck == false) || (leftToRightCheck == false))
+                    {
+
                         return false;
                     }
+
+
                     #endregion
                     //L form
                     for (int i = -2; i < 3; i = i + 4)
