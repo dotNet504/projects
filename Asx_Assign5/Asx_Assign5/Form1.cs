@@ -432,7 +432,7 @@ namespace Asx_Assign5
                         displayText("Player 1's turn", Color.Blue, 20);
                         if (confirmCheck(_whites))
                         {
-                            displayText("Player 1's turn\n" + "Check", Color.Blue, 30);
+                            displayText("Player 1's turn\n\n" + "CHECK!!!", Color.Blue, 30);
                         }
                         RED_DISPLAY = false;
                     }
@@ -441,7 +441,7 @@ namespace Asx_Assign5
                         displayText("Player 2's turn", Color.DarkRed, 20);
                         if (confirmCheck(_blacks))
                         {
-                            displayText("Player 2's turn\n" + "Check", Color.DarkRed, 30);
+                            displayText("Player 2's turn\n\n" + "CHECK!!!", Color.DarkRed, 30);
                         }
                         RED_DISPLAY = true;
                     }
