@@ -2035,6 +2035,10 @@ namespace Asx_Assign5
                 {
                     return true;
                 }
+                else if (p.Name.Contains("Bishop") && BishopGridCheck(p))
+                {
+                    return true;
+                }
             }
 
             return false;
