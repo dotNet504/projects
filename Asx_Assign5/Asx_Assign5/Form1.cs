@@ -2010,7 +2010,7 @@ namespace Asx_Assign5
             string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 2 won!!!\n\n" : "Player 1 won!!!\n\n";
             string piecesLost = "Player 1 lost: "+ (16 - _whites.Count()).ToString() + " pieces\nPlayer 2 lost: " + (16 - _blacks.Count()).ToString() + " pieces\n\n";
             string timeStr = "Duration: " + timeTaken.ToString(@"m\:ss");
-            string moveStr = "Player 1's Moves: " + WHITE_TURN.ToString() + "\nPlayer 2's Moves: " + BLACK_TURN.ToString();
+            string moveStr = "Player 1's Moves: " + WHITE_TURN.ToString() + "\nPlayer 2's Moves: " + BLACK_TURN.ToString() + "\nTotal Moves made: " + (WHITE_TURN + BLACK_TURN).ToString();
             displayText(whoWon + piecesLost + timeStr + "\n\n" + moveStr, display_color, 23);
         }
 
