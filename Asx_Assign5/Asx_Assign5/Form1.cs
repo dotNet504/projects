@@ -31,8 +31,9 @@ namespace Asx_Assign5
         public Color DISPLAY_COLOR = Color.Green;
         public int FONT_SIZE = 14;
         public Stopwatch TIMER = new Stopwatch();
-        public int MOVES_COUNTER = 0;
         public bool RED_DISPLAY = false;
+        public int WHITE_TURN = 1;
+        public int BLACK_TURN = 0;
 
         public Form1()
         {
@@ -444,15 +445,17 @@ namespace Asx_Assign5
                     }
                     else if (whiteTurnSwitch.Equals(true))
                     {
+                        WHITE_TURN++;
                         displayText("Player 1's turn", Color.Blue, 20);
                         if (confirmCheck(_whites))
-                        {
+                        {   
                             displayText("Player 1's turn\n\n" + "CHECK!!!", Color.Blue, 30);
                         }
                         RED_DISPLAY = false;
                     }
                     else
                     {
+                        BLACK_TURN++;
                         displayText("Player 2's turn", Color.DarkRed, 20);
                         if (confirmCheck(_blacks))
                         {
@@ -461,7 +464,6 @@ namespace Asx_Assign5
                         RED_DISPLAY = true;
                     }
 
-                    MOVES_COUNTER++;
                     RedraweBoard(g);
                 }
         
@@ -1983,6 +1985,7 @@ namespace Asx_Assign5
                 if (p.Name.Contains("King"))
                 {
                     count += 1;
+                    RED_DISPLAY = false;
                 }
             }
 
@@ -1991,6 +1994,7 @@ namespace Asx_Assign5
                 if (p.Name.Contains("King"))
                 {
                     count += 1;
+                    RED_DISPLAY = true;
                 }
             }
 
@@ -2002,11 +2006,11 @@ namespace Asx_Assign5
         {
             TIMER.Stop();
             TimeSpan timeTaken = TIMER.Elapsed;
-            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Beige : Color.Black;
-            string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 1 won!!!\n\n" : "Player 2 won!!!\n\n";
+            Color display_color = (RED_DISPLAY.Equals(true)) ? Color.Black : Color.Beige;
+            string whoWon = (RED_DISPLAY.Equals(true)) ? "Player 2 won!!!\n\n" : "Player 1 won!!!\n\n";
             string piecesLost = "Player 1 lost: "+ (16 - _whites.Count()).ToString() + " pieces\nPlayer 2 lost: " + (16 - _blacks.Count()).ToString() + " pieces\n\n";
             string timeStr = "Duration: " + timeTaken.ToString(@"m\:ss");
-            string moveStr = "Moves Made: " + MOVES_COUNTER.ToString();
+            string moveStr = "Player 1's Moves: " + WHITE_TURN.ToString() + "\nPlayer 2's Moves: " + BLACK_TURN.ToString();
             displayText(whoWon + piecesLost + timeStr + "\n\n" + moveStr, display_color, 23);
         }
 
