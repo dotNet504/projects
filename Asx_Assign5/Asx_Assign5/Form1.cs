@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 5					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form1
+ *  Purpose   : Implementation of chess game using windows application.                                  *
+ *********************************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,6 +59,7 @@ namespace Asx_Assign5
 
         #region Initialize Chess Board
 
+        //Method to draw the chess board
         private void RedraweBoard(Graphics g)
         {
             //MessageBox.Show("inredraw");
@@ -62,7 +75,7 @@ namespace Asx_Assign5
             }
         }
 
-
+        // Method to draw the board
         private void DrawBoard(Graphics g)
         {
 
@@ -91,7 +104,7 @@ namespace Asx_Assign5
 
         }
 
-
+        //Reusable method to initialize the board
         private void InitializeBoard(Graphics g)
         {
             int _bX = 10, _bY = 10;
@@ -120,6 +133,7 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method to initialize the chess pieces
         private void InitializePieces(Graphics g)
         {
             LoadWhitePieces();
@@ -139,6 +153,7 @@ namespace Asx_Assign5
 
 
         #region Load Pieces
+        //Reusable method to load white pieces
         private void LoadWhitePieces()
         {
             int xSpace = -10;
@@ -220,7 +235,7 @@ namespace Asx_Assign5
 
 
 
-
+        ////Reusable method to load black pieces
         private void LoadBlackPieces()
         {
             int xSpace = -10;
@@ -304,11 +319,11 @@ namespace Asx_Assign5
 
 
 
-
-
         int moveSwitch = 0;
         bool whiteTurnSwitch = true;
         Pieces currentPiece;
+
+        //Method invoked on mouse down event
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             //convert the X Y 
@@ -455,12 +470,12 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method to check the empty grid
         private bool checkEmptyGrid(int X, int Y)
         {
 
             int boardX = (X - 10) / 80;
             int boardY = (Y - 10) / 80;
-            //MessageBox.Show("check whether it is empty" + boardX.ToString() + "  " + boardY.ToString());
             Pieces temp1 = _whites.Find(x => ((x.X == 30 + boardX * 80) && (x.Y == 30 + boardY * 80)));
             Pieces temp2 = _blacks.Find(x => ((x.X == 30 + boardX * 80) && (x.Y == 30 + boardY * 80)));
 
@@ -476,6 +491,7 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method to check the enemy grid
         private bool checkEnemyGrid(Pieces currentKnight, int X, int Y)
         {
             
@@ -507,9 +523,9 @@ namespace Asx_Assign5
             }
         }
 
+        //Reusable method to kill the enemy pieces
         private void removeEnemyPiece(Pieces currentKnight, int X, int Y)
         {
-            //MessageBox.Show("removing sth");
             int currentPieceBoardX = (currentKnight.X - 10) / 80;
             int currentPieceBoardY = (currentKnight.Y - 10) / 80;
             int targetgridBoardX = (X - 10) / 80;
@@ -540,6 +556,7 @@ namespace Asx_Assign5
            }
 
         #region knight piece
+        //Reusable method to check knight move
         private bool CheckKnightMove(Pieces currentKnight, int X, int Y)
         {
 
@@ -573,6 +590,8 @@ namespace Asx_Assign5
             }
             return false;
         }
+
+        //Reusable method for knight processing
         private int KnightProcessing(Pieces currentKnight, int X,int Y)
         {
 
@@ -630,6 +649,7 @@ namespace Asx_Assign5
         }
         #endregion
         #region Bishop piece
+        //Reusable method to check Bishop move
         private bool CheckBishopMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -639,7 +659,6 @@ namespace Asx_Assign5
             
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                //MessageBox.Show("a piece cannot move to his gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX >7) || (targetgridBoardY <0 )|| (targetgridBoardY>7))
@@ -651,11 +670,10 @@ namespace Asx_Assign5
 
             if (   Math.Abs(currentPieceBoardX - targetgridBoardX)  != Math.Abs(currentPieceBoardY - targetgridBoardY)   )
             {
-                //MessageBox.Show("Bishop should go dignoal direction");
                 return false;
             }
 
-            //MessageBox.Show()
+            
             int hstep = (targetgridBoardX - currentPieceBoardX)/Math.Abs(targetgridBoardX - currentPieceBoardX);
             int vstep = (targetgridBoardY - currentPieceBoardY)/ Math.Abs(targetgridBoardY - currentPieceBoardY);
 
@@ -666,7 +684,7 @@ namespace Asx_Assign5
                 Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
                 if ((temp1 != null) || (temp2 != null))
                 {
-                    //MessageBox.Show("This move is illegal. Something is on his path.");
+                    
                     return false;
                 }
 
@@ -674,6 +692,7 @@ namespace Asx_Assign5
             return true;
 
         }
+        //Reusable method for bishop processing
         private int BishopProcessing(Pieces currentPiece, int X, int Y)
         {
 
@@ -689,7 +708,6 @@ namespace Asx_Assign5
                 //if the target grid is occupied by enemy, replaceing the Enemy piece 
                 if (checkEnemyGrid(currentPiece, X, Y))
                 {
-                    //MessageBox.Show("enemy is found");
                     removeEnemyPiece(currentPiece, X, Y);
                     currentPiece.X = 30 + ((X - 10) / 80) * 80;
                     currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
@@ -732,7 +750,7 @@ namespace Asx_Assign5
         #endregion
 
         #region Rook piece
-
+        //Reusable method to check Rook move
         private bool CheckRookMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -799,7 +817,7 @@ namespace Asx_Assign5
 
         }
 
-
+        //Reusable method for Rook processing
         private int RookProcessing(Pieces currentPiece, int X, int Y)
         {
             //check whether the Rook will move to a reasonbale grid
@@ -814,7 +832,6 @@ namespace Asx_Assign5
                 //if the target grid is occupied by enemy, replaceing the Enemy piece 
                 if (checkEnemyGrid(currentPiece, X, Y))
                 {
-                    //MessageBox.Show("enemy is found");
                     removeEnemyPiece(currentPiece, X, Y);
                     currentPiece.X = 30 + ((X - 10) / 80) * 80;
                     currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
@@ -858,6 +875,7 @@ namespace Asx_Assign5
 
         #region queen piece
 
+        //Reusable method to check Queen move
         private bool CheckQueenMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -869,12 +887,11 @@ namespace Asx_Assign5
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                //MessageBox.Show("a piece cannot move to his own gird");
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                //MessageBox.Show("a piece cannot move to outside");
+                
                 return false;
 
             }
@@ -901,7 +918,7 @@ namespace Asx_Assign5
                     Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
                     if ((temp1 != null) || (temp2 != null))
                     {
-                        //MessageBox.Show("sth is on the path");
+                       
                         return false;
                     }
 
@@ -913,7 +930,7 @@ namespace Asx_Assign5
                     Pieces temp2 = _blacks.Find(x => ((x.X == 30 + (currentPieceBoardX + (i + 1) * hstep) * 80) && (x.Y == 30 + (currentPieceBoardY + (i + 1) * vstep) * 80)));
                     if ((temp1 != null) || (temp2 != null))
                     {
-                        //MessageBox.Show("sth is on the path");
+                        
                         return false;
                     }
 
@@ -931,7 +948,7 @@ namespace Asx_Assign5
 
         }
 
-
+        //Reusable method for queen processing
         private int QueenProcessing(Pieces currentPiece, int X, int Y)
         {
             //check whether the Rook will move to a reasonbale grid
@@ -946,7 +963,7 @@ namespace Asx_Assign5
                 //if the target grid is occupied by enemy, replaceing the Enemy piece 
                 if (checkEnemyGrid(currentPiece, X, Y))
                 {
-                    //MessageBox.Show("enemy is found");
+                   
                     removeEnemyPiece(currentPiece, X, Y);
                     currentPiece.X = 30 + ((X - 10) / 80) * 80;
                     currentPiece.Y = 30 + ((Y - 10) / 80) * 80;
@@ -990,7 +1007,7 @@ namespace Asx_Assign5
         #region Pawn piece
 
 
-
+        //Reusable method to check Pawn move
         private bool CheckPawnMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -1090,7 +1107,7 @@ namespace Asx_Assign5
 
         }
 
-
+        //Reusable method for Pawn processing
         private int PawnProcessing(Pieces currentPiece, int X, int Y)
         {
             //check whether the Rook will move to a reasonbale grid
@@ -1148,6 +1165,7 @@ namespace Asx_Assign5
 
 
         #region King piece
+        //Reusable method to check king move
         private bool CheckKingMove(Pieces currentPiece, int X, int Y)
         {
             int currentPieceBoardX = (currentPiece.X - 10) / 80;
@@ -1165,12 +1183,12 @@ namespace Asx_Assign5
 
             if ((currentPieceBoardX == targetgridBoardX) && (currentPieceBoardY == targetgridBoardY))
             {
-                //MessageBox.Show("a piece cannot move to his own gird");
+                
                 return false;
             }
             if ((targetgridBoardX < 0) || (targetgridBoardX > 7) || (targetgridBoardY < 0) || (targetgridBoardY > 7))
             {
-                //MessageBox.Show("a piece cannot move to outside");
+               
                 return false;
 
             }
@@ -1210,8 +1228,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        //MessageBox.Show("will be attacked by Queen or Rook");
-                        //return false;
+                        
                         hCheck = false;
                     }
 
@@ -1235,8 +1252,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        //MessageBox.Show("will be attacked by Queen or Rook");
-                        //return false;
+                        
                         vCheck = false;
                     }
 
@@ -1284,8 +1300,7 @@ namespace Asx_Assign5
 
                     if ((temp != null) && (temp.Name.Contains("Queen") || temp.Name.Contains("Rook")))
                     {
-                        //MessageBox.Show("will be attacked by Queen or Rook");
-                        //return false;
+                        
                         vCheck = false;
                     }
                     if ((hCheck == false) || (vCheck== false))
@@ -1409,7 +1424,7 @@ namespace Asx_Assign5
                             temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                             if ((temp != null) && (temp.Name.Contains("Knight") ))
                             {
-                                //MessageBox.Show("will be attacked by Knight");
+                                
                                 return false;
                             }
                         }
@@ -1432,7 +1447,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        //MessageBox.Show("will be attacked by Pawn");
+                       
                         return false;
                     }
 
@@ -1441,7 +1456,7 @@ namespace Asx_Assign5
                     temp = _blacks.Find(x => ((x.X == 30 + tempX * 80) && (x.Y == 30 + tempY * 80)));
                     if ((temp != null) && (temp.Name.Contains("Pawn")))
                     {
-                        //MessageBox.Show("will be attacked by Pawn");
+                        
                         return false;
                     }
                     //detect King
@@ -1746,7 +1761,7 @@ namespace Asx_Assign5
             }
             else
             {
-                //MessageBox.Show("only one pace is allowed");
+               
                 return false;
             }           
             return true;
@@ -1756,6 +1771,8 @@ namespace Asx_Assign5
 
 
         }
+
+        //Reusable method for knight processing
         private int KingProcessing(Pieces currentPiece, int X, int Y)
         {
 
@@ -1832,6 +1849,8 @@ namespace Asx_Assign5
 
 
         #region possible grid
+
+        //Reusable method for knight processing grid
         private void KnightPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1848,6 +1867,7 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method for bishop processing grid
         private void BishopPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1865,6 +1885,7 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method for Rook processing grid
         private void RookPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1880,7 +1901,7 @@ namespace Asx_Assign5
                 }
         }
 
-
+        //Reusable method for Queen processing grid
         private void QueenPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1896,7 +1917,7 @@ namespace Asx_Assign5
                 }
         }
 
-
+        //Reusable method for Pawn processing grid
         private void PawnPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1913,6 +1934,7 @@ namespace Asx_Assign5
 
         }
 
+        //Reusable method for King processing grid
         private void KingPossibleGrid(Pieces currentPiece)
         {
             Graphics g;
@@ -1931,7 +1953,7 @@ namespace Asx_Assign5
         #endregion
 
 
-
+        //Method for paint
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             using (Font myFont = new Font("Arial", FONT_SIZE))
@@ -1942,6 +1964,7 @@ namespace Asx_Assign5
             }
         }
 
+        //Reusable method for displaying messages
         private void displayText(string txt, Color t, int fontSize)
         {
             DISPLAY_TEXT = txt;
@@ -1950,6 +1973,7 @@ namespace Asx_Assign5
             pictureBox1.Refresh();
         }
 
+        //Reusable method for checkmate
         private bool checkMate()
         {
             UInt16 count = 0;
@@ -1973,6 +1997,7 @@ namespace Asx_Assign5
             return (count < 2) ? true : false;
         }
 
+        //Method invoked on surrender button click
         private void surrender_button_Click(object sender, EventArgs e)
         {
             TIMER.Stop();
@@ -1985,7 +2010,7 @@ namespace Asx_Assign5
             displayText(whoWon + piecesLost + timeStr + "\n\n" + moveStr, display_color, 23);
         }
 
-
+        //Reusable method for confirm check
         private bool confirmCheck(List<Pieces> lst_pieces)
         {
            foreach (Pieces p in lst_pieces)
@@ -2016,7 +2041,7 @@ namespace Asx_Assign5
         }
 
         #region Check
-
+        //Reusable method for knight grid check
         private bool KnightGridCheck(Pieces currentPiece)
         {
 
@@ -2033,6 +2058,7 @@ namespace Asx_Assign5
             return false;
         }
 
+        //Reusable method for Bishop grid check
         private bool BishopGridCheck(Pieces currentPiece)
         {
 
@@ -2064,7 +2090,7 @@ namespace Asx_Assign5
             return false;
         }
 
-
+        //Reusable method for Queen grid check
         private bool QueenGridCheck(Pieces currentPiece)
         {
 
@@ -2074,13 +2100,13 @@ namespace Asx_Assign5
                     if ( CheckQueenMove(currentPiece, 30 + i * 80, 30 + j * 80) &&  checkKing(currentPiece, 30 + i * 80, 30 + j * 80)   )
                     {
                         return true;
-                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                        
                     }
                 }
             return false;
         }
 
-
+        //Reusable method for pawn grid check
         private bool PawnGridCheck(Pieces currentPiece)
         {
 
@@ -2090,12 +2116,13 @@ namespace Asx_Assign5
                     if ( CheckPawnMove(currentPiece, 30 + i * 80, 30 + j * 80) && checkKing(currentPiece, 30 + i * 80, 30 + j * 80) )
                     {
                         return true;
-                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                        
                     }
                 }
             return false;
         }
 
+        //Reusable method for King grid check
         private bool KingGridCheck(Pieces currentPiece)
         {
 
@@ -2105,7 +2132,7 @@ namespace Asx_Assign5
                     if (    CheckKingMove(currentPiece, 30 + i * 80, 30 + j * 80) && checkKing(currentPiece, 30 + i * 80, 30 + j * 80)  )
                     {
                         return true;
-                        //g.DrawRectangle(new Pen(Brushes.Green, 5), new Rectangle(10 + i * 80 + 10, 10 + j * 80 + 10, 60, 60));
+                       
                     }
                 }
             return false;
@@ -2115,7 +2142,7 @@ namespace Asx_Assign5
 
         #endregion
 
-
+        //Reusable method for king check
         private bool checkKing(Pieces currentPiece, int X, int Y)
         {
 
@@ -2138,7 +2165,7 @@ namespace Asx_Assign5
             //if enemy is not empty
             if ( temp != null && temp.Name.Equals("King") )
             {
-               // displayText("Check", Color.Yellow, 30);
+               
                 return true;
             }
             return false;
