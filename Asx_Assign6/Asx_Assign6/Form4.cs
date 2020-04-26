@@ -12,9 +12,14 @@ namespace Asx_Assign6
 {
     public partial class Form4 : Form
     {
+        private readonly List<DataModel> _lstDataModel;
         public Form4()
         {
             InitializeComponent();
+        }
+        public Form4(List<DataModel> lstData)
+        {
+            _lstDataModel = lstData;
         }
 
         private void button1_Click(object sender, EventArgs e)

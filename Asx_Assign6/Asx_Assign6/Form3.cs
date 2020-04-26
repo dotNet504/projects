@@ -7,19 +7,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Asx_Assign6
 {
     public partial class Form3 : Form
     {
-        public Form3()
+        private List<DataModel> _lstDataModel;
+        public Form3(List<DataModel> lstData)
         {
+            _lstDataModel = lstData;
             InitializeComponent();
+            WindowState = FormWindowState.Maximized;
+            SplineChartExample();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SplineChartExample()
+        {            
+            chart1.Titles.Add("Population Spline Chart");
+            var filteredCountries = _lstDataModel.Where(x => x.CountryCode == "USA" ||
+            x.CountryCode == "IND" || x.CountryCode == "CHN" || x.CountryCode == "RUS" || x.CountryCode == "GBR");
+
+            foreach (var item in filteredCountries)
+            {
+                chart1.Series["2011"].Points.AddXY(item.CountryName, item.PopulationIn2011);
+                chart1.Series["2012"].Points.AddXY(item.CountryName, item.PopulationIn2012);
+                chart1.Series["2013"].Points.AddXY(item.CountryName, item.PopulationIn2013);
+                chart1.Series["2014"].Points.AddXY(item.CountryName, item.PopulationIn2014);
+                chart1.Series["2015"].Points.AddXY(item.CountryName, item.PopulationIn2015);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Close();
         }
     }
 }
