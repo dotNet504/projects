@@ -52,7 +52,8 @@ namespace Asx_Assign6
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
+            new Form1().Show();
         }
 
 

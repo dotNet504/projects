@@ -44,6 +44,7 @@ namespace Asx_Assign6
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+            new Form1().Show();
         }
     }
 }
