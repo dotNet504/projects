@@ -12,15 +12,12 @@ namespace Asx_Assign6
 {
     public partial class Form2 : Form
     {
-        public Form2()
-        {
-            InitializeComponent();
-        }
 
         private readonly List<DataModel> _lstDataModel;
         public Form2(List<DataModel> lstData)
         {
             _lstDataModel = lstData;
+            InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
