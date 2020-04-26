@@ -25,8 +25,11 @@ namespace Asx_Assign6
         private void SplineChartExample()
         {            
             chart1.Titles.Add("Population Spline Chart");
-            var filteredCountries = _lstDataModel.Where(x => x.CountryCode == "USA" ||
-            x.CountryCode == "IND" || x.CountryCode == "CHN" || x.CountryCode == "RUS" || x.CountryCode == "GBR");
+            chart1.ChartAreas["ChartArea1"].AxisX.Title = "Country";
+            chart1.ChartAreas["ChartArea1"].AxisY.Title = "Population";
+            var filteredCountries = _lstDataModel.Where(x => x.CountryCode == "USA" || 
+            x.CountryCode == "IND" || x.CountryCode == "CHN" || x.CountryCode == "RUS" || x.CountryCode == "GBR" ||
+            x.CountryCode == "AUS" || x.CountryCode == "AFG" || x.CountryCode == "ARE" || x.CountryCode == "BGD");
 
             foreach (var item in filteredCountries)
             {
