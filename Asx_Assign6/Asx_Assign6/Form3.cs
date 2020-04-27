@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 6					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form3
+ *  Purpose   : Implementation of different Charts.                                                      *
+ *********************************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,10 +31,11 @@ namespace Asx_Assign6
             _lstDataModel = lstData;
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
-            SplineChartExample();
+            SplineChart();
         }
 
-        private void SplineChartExample()
+        //Method to populate Spline chart
+        private void SplineChart()
         {            
             chart1.Titles.Add("Population Spline Chart");
             chart1.ChartAreas["ChartArea1"].AxisX.Title = "Country";
@@ -41,6 +54,7 @@ namespace Asx_Assign6
             }
         }
 
+        //Method invoked on Exit button click
         private void button2_Click(object sender, EventArgs e)
         {
             Close();

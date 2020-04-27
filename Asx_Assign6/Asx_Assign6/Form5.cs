@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 6					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form5
+ *  Purpose   : Implementation of different Charts.                                                      *
+ *********************************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,10 +30,12 @@ namespace Asx_Assign6
         public Form5(List<DataModel> lstData)
         {
             _lstDataModel = lstData;
+            WindowState = FormWindowState.Maximized;
             InitializeComponent();
             loadData();
         }
 
+        //Method to load data
         private void loadData()
         {
             chart1.Titles.Add("Point Chart of Annual Population per Country ");
@@ -50,6 +64,7 @@ namespace Asx_Assign6
 
         }
 
+        //Method invoked on Exit button click
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();

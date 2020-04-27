@@ -1,4 +1,16 @@
-﻿using System;
+﻿/*********************************************************************************************************
+ *                                                                                                       *
+ *  CSCI:504-MSTR PROGRAMMING PRINCIPLES IN .NET	      Assignment 6					 Spring 2020     *                                          
+ *																										 *
+ *  Programmer's: Swathi Reddy Konatham (Z1864290),
+ *                Abdulsalam Olaoye (Z1836477),
+ *                Xuezhi Cang (Z1747635)                                                                 *  	                           
+ *																										 *
+ *  Class Name: Form1
+ *  Purpose   : Implementation of different Charts.                                                      *
+ *********************************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +34,7 @@ namespace Asx_Assign6
             InitializeData();
         }
 
+        //Method invoked on Polar chart button
         private void button1_Click(object sender, EventArgs e)
         {
             Form2 chart1 = new Form2(_lstDataModel);
@@ -29,6 +42,7 @@ namespace Asx_Assign6
             this.Hide();
         }
 
+        //Method invoked on Point chart button
         private void button2_Click(object sender, EventArgs e)
         {
             Form3 chart2 = new Form3(_lstDataModel);            
@@ -37,6 +51,7 @@ namespace Asx_Assign6
             // Close();
         }
 
+        //Method invoked on Spline chart button
         private void button3_Click(object sender, EventArgs e)
         {
             Form4 chart3 = new Form4(_lstDataModel);
@@ -44,6 +59,7 @@ namespace Asx_Assign6
             this.Hide();
         }
 
+        //Method invoked on Column chart button
         private void button4_Click(object sender, EventArgs e)
         {
             Form5 chart4 = new Form5(_lstDataModel);
@@ -51,6 +67,7 @@ namespace Asx_Assign6
             this.Hide();
         }
 
+        //Method to initialize data
         private void InitializeData()
         {
             string path = @"../../../Asx_Assign6/InputFiles/PopulationByCountry.csv";
@@ -90,6 +107,7 @@ namespace Asx_Assign6
             }
         }
 
+        //Method invoked on Exit button click
         private void button5_Click(object sender, EventArgs e)
         {
             Application.Exit();
