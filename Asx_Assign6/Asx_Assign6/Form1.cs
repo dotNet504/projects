@@ -48,7 +48,6 @@ namespace Asx_Assign6
             Form3 chart2 = new Form3(_lstDataModel);            
             chart2.ShowDialog();
             this.Hide();
-            // Close();
         }
 
         //Method invoked on Spline chart button
@@ -109,6 +108,11 @@ namespace Asx_Assign6
 
         //Method invoked on Exit button click
         private void button5_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }

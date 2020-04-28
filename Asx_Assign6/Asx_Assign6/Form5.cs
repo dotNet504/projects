@@ -44,17 +44,11 @@ namespace Asx_Assign6
 
             var countryQ = from country in _lstDataModel
                            where (country.CountryCode == "USA" || country.CountryCode == "ZAF" ||
-            country.CountryCode == "IND" || country.CountryCode == "CHN" || country.CountryCode == "BDI" || country.CountryCode == "GBR" ||
-            country.CountryCode == "AUS" || country.CountryCode == "NGA" || country.CountryCode == "BEN" || country.CountryCode == "BGD")
+            country.CountryCode == "IND" || country.CountryCode == "BEN" || country.CountryCode == "BGD")
                            select country;
 
             foreach (var c in countryQ)
-            {
-                //chart1.Series["2006"].Points.AddXY(c.CountryName, c.PopulationIn2006);
-                //chart1.Series["2007"].Points.AddXY(c.CountryName, c.PopulationIn2007);
-                //chart1.Series["2008"].Points.AddXY(c.CountryName, c.PopulationIn2008);
-                //chart1.Series["2009"].Points.AddXY(c.CountryName, c.PopulationIn2009);
-                //chart1.Series["2010"].Points.AddXY(c.CountryName, c.PopulationIn2010);
+            {                
                 chart1.Series["2011"].Points.AddXY(c.CountryName, c.PopulationIn2011);
                 chart1.Series["2012"].Points.AddXY(c.CountryName, c.PopulationIn2012);
                 chart1.Series["2013"].Points.AddXY(c.CountryName, c.PopulationIn2013);
@@ -68,7 +62,12 @@ namespace Asx_Assign6
         private void button1_Click(object sender, EventArgs e)
         {
             this.Close();
-            new Form1().Show();  
+        }
+
+        //Method to show the portal form
+        private void Form5_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new Form1().Show();
         }
     }
 

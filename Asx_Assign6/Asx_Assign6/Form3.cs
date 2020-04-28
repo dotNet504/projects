@@ -58,6 +58,11 @@ namespace Asx_Assign6
         private void button2_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        //Method to show the portal form
+        private void Form3_FormClosed(object sender, FormClosedEventArgs e)
+        {
             new Form1().Show();
         }
     }

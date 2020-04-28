@@ -43,8 +43,8 @@ namespace Asx_Assign6
             chart1.ChartAreas["ChartArea1"].AxisY.Title = "Population";
 
             var countryQ = from country in _lstDataModel
-                           where (country.CountryCode == "USA" ||  country.CountryCode == "IND" || country.CountryCode == "CHN" || country.CountryCode == "BDI" || country.CountryCode == "GBR" ||
-            country.CountryCode == "AUS" || country.CountryCode == "NGA" || country.CountryCode == "BEN" || country.CountryCode == "BGD" || country.CountryCode == "ZAF")
+                           where (country.CountryCode == "USA" ||  country.CountryCode == "CHN" ||  country.CountryCode == "GBR" ||
+            country.CountryCode == "AUS" || country.CountryCode == "NGA" || country.CountryCode == "BEN" )
                            select country;
 
             foreach (var c in countryQ)
@@ -66,7 +66,12 @@ namespace Asx_Assign6
         //Method invoked on Exit button click
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close();            
+        }
+
+        //Method to show the portal form
+        private void Form4_FormClosed(object sender, FormClosedEventArgs e)
+        {
             new Form1().Show();
         }
     }
